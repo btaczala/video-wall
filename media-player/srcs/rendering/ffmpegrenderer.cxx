@@ -1,5 +1,4 @@
 #include "ffmpegrenderer.h"
-
 #include <stdexcept>
 
 extern "C" {

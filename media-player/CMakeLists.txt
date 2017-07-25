@@ -4,7 +4,12 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 
 option(BUILD_UNIT_TESTS "Build unit tests" ON)
-option(BUILD_SHARED_LIBS "Build shared instead of static libraries."              ON)
+option(BUILD_EXAMPLES "Build examples folder" OFF)
+
+include(CEFBinaryDistribution.cmake)
+include(cmake/compilers.cmake)
+
+set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(3rdParty)
 
@@ -15,3 +20,7 @@ if(BUILD_UNIT_TESTS)
     add_subdirectory(tests)
 endif()
 
+
+if(BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
