@@ -1,37 +1,40 @@
 
 #include <SDL2/SDL.h>
+#include <SDL2pp/SDL2pp.hh>
+#include <SDL2pp/Window.hh>
+
+#include <thread>
 
 #include "ffmpegrenderer.h"
 
 int main(int argc, char* argv[])
 {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
-        printf("Could not initialize SDL - %s\n", SDL_GetError());
-        return -1;
-    }
+    using namespace SDL2pp;
+    try {
+        SDL sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
-    auto screen = SDL_CreateWindow("Simplest ffmpeg player's Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        800, 600, SDL_WINDOW_OPENGL);
-    auto sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
-    auto sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, 480, 272);
+        Window window("libSDL2pp demo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_OPENGL);
+        Renderer renderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    SDL_Rect sdlRect;
-    sdlRect.x = 0;
-    sdlRect.y = 0;
-    sdlRect.w = 480;
-    sdlRect.h = 272;
+        mars::rendering::FFMPEGRenderer ffmpeg{ std::string{ TEST_DIR } + "/bigbuckbunny_480x272.h265" };
+        auto info = ffmpeg.info();
+        Texture videoTexture(renderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, info.width, info.height);
 
-    mars::rendering::FFMPEGRenderer ffmpeg{ std::string{TEST_DIR} + "/bigbuckbunny_480x272.h265" };
+        auto frame = ffmpeg.frame();
 
-    auto frame = ffmpeg.frame();
+        while (frame) {
+            videoTexture.UpdateYUV(Rect(0, 0, info.width, info.height), frame->planes[0].pixels,
+                frame->planes[0].linesize, frame->planes[1].pixels, frame->planes[1].linesize, frame->planes[2].pixels,
+                frame->planes[2].linesize);
 
-    while (frame) {
-        SDL_UpdateYUVTexture(sdlTexture, &sdlRect, frame->planes[0].pixels, frame->planes[0].linesize,
-            frame->planes[1].pixels, frame->planes[1].linesize, frame->planes[2].pixels, frame->planes[2].linesize);
-        SDL_RenderClear(sdlRenderer);
-        SDL_RenderCopy(sdlRenderer, sdlTexture, nullptr, &sdlRect);
-        SDL_RenderPresent(sdlRenderer);
-        SDL_Delay(40);
-        frame = ffmpeg.frame();
+            renderer.Clear();
+            renderer.Copy(videoTexture, Rect(0,0,480, 272), Rect(0, 0, 480, 272));
+            renderer.Copy(videoTexture, Rect(0,0,480, 272), Rect(500, 0, 480, 272));
+            //renderer.Copy(videoTexture, Rect(0,0,480/2, 272/2), Rect(0, 0, 480, 272));
+            renderer.Present();
+            std::this_thread::sleep_for(std::chrono::milliseconds(40));
+            frame = ffmpeg.frame();
+        }
+    } catch (const std::exception& ex) {
     }
 }
