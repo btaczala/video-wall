@@ -111,10 +111,15 @@ namespace rendering {
                 }
             }
             av_packet_unref(packet);
+            av_packet_free(&packet);
             VideoFrame frame;
             frame.planes[0] = { pFrameYUV->data[0], pFrameYUV->linesize[0] };
             frame.planes[1] = { pFrameYUV->data[1], pFrameYUV->linesize[1] };
             frame.planes[2] = { pFrameYUV->data[2], pFrameYUV->linesize[2] };
+            av_frame_free(&pFrame);
+            av_frame_free(&pFrameYUV);
+            av_free(out_buffer);
+            sws_freeContext(img_convert_ctx);
 
             return frame;
         } else {
