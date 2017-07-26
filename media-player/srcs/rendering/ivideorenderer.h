@@ -15,10 +15,18 @@ namespace rendering {
         std::array<Plane, 3> planes;
     };
 
+    struct VideoInfo {
+        const std::uint16_t width;
+        const std::uint16_t height;
+        const std::int64_t duration;
+    };
+
     struct IVideoRenderer {
         virtual ~IVideoRenderer() = default;
 
         virtual boost::optional<VideoFrame> frame() noexcept = 0;
+
+        virtual VideoInfo info() const noexcept = 0;
     };
 }
 }

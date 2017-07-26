@@ -123,5 +123,11 @@ namespace rendering {
 
         return boost::optional<VideoFrame>{};
     }
+
+    VideoInfo FFMPEGRenderer::info() const noexcept
+    {
+        return VideoInfo{ static_cast<std::uint16_t>(codecCtx->width), static_cast<std::uint16_t>(codecCtx->height),
+            formatCtx->duration };
+    }
 } // rendering
 } // mars

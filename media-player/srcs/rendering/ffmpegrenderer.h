@@ -13,18 +13,18 @@ namespace rendering {
     struct FFMPEGRenderer : public IVideoRenderer {
 
         /**
-         * @brief 
+         * @brief
          * @param filename
-         * @throws 
+         * @throws
          */
         FFMPEGRenderer(const std::string& filename);
 
         ~FFMPEGRenderer();
 
         virtual boost::optional<VideoFrame> frame() noexcept override;
+        virtual VideoInfo info() const noexcept override;
 
     private:
-
         const std::string _filename;
         AVFormatContext* formatCtx;
         AVCodecContext* codecCtx;

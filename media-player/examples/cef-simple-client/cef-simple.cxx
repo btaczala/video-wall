@@ -119,7 +119,6 @@ int main(int argc, char* argv[])
                 // render
                 renderer.clear();
 
-                Stopwatch<> sw;
                 renderHandler->render();
 
                 // Update screen
