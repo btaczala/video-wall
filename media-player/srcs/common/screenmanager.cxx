@@ -5,24 +5,26 @@
 #include <iostream>
 
 namespace mars {
-namespace ui {
+namespace common {
 
     ScreenManager::ScreenManager() {}
 
-    void ScreenManager::availableScreens() const
+    ScreensInfo ScreenManager::availableScreens() const
     {
+        ScreensInfo screens;
         Display* dpy = XOpenDisplay(nullptr);
 
         auto window = DefaultRootWindow(dpy);
         auto screen = XRRGetScreenResources(dpy, window);
 
-        std::cout << screen->ncrtc << std::endl;
-
         for (int i = 0; i < screen->ncrtc; ++i) {
             auto crtc_info = XRRGetCrtcInfo(dpy, screen, screen->crtcs[i]);
-            auto info = XRRGetOutputInfo(dpy, screen, screen->outputs[i]);
-            std::cout << crtc_info->width << " x " << crtc_info->height << " " << info->name << std::endl;
+            const auto info = XRRGetOutputInfo(dpy, screen, screen->outputs[i]);
+            screens.push_back({ static_cast<std::uint16_t>(crtc_info->width),
+                static_cast<std::uint16_t>(crtc_info->height), info->name });
         }
+
+        return screens;
     }
 }
 }

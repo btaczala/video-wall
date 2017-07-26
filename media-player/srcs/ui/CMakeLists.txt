@@ -1,6 +1,8 @@
 find_package(CEF REQUIRED)
-find_package(Xrandr REQUIRED)
-find_package(XCB REQUIRED)
-add_library(mars-ui cefrenderhandler.cxx cefbrowserclient.cxx screenmanager.cxx)
-target_link_libraries(mars-ui ${CEF_LIBRARIES} mars-rendering mars-common ${XRANDR_LIBRARIES} ${XCB_LIBRARIES})
-target_include_directories(mars-ui PUBLIC ${CEF_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} ${XRANDR_INCLUDE_DIRS} ${XCB_INCLUDE_DIRS})
+add_library(mars-ui cefrenderhandler.cxx cefbrowserclient.cxx )
+target_link_libraries(mars-ui
+    ${CEF_LIBRARIES} 
+    mars-rendering 
+    mars-common
+)
+target_include_directories(mars-ui PUBLIC ${CEF_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR})
