@@ -10,3 +10,4 @@ std::shared_ptr<spdlog::logger> loggerSetup(const std::string& name)
 
 std::shared_ptr<spdlog::logger> uiLogger{ loggerSetup("mars-ui") };
 std::shared_ptr<spdlog::logger> renderingLogger{ loggerSetup("mars-rendering") };
+std::shared_ptr<spdlog::logger> ffmpegLogger{ loggerSetup("mars-ffmpeg") };
