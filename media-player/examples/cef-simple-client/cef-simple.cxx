@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include <iostream>
 #include <sstream>
+#include <stdio.h>
 
 #include <SDL.h>
 #include <unistd.h>
@@ -21,7 +21,8 @@
 
 std::shared_ptr<spdlog::logger> kDefaultLogger;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     kDefaultLogger = spdlog::stdout_color_mt("mars");
     kDefaultLogger->set_level(spdlog::level::debug);
 
@@ -63,25 +64,23 @@ int main(int argc, char* argv[]) {
     // Initialize SDL
     mars_debug("Initializing SDL pid = {}", getpid());
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError()
-                  << std::endl;
+        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         return 1;
     }
 
     int width = 800;
     int height = 600;
 
-    auto window = SDL_CreateWindow(
-        "Render CEF with SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        width, height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+    auto window = SDL_CreateWindow("Render CEF with SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width,
+        height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
     mars_debug("SDL window = {}", static_cast<void*>(window));
     if (window) {
-        mars::ui::SDLRenderer renderer{window};
+        mars::ui::SDLRenderer renderer{ window };
         if (true) {
             SDL_Event e;
 
-            CefRefPtr<mars::webengine::RenderHandler> renderHandler =
-                new mars::webengine::RenderHandler(&renderer, width*2, height*2);
+            CefRefPtr<mars::webengine::RenderHandler> renderHandler
+                = new mars::webengine::RenderHandler(&renderer, width * 2, height * 2);
 
             // create browser-window
             CefRefPtr<CefBrowser> browser;
@@ -93,16 +92,13 @@ int main(int argc, char* argv[]) {
                 browserSettings.webgl = STATE_ENABLED;
 
                 window_info.SetAsWindowless(0);
-                browserClient =
-                    new mars::webengine::BrowserClient(renderHandler);
+                browserClient = new mars::webengine::BrowserClient(renderHandler);
 
-                const std::string url{
-                    std::string{"file:///"} + std::string(HTML_DIR) +
-                    "/webgl-hello-world-master/webgl-demo.htm"};
+                const std::string url{ std::string{ "file:///" } + std::string(HTML_DIR)
+                    + "/webgl-hello-world-master/webgl-demo.htm" };
                 mars_debug("Url = {}", url);
                 browser = CefBrowserHost::CreateBrowserSync(
-                    window_info, browserClient.get(), url, browserSettings,
-                    nullptr);
+                    window_info, browserClient.get(), url, browserSettings, nullptr);
             }
 
             bool shutdown = false;
@@ -110,10 +106,10 @@ int main(int argc, char* argv[]) {
                 // send events to browser
                 while (!shutdown && SDL_PollEvent(&e) != 0) {
                     switch (e.type) {
-                        case SDL_QUIT:
-                            shutdown = true;
-                            browser->GetHost()->CloseBrowser(false);
-                            break;
+                    case SDL_QUIT:
+                        shutdown = true;
+                        browser->GetHost()->CloseBrowser(false);
+                        break;
                     }
                 }
 
