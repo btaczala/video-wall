@@ -4,3 +4,6 @@
 [submodule "media-player/3rdParty/googletest"]
 	path = media-player/3rdParty/googletest
 	url = https://github.com/google/googletest.git
+[submodule "media-player/3rdParty/libSDL2pp.git"]
+	path = media-player/3rdParty/libSDL2pp.git
+	url = https://github.com/libSDL2pp/libSDL2pp.git
