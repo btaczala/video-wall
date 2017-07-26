@@ -10,6 +10,7 @@ option(BUILD_WITH_COVERAGE "Build examples folder" OFF)
 
 include(CEFBinaryDistribution)
 include(Compilers)
+include(Valgrind)
 
 set(CMAKE_CXX_STANDARD 14)
 
