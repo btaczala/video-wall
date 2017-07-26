@@ -3,6 +3,7 @@
 
 #include <boost/assert.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/optional.hpp>
 
 #include <spdlog/fmt/fmt.h>
 #include <stdexcept>
@@ -20,6 +21,7 @@ namespace rendering {
     FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
         : _filename(filename)
         , formatCtx(nullptr)
+        , codecCtx(nullptr)
     {
         namespace bfs = boost::filesystem;
 
@@ -31,7 +33,6 @@ namespace rendering {
             throw std::runtime_error(fmt::format("file {} is not a file", _filename));
         }
 
-        AVCodecContext* codecCtx{ nullptr };
         AVCodec* pCodec{ nullptr };
         av_register_all();
 
@@ -60,7 +61,7 @@ namespace rendering {
 
         codecCtx = formatCtx->streams[videoindex]->codec;
         pCodec = avcodec_find_decoder(codecCtx->codec_id);
-        if (pCodec == nullptr) {
+        if (!pCodec) {
             mars_warn_(ffmpeg, "Codec not found");
             throw std::runtime_error("Codec not found");
         }
@@ -68,11 +69,14 @@ namespace rendering {
             mars_warn_(ffmpeg, "Could not open codec");
             throw std::runtime_error("Could not open codec");
         }
+
+        av_dump_format(formatCtx, 0, _filename.c_str(), 0);
     }
 
     VideoFrame FFMPEGRenderer::frame() noexcept
     {
         BOOST_ASSERT_MSG(formatCtx, "formatCtx must not be nullptr");
+        BOOST_ASSERT_MSG(codecCtx, "formatCtx must not be nullptr");
 
         auto pFrame = av_frame_alloc();
         AVFrame* pFrameYUV = av_frame_alloc();
@@ -86,7 +90,8 @@ namespace rendering {
         int ret = 0, got_picture = 0;
         int videoIndex = 0;
 
-        while (av_read_frame(formatCtx, packet) >= 0) {
+        if (av_read_frame(formatCtx, packet) >= 0) {
+            mars_debug_(ffmpeg, "Getting a frame for {} pos = {}", _filename, packet->pos);
             if (packet->stream_index == videoIndex) {
                 ret = avcodec_decode_video2(codecCtx, pFrame, &got_picture, packet);
 
@@ -100,16 +105,17 @@ namespace rendering {
                 }
             }
             av_packet_unref(packet);
+            VideoFrame frame;
+            frame.planes[0] = { pFrameYUV->data[0], pFrameYUV->linesize[0] };
+            frame.planes[1] = { pFrameYUV->data[1], pFrameYUV->linesize[1] };
+            frame.planes[2] = { pFrameYUV->data[2], pFrameYUV->linesize[2] };
+
+            return frame;
+        } else {
+            mars_warn_(ffmpeg, "There is no frames left in {}", _filename);
         }
 
-        VideoFrame frame;
-        frame.planes[0] = { pFrameYUV->data[0], pFrameYUV->linesize[0] };
-        frame.planes[1] = { pFrameYUV->data[1], pFrameYUV->linesize[1] };
-        frame.planes[2] = { pFrameYUV->data[2], pFrameYUV->linesize[2] };
-
-        return frame;
-        // SDL_UpdateYUVTexture(sdlTexture, &sdlRect, pFrameYUV->data[0], pFrameYUV->linesize[0], pFrameYUV->data[1],
-        // pFrameYUV->linesize[1], pFrameYUV->data[2], pFrameYUV->linesize[2]);
+        return VideoFrame{};
     }
 } // rendering
 } // mars
