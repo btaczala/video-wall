@@ -16,19 +16,21 @@ TEST(FFMPEGRenderer, valid_file)
     mars::rendering::FFMPEGRenderer renderer{ data_dir };
     auto frame = renderer.frame();
 
-    EXPECT_NE(frame.planes[0].pixels, nullptr);
-    EXPECT_EQ(frame.planes[0].linesize, 480);
-    EXPECT_NE(frame.planes[1].pixels, nullptr);
-    EXPECT_EQ(frame.planes[1].linesize, 240);
-    EXPECT_NE(frame.planes[2].pixels, nullptr);
-    EXPECT_EQ(frame.planes[2].linesize, 240);
+    ASSERT_TRUE(frame);
+    EXPECT_NE(frame->planes[0].pixels, nullptr);
+    EXPECT_EQ(frame->planes[0].linesize, 480);
+    EXPECT_NE(frame->planes[1].pixels, nullptr);
+    EXPECT_EQ(frame->planes[1].linesize, 240);
+    EXPECT_NE(frame->planes[2].pixels, nullptr);
+    EXPECT_EQ(frame->planes[2].linesize, 240);
 
     auto second = renderer.frame();
-    EXPECT_NE(second.planes[0].pixels, nullptr);
-    EXPECT_EQ(second.planes[0].linesize, 480);
-    EXPECT_NE(second.planes[1].pixels, nullptr);
-    EXPECT_EQ(second.planes[1].linesize, 240);
-    EXPECT_NE(second.planes[2].pixels, nullptr);
-    EXPECT_EQ(second.planes[2].linesize, 240);
+    ASSERT_TRUE(second);
+    EXPECT_NE(second->planes[0].pixels, nullptr);
+    EXPECT_EQ(second->planes[0].linesize, 480);
+    EXPECT_NE(second->planes[1].pixels, nullptr);
+    EXPECT_EQ(second->planes[1].linesize, 240);
+    EXPECT_NE(second->planes[2].pixels, nullptr);
+    EXPECT_EQ(second->planes[2].linesize, 240);
 
 }

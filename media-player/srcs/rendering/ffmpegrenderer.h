@@ -19,7 +19,9 @@ namespace rendering {
          */
         FFMPEGRenderer(const std::string& filename);
 
-        virtual VideoFrame frame() noexcept override;
+        ~FFMPEGRenderer();
+
+        virtual boost::optional<VideoFrame> frame() noexcept override;
 
     private:
 

@@ -73,7 +73,13 @@ namespace rendering {
         av_dump_format(formatCtx, 0, _filename.c_str(), 0);
     }
 
-    VideoFrame FFMPEGRenderer::frame() noexcept
+    FFMPEGRenderer::~FFMPEGRenderer()
+    {
+        avcodec_close(codecCtx);
+        avformat_close_input(&formatCtx);
+    }
+
+    boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
     {
         BOOST_ASSERT_MSG(formatCtx, "formatCtx must not be nullptr");
         BOOST_ASSERT_MSG(codecCtx, "formatCtx must not be nullptr");
@@ -115,7 +121,7 @@ namespace rendering {
             mars_warn_(ffmpeg, "There is no frames left in {}", _filename);
         }
 
-        return VideoFrame{};
+        return boost::optional<VideoFrame>{};
     }
 } // rendering
 } // mars

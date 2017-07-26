@@ -2,6 +2,7 @@
 #define IVIDEORENDERER_H_YAQ1STO2
 
 #include <array>
+#include <boost/optional.hpp>
 
 namespace mars {
 namespace rendering {
@@ -17,7 +18,7 @@ namespace rendering {
     struct IVideoRenderer {
         virtual ~IVideoRenderer() = default;
 
-        virtual VideoFrame frame() noexcept = 0;
+        virtual boost::optional<VideoFrame> frame() noexcept = 0;
     };
 }
 }
