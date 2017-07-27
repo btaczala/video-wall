@@ -7,24 +7,24 @@
 namespace mars {
 namespace common {
 
-    ScreenManager::ScreenManager() {}
+ScreenManager::ScreenManager() {}
 
-    ScreensInfo ScreenManager::availableScreens() const
-    {
-        ScreensInfo screens;
-        Display* dpy = XOpenDisplay(nullptr);
+ScreensInfo ScreenManager::availableScreens() const
+{
+    ScreensInfo screens;
+    Display* dpy = XOpenDisplay(nullptr);
 
-        auto window = DefaultRootWindow(dpy);
-        auto screen = XRRGetScreenResources(dpy, window);
+    auto window = DefaultRootWindow(dpy);
+    auto screen = XRRGetScreenResources(dpy, window);
 
-        for (int i = 0; i < screen->ncrtc; ++i) {
-            auto crtc_info = XRRGetCrtcInfo(dpy, screen, screen->crtcs[i]);
-            const auto info = XRRGetOutputInfo(dpy, screen, screen->outputs[i]);
-            screens.push_back({ static_cast<std::uint16_t>(crtc_info->width),
-                static_cast<std::uint16_t>(crtc_info->height), info->name });
-        }
-
-        return screens;
+    for (int i = 0; i < screen->ncrtc; ++i) {
+        auto crtc_info = XRRGetCrtcInfo(dpy, screen, screen->crtcs[i]);
+        const auto info = XRRGetOutputInfo(dpy, screen, screen->outputs[i]);
+        screens.push_back({ static_cast<std::uint16_t>(crtc_info->width), static_cast<std::uint16_t>(crtc_info->height),
+            info->name });
     }
+
+    return screens;
+}
 }
 }

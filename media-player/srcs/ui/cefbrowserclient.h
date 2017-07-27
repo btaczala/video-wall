@@ -6,10 +6,8 @@
 namespace mars {
 namespace webengine {
 
-struct BrowserClient : public CefClient,
-                       public CefLifeSpanHandler,
-                       public CefLoadHandler {
-   public:
+struct BrowserClient : public CefClient, public CefLifeSpanHandler, public CefLoadHandler {
+public:
     BrowserClient(CefRefPtr<CefRenderHandler> ptr);
     virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override;
     virtual CefRefPtr<CefLoadHandler> GetLoadHandler() override;
@@ -20,15 +18,13 @@ struct BrowserClient : public CefClient,
     bool DoClose(CefRefPtr<CefBrowser> browser) override;
     void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
 
-    void OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
-                   int httpStatusCode) override;
+    void OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode) override;
 
-    void OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame,
-                     ErrorCode errorCode, const CefString& errorText,
-                     const CefString& failedUrl) override;
+    void OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, ErrorCode errorCode,
+        const CefString& errorText, const CefString& failedUrl) override;
 
-    void OnLoadingStateChange(CefRefPtr<CefBrowser> browser, bool isLoading,
-                              bool canGoBack, bool canGoForward) override;
+    void OnLoadingStateChange(
+        CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward) override;
 
     // void OnLoadStart(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame>
     // frame) override;
@@ -36,7 +32,7 @@ struct BrowserClient : public CefClient,
     bool closeAllowed() const;
     bool isLoaded() const;
 
-   private:
+private:
     int browser_id;
     bool closing = false;
     bool loaded = false;

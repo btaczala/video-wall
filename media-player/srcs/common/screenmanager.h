@@ -8,18 +8,18 @@
 namespace mars {
 namespace common {
 
-    struct ScreenInfo {
-        const std::uint16_t width;
-        const std::uint16_t height;
-        const std::string name;
-    };
+struct ScreenInfo {
+    const std::uint16_t width;
+    const std::uint16_t height;
+    const std::string name;
+};
 
-    using ScreensInfo = std::vector<ScreenInfo>;
-    struct ScreenManager {
-        ScreenManager();
+using ScreensInfo = std::vector<ScreenInfo>;
+struct ScreenManager {
+    ScreenManager();
 
-        ScreensInfo availableScreens() const;
-    };
+    ScreensInfo availableScreens() const;
+};
 }
 }
 

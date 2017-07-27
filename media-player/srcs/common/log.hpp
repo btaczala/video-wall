@@ -38,9 +38,9 @@ extern std::shared_ptr<spdlog::logger> ffmpegLogger;
     do {                                                                                                               \
         logger##Logger->debug("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
     } while (0)
-#define mars_warn_(logger, fmt, ...)                                                                                  \
+#define mars_warn_(logger, fmt, ...)                                                                                   \
     do {                                                                                                               \
-        logger##Logger->warn("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
+        logger##Logger->warn("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
     } while (0)
 
 #endif /* end of include guard: LOG_HPP_LI7VTYUZ */

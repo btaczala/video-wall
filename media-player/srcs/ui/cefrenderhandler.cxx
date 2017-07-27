@@ -8,27 +8,27 @@
 namespace mars {
 namespace webengine {
 
-    RenderHandler::RenderHandler(ui::IRenderer* renderer, int w, int h)
-        : _renderingTexture(renderer->createTexture(w, h))
-    {
-    }
+RenderHandler::RenderHandler(ui::IRenderer* renderer, int w, int h)
+    : _renderingTexture(renderer->createTexture(w, h, ui::PixelFormat::Unknown))
+{
+}
 
-    RenderHandler::~RenderHandler() {}
+RenderHandler::~RenderHandler() {}
 
-    bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
-    {
-        rect = CefRect(0, 0, _renderingTexture->size().first, _renderingTexture->size().second);
-        return true;
-    }
+bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+{
+    rect = CefRect(0, 0, _renderingTexture->size().first, _renderingTexture->size().second);
+    return true;
+}
 
-    void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList& dirtyRects,
-        const void* buffer, int w, int h)
-    {
-        mars_trace_(ui, "OnPaint({}, {}, {}, {}, {}, {}", static_cast<void*>(browser), type, dirtyRects.size(),
-            static_cast<const void*>(buffer), w, h);
-        _renderingTexture->put(buffer, std::make_pair(w, h));
-    }
+void RenderHandler::OnPaint(
+    CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList& dirtyRects, const void* buffer, int w, int h)
+{
+    mars_trace_(ui, "OnPaint({}, {}, {}, {}, {}, {}", static_cast<void*>(browser), type, dirtyRects.size(),
+        static_cast<const void*>(buffer), w, h);
+    _renderingTexture->put(buffer, std::make_pair(w, h));
+}
 
-    void RenderHandler::render() { _renderingTexture->render(); }
+void RenderHandler::render() { _renderingTexture->render(); }
 }
 }

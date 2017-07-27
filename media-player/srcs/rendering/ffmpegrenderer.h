@@ -10,25 +10,29 @@ struct AVCodecContext;
 
 namespace mars {
 namespace rendering {
-    struct FFMPEGRenderer : public IVideoRenderer {
+struct FFMPEGRenderer : public IVideoRenderer {
 
-        /**
-         * @brief
-         * @param filename
-         * @throws
-         */
-        FFMPEGRenderer(const std::string& filename);
+    /**
+     * @brief
+     * @param filename
+     * @throws
+     */
+    FFMPEGRenderer(const std::string& filename);
 
-        ~FFMPEGRenderer();
+    ~FFMPEGRenderer();
 
-        virtual boost::optional<VideoFrame> frame() noexcept override;
-        virtual VideoInfo info() const noexcept override;
+    virtual boost::optional<VideoFrame> frame() noexcept override;
+    virtual VideoInfo info() const noexcept override;
 
-    private:
-        const std::string _filename;
-        AVFormatContext* formatCtx;
-        AVCodecContext* codecCtx;
-    };
+private:
+    const std::string _filename;
+    AVFormatContext* formatCtx;
+    AVCodecContext* codecCtx;
+};
+
+struct FFMPEGBackend : public IVideoBackend {
+    virtual std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const override;
+};
 }
 }
 

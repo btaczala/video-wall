@@ -1,5 +1,8 @@
 find_package(CEF REQUIRED)
-add_library(mars-ui cefrenderhandler.cxx cefbrowserclient.cxx )
+add_library(mars-ui cefrenderhandler.cxx 
+    cefbrowserclient.cxx
+    widgets/videowidget.cxx
+)
 target_link_libraries(mars-ui
     ${CEF_LIBRARIES} 
     mars-rendering 

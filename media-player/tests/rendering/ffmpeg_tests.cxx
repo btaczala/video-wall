@@ -32,5 +32,4 @@ TEST(FFMPEGRenderer, valid_file)
     EXPECT_EQ(second->planes[1].linesize, 240);
     EXPECT_NE(second->planes[2].pixels, nullptr);
     EXPECT_EQ(second->planes[2].linesize, 240);
-
 }
