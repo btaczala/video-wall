@@ -22,6 +22,9 @@ struct VideoInfo {
     const std::int64_t duration;
 };
 
+/**
+ * @brief  A base class for every type capable of producing a video frame: ffmpeg and libVA
+ */
 struct IVideoRenderer {
     virtual ~IVideoRenderer() = default;
 

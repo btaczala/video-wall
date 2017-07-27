@@ -1,6 +1,7 @@
 #include "cefrenderhandler.h"
 
 #include "irenderer.h"
+#include "itexture.h"
 #include "stopwatch.hpp"
 
 #include "log.hpp"

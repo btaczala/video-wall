@@ -1,5 +1,6 @@
 #include "videowidget.h"
 #include "irenderer.h"
+#include "itexture.h"
 #include "ivideorenderer.h"
 
 #include "log.hpp"

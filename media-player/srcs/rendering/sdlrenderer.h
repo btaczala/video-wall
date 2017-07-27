@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "irenderer.h"
+#include "itexture.h"
 #include "log.hpp"
 #include "sdlhelpers.hpp"
 
@@ -33,14 +34,14 @@ struct SDLRenderer : public IRenderer {
     SDLRenderer(SDL_Window* window);
 
     virtual std::unique_ptr<ITexture> createTexture(
-        std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept;
+        std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept override;
 
-    virtual void clear() noexcept;
-    virtual void render() noexcept;
+    virtual void clear() noexcept override;
+    virtual void render() noexcept override;
 
     void loop() noexcept;
 
-    void addWidget(const std::shared_ptr<widgets::IWidget>& w);
+    virtual void addWidget(const std::shared_ptr<widgets::IWidget>& w) override;
 
 private:
     const sdl_helpers::RendererPtr _renderer;

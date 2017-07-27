@@ -5,37 +5,43 @@
 #include <memory>
 #include <utility>
 
+#include "renderer_types.hpp"
+
 namespace mars {
+namespace widgets {
+struct IWidget;
+}
 namespace windowing {
 
-struct Rect {
-    std::uint32_t x;
-    std::uint32_t y;
-    std::uint32_t w;
-    std::uint32_t h;
-};
+struct ITexture;
 
-enum class PixelFormat { Unknown = 0, IYUV };
-
-struct ITexture {
-    using TextureSize = std::pair<std::uint16_t, std::uint16_t>;
-    virtual ~ITexture() = default;
-    virtual TextureSize size() const noexcept = 0;
-
-    virtual void put(const void* buffer, const TextureSize& size) noexcept = 0;
-    virtual void render() noexcept = 0;
-    virtual void UpdateYUVTexture(const Rect&, std::uint8_t*, int, std::uint8_t*, int, std::uint8_t*, int) noexcept = 0;
-};
-
+/**
+ * @brief This is a base class for windowing system
+ *  Provides a surface with a buffer where all other widgets are rendering.
+ *  Each widget (texture) has to be associated with a renderer to know where to actually render.
+ */
 struct IRenderer {
     virtual ~IRenderer() = default;
 
+    /**
+     * @brief Creates a texture
+     * @return a unique pointer to newly created format
+     */
     virtual std::unique_ptr<ITexture> createTexture(std::uint16_t width, std::uint16_t height, PixelFormat e) noexcept
         = 0;
 
+    /**
+     * @brief Clears a renderer
+     *  This function is used to prepare before actuall rendering
+     */
     virtual void clear() noexcept = 0;
 
+    /**
+     * @brief This function copies renderer buffor to actuall window buffer
+     */
     virtual void render() noexcept = 0;
+
+    virtual void addWidget(const std::shared_ptr<widgets::IWidget>& w) = 0;
 };
 } // rendering
 } // mars
