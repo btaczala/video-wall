@@ -8,8 +8,8 @@
 namespace mars {
 namespace webengine {
 
-RenderHandler::RenderHandler(ui::IRenderer* renderer, int w, int h)
-    : _renderingTexture(renderer->createTexture(w, h, ui::PixelFormat::Unknown))
+RenderHandler::RenderHandler(windowing::IRenderer* renderer, int w, int h)
+    : _renderingTexture(renderer->createTexture(w, h, windowing::PixelFormat::Unknown))
 {
 }
 

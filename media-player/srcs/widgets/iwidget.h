@@ -4,7 +4,6 @@
 #include <cstdint>
 
 namespace mars {
-namespace ui {
 namespace widgets {
 
 /**
@@ -26,7 +25,6 @@ struct IWidget {
 
     virtual void moveTo(std::uint16_t newX, std::uint16_t newY) = 0;
 };
-}
 }
 }
 

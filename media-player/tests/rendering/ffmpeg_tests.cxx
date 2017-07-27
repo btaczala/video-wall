@@ -2,7 +2,7 @@
 #include <fstream>
 #include <gtest/gtest.h>
 
-#include "ffmpegrenderer.h"
+#include "video/ffmpegrenderer.h"
 #include "log.hpp"
 
 struct FFMPEGRendererTest : public ::testing::Test {

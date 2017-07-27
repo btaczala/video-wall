@@ -11,25 +11,25 @@ struct IVideoRenderer;
 struct IVideoBackend;
 } // rendering
 
-namespace ui {
+namespace windowing {
 struct IRenderer;
 struct ITexture;
+}
 namespace widgets {
 
 struct VideoWidget : public IWidget {
-    VideoWidget(const std::string& filename, IRenderer& renderer, rendering::IVideoBackend& videoBackend);
+    VideoWidget(const std::string& filename, windowing::IRenderer& renderer, rendering::IVideoBackend& videoBackend);
 
     bool update() noexcept override;
     void render() noexcept override;
     void moveTo(std::uint16_t newX, std::uint16_t newY) noexcept override;
 
 private:
-    IRenderer& _renderer;
+    windowing::IRenderer& _renderer;
     const std::unique_ptr<rendering::IVideoRenderer> _video;
-    const std::unique_ptr<ITexture> _texture;
+    const std::unique_ptr<windowing::ITexture> _texture;
 };
 } // widgets
-} // ui
 } // mars
 
 #endif /* end of include guard: VIDEOWIDGET_H_JMZKEF5D */

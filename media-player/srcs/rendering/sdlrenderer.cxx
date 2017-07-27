@@ -1,12 +1,15 @@
 #include "sdlrenderer.h"
+#include "widgets/iwidget.h"
+
+#include "log.hpp"
 
 namespace {
 
-int convertPixelFormat(mars::ui::PixelFormat format)
+int convertPixelFormat(mars::windowing::PixelFormat format)
 {
-    if (format == mars::ui::PixelFormat::Unknown) {
+    if (format == mars::windowing::PixelFormat::Unknown) {
         return SDL_PIXELFORMAT_UNKNOWN;
-    } else if (format == mars::ui::PixelFormat::IYUV) {
+    } else if (format == mars::windowing::PixelFormat::IYUV) {
         return SDL_PIXELFORMAT_IYUV;
     }
 
@@ -15,7 +18,7 @@ int convertPixelFormat(mars::ui::PixelFormat format)
 }
 
 namespace mars {
-namespace ui {
+namespace windowing {
 
 SDLTexture::SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_t height, PixelFormat format)
     : _renderer(renderer)
@@ -76,5 +79,34 @@ std::unique_ptr<ITexture> SDLRenderer::createTexture(std::uint16_t w, std::uint1
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }
 void SDLRenderer::render() noexcept { SDL_RenderPresent(_renderer.get()); }
+
+void SDLRenderer::loop() noexcept
+{
+    mars_info_(rendering, "Start rendering loop");
+    SDL_Event ev;
+    while (true) {
+        auto r = SDL_WaitEventTimeout(&ev, 40);
+        if (r > 0) {
+            mars_trace("Received event 0x{:x}", ev.type);
+            if (ev.type == SDL_QUIT) {
+                break;
+            } else if (ev.type == SDL_KEYDOWN) {
+                if (ev.key.keysym.sym == SDLK_SPACE) {
+                }
+            }
+        }
+        clear();
+        for (const auto& w : _widgets) {
+            if (w->update()) {
+                w->render();
+            }
+        }
+        render();
+    }
+    mars_debug_(rendering, "Finish rendering loop");
 }
-}
+
+void SDLRenderer::addWidget(const std::shared_ptr<widgets::IWidget>& w) { _widgets.push_back(w); }
+
+} // ui
+} // mars

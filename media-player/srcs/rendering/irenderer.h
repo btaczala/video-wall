@@ -6,7 +6,7 @@
 #include <utility>
 
 namespace mars {
-namespace ui {
+namespace windowing {
 
 struct Rect {
     std::uint32_t x;
@@ -37,7 +37,7 @@ struct IRenderer {
 
     virtual void render() noexcept = 0;
 };
-}
-}
+} // rendering
+} // mars
 
 #endif /* end of include guard: IRENDERER_H_HBWR9AKY */

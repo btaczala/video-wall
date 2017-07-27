@@ -4,14 +4,14 @@
 #include <cef_render_handler.h>
 
 namespace mars {
-namespace ui {
+namespace windowing {
 struct IRenderer;
 struct ITexture;
 }
 
 namespace webengine {
 struct RenderHandler : public CefRenderHandler {
-    RenderHandler(ui::IRenderer* renderer, int w, int h);
+    RenderHandler(windowing::IRenderer* renderer, int w, int h);
     ~RenderHandler();
     bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
 
@@ -21,7 +21,7 @@ struct RenderHandler : public CefRenderHandler {
     void render();
 
 private:
-    const std::unique_ptr<ui::ITexture> _renderingTexture;
+    const std::unique_ptr<windowing::ITexture> _renderingTexture;
     IMPLEMENT_REFCOUNTING(RenderHandler);
 };
 }

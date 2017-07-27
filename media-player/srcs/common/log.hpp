@@ -9,6 +9,7 @@
 
 extern std::shared_ptr<spdlog::logger> kDefaultLogger;
 extern std::shared_ptr<spdlog::logger> uiLogger;
+extern std::shared_ptr<spdlog::logger> renderingLogger;
 extern std::shared_ptr<spdlog::logger> ffmpegLogger;
 extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
 
@@ -42,6 +43,10 @@ extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
 #define mars_debug_(logger, fmt, ...)                                                                                  \
     do {                                                                                                               \
         logger##Logger->debug("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
+    } while (0)
+#define mars_info_(logger, fmt, ...)                                                                                   \
+    do {                                                                                                               \
+        logger##Logger->info("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
     } while (0)
 #define mars_warn_(logger, fmt, ...)                                                                                   \
     do {                                                                                                               \

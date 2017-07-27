@@ -12,8 +12,8 @@
 #include <cef_render_handler.h>
 #include <wrapper/cef_helpers.h>
 
-#include "cefbrowserclient.h"
-#include "cefrenderhandler.h"
+#include "html/cefbrowserclient.h"
+#include "html/cefrenderhandler.h"
 #include "fps.hpp"
 #include "log.hpp"
 #include "sdlrenderer.h"
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
         height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
     mars_debug("SDL window = {}", static_cast<void*>(window));
     if (window) {
-        mars::ui::SDLRenderer renderer{ window };
+        mars::windowing::SDLRenderer renderer{ window };
         if (true) {
             SDL_Event e;
 

@@ -1,6 +1,9 @@
 #ifndef SDLRENDERER_H_LA7HA5NV
 #define SDLRENDERER_H_LA7HA5NV
 
+#include <memory>
+#include <vector>
+
 #include "irenderer.h"
 #include "log.hpp"
 #include "sdlhelpers.hpp"
@@ -8,7 +11,10 @@
 #include <SDL2/SDL_render.h>
 
 namespace mars {
-namespace ui {
+namespace widgets {
+struct IWidget;
+}
+namespace windowing {
 
 struct SDLTexture : public ITexture {
     SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_t height, PixelFormat format);
@@ -32,8 +38,14 @@ struct SDLRenderer : public IRenderer {
     virtual void clear() noexcept;
     virtual void render() noexcept;
 
+    void loop() noexcept;
+
+    void addWidget(const std::shared_ptr<widgets::IWidget>& w);
+
 private:
     const sdl_helpers::RendererPtr _renderer;
+    std::vector<std::shared_ptr<widgets::IWidget>> _widgets;
+    std::shared_ptr<widgets::IWidget> _focused;
 };
 }
 }

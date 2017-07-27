@@ -1,7 +1,7 @@
 
 
 add_executable(cef-simple-client cef-simple.cxx)
-target_link_libraries(cef-simple-client mars-ui mars-rendering mars-common)
+target_link_libraries(cef-simple-client mars-widgets mars-rendering mars-common)
 target_include_directories(cef-simple-client PUBLIC ${SDL2_INCLUDE_DIR})
 target_compile_definitions(cef-simple-client PRIVATE HTML_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
