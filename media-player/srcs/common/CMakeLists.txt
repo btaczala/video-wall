@@ -7,7 +7,7 @@ add_library(mars-common
     loggers.cxx
     systemmanager.cxx
     screenmanager.cxx
-    configurationmanager.cxx
+    xmlconfiguration.cxx
 )
 target_include_directories(mars-common
     PUBLIC

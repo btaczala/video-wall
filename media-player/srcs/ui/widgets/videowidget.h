@@ -16,8 +16,8 @@ struct ITexture;
 namespace widgets {
 struct VideoWidget {
     VideoWidget(const std::string& filename, IRenderer& renderer, rendering::IVideoBackend& videoBackend);
-    bool update();
 
+    bool update();
     void render();
 
 private:
