@@ -16,7 +16,7 @@ using IPAddressList = std::vector<IPAddress>;
 struct SystemManager {
     IPAddressList getIP();
 
-    std::string uuid() const; 
+    std::string uuid() const;
 };
 }
 }

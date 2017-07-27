@@ -49,7 +49,8 @@ IPAddressList SystemManager::getIP()
     return addresses;
 }
 
-std::string SystemManager::uuid() const {
+std::string SystemManager::uuid() const
+{
     mars_error("NOT IMPLEMENTED");
     return "";
 }
