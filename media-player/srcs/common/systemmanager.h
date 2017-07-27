@@ -15,6 +15,8 @@ struct IPAddress {
 using IPAddressList = std::vector<IPAddress>;
 struct SystemManager {
     IPAddressList getIP();
+
+    std::string uuid() const; 
 };
 }
 }
