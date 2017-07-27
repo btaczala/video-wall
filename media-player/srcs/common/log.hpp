@@ -43,4 +43,9 @@ extern std::shared_ptr<spdlog::logger> ffmpegLogger;
         logger##Logger->warn("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
     } while (0)
 
+template <typename ex = std::runtime_error> void fatal_error(const std::string& e)
+{
+    mars_error("{}", e);
+    throw ex(e.c_str());
+}
 #endif /* end of include guard: LOG_HPP_LI7VTYUZ */
