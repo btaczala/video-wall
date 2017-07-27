@@ -37,17 +37,21 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
     av_register_all();
 
     formatCtx = avformat_alloc_context();
+    formatCtx->format_whitelist = av_strdup("avi,hevc");
 
+    mars_debug_(ffmpeg, "Opening file {}", filename);
     if (avformat_open_input(&formatCtx, _filename.c_str(), nullptr, nullptr) != 0) {
         mars_warn_(ffmpeg, "Couldn't open input {}", _filename);
         throw std::runtime_error(fmt::format("Couldn't open input {}", _filename));
     }
+
     if (avformat_find_stream_info(formatCtx, NULL) < 0) {
         mars_warn_(ffmpeg, "Couldn't find stream information");
         throw std::runtime_error("Couldn't find stream information");
     }
 
     int videoindex = -1;
+    mars_debug_(ffmpeg, "Number of streams {}", formatCtx->nb_streams);
     for (decltype(formatCtx->nb_streams) i = 0; i < formatCtx->nb_streams; i++)
         if (formatCtx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
             videoindex = i;
@@ -59,6 +63,8 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
         throw std::runtime_error("Didn't find a video stream");
     }
 
+    mars_debug_(ffmpeg, "Video index for file {} is {}", filename, videoindex);
+
     codecCtx = formatCtx->streams[videoindex]->codec;
     pCodec = avcodec_find_decoder(codecCtx->codec_id);
     if (!pCodec) {
@@ -69,6 +75,8 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
         mars_warn_(ffmpeg, "Could not open codec");
         throw std::runtime_error("Could not open codec");
     }
+
+    mars_debug_(ffmpeg, "Codec name = {}", pCodec->long_name);
 
     av_dump_format(formatCtx, 0, _filename.c_str(), 0);
 }
@@ -133,6 +141,11 @@ VideoInfo FFMPEGRenderer::info() const noexcept
 {
     return VideoInfo{ static_cast<std::uint16_t>(codecCtx->width), static_cast<std::uint16_t>(codecCtx->height),
         formatCtx->duration };
+}
+
+FFMPEGBackend::FFMPEGBackend()
+{
+    av_log_set_callback([](void*, int, const char*, va_list) {});
 }
 
 std::unique_ptr<IVideoRenderer> FFMPEGBackend::createVideo(const std::string& filename) const

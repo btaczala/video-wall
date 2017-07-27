@@ -31,6 +31,7 @@ private:
 };
 
 struct FFMPEGBackend : public IVideoBackend {
+    FFMPEGBackend();
     virtual std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const override;
 };
 }
