@@ -145,7 +145,25 @@ VideoInfo FFMPEGRenderer::info() const noexcept
 
 FFMPEGBackend::FFMPEGBackend()
 {
-    av_log_set_callback([](void*, int, const char*, va_list) {});
+    av_log_set_callback([](void* avcl, int level, const char* fmt, va_list vl) {
+        char buff[1024];
+        int prefix;
+        av_log_format_line2(avcl, level, fmt, vl, buff, 1024, &prefix);
+        std::string str{ buff };
+        str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+        if (level == AV_LOG_DEBUG) {
+            ffmpegLogger->debug("{}", str);
+        } else if (level == AV_LOG_INFO) {
+            ffmpegLogger->info("{}", str);
+        } else if (level == AV_LOG_WARNING) {
+            ffmpegLogger->warn("{}", str);
+        } else if (level == AV_LOG_ERROR) {
+            ffmpegLogger->error("{}", str);
+        } else {
+            mars_debug_(ffmpeg, "Unknow level type {}", level);
+            ffmpegLogger->debug("{}", str);
+        }
+    });
 }
 
 std::unique_ptr<IVideoRenderer> FFMPEGBackend::createVideo(const std::string& filename) const
