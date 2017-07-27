@@ -25,6 +25,7 @@ struct FFMPEGRenderer : public IVideoRenderer {
     virtual VideoInfo info() const noexcept override;
 
 private:
+    const std::string _filepath;
     const std::string _filename;
     AVFormatContext* formatCtx;
     AVCodecContext* codecCtx;

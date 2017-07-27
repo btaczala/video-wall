@@ -10,9 +10,14 @@
 extern std::shared_ptr<spdlog::logger> kDefaultLogger;
 extern std::shared_ptr<spdlog::logger> uiLogger;
 extern std::shared_ptr<spdlog::logger> ffmpegLogger;
+extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
 
 #define __FILENAME__ (std::strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
+#define mars_trace(fmt, ...)                                                                                           \
+    do {                                                                                                               \
+        kDefaultLogger->trace("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
+    } while (0)
 #define mars_debug(fmt, ...)                                                                                           \
     do {                                                                                                               \
         kDefaultLogger->debug("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \

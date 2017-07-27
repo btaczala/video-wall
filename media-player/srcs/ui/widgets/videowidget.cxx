@@ -2,6 +2,8 @@
 #include "irenderer.h"
 #include "ivideorenderer.h"
 
+#include "log.hpp"
+
 namespace mars {
 namespace ui {
 namespace widgets {
@@ -11,9 +13,10 @@ VideoWidget::VideoWidget(const std::string& filename, IRenderer& renderer, rende
     , _video(videoBackend.createVideo(filename))
     , _texture(_renderer.createTexture(_video->info().width, _video->info().height, PixelFormat::IYUV))
 {
+    mars_debug("VideoWidget video size {}x{}", _video->info().width, _video->info().height);
 }
 
-bool VideoWidget::update()
+bool VideoWidget::update() noexcept
 {
     auto frame = _video->frame();
     if (frame) {
@@ -25,7 +28,9 @@ bool VideoWidget::update()
 
     return !!frame;
 }
-void VideoWidget::render() { _texture->render(); }
-}
-}
-}
+void VideoWidget::render() noexcept { _texture->render(); }
+
+void VideoWidget::moveTo(std::uint16_t newX, std::uint16_t newY) noexcept {}
+} // widgets
+} // ui
+} // mars

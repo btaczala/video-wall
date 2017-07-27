@@ -19,12 +19,8 @@
 #include "sdlrenderer.h"
 #include "stopwatch.hpp"
 
-std::shared_ptr<spdlog::logger> kDefaultLogger;
-
 int main(int argc, char* argv[])
 {
-    kDefaultLogger = spdlog::stdout_color_mt("mars");
-    kDefaultLogger->set_level(spdlog::level::debug);
 
     mars_debug("Star rendering html content pid = {}", getpid());
 

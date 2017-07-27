@@ -19,30 +19,31 @@ namespace mars {
 namespace rendering {
 
 FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
-    : _filename(filename)
+    : _filepath(filename)
+    , _filename(boost::filesystem::path(_filepath).filename().string())
     , formatCtx(nullptr)
     , codecCtx(nullptr)
 {
     namespace bfs = boost::filesystem;
 
-    if (!bfs::exists(filename)) {
-        throw std::runtime_error(fmt::format("file {} does not exists", _filename));
+    if (!bfs::exists(_filepath)) {
+        throw std::runtime_error(fmt::format("file {} does not exists", _filepath));
     }
 
     if (!bfs::is_regular_file(filename)) {
-        throw std::runtime_error(fmt::format("file {} is not a file", _filename));
+        throw std::runtime_error(fmt::format("file {} is not a file", _filepath));
     }
 
     AVCodec* pCodec{ nullptr };
     av_register_all();
 
     formatCtx = avformat_alloc_context();
-    formatCtx->format_whitelist = av_strdup("avi,hevc");
+    formatCtx->format_whitelist = av_strdup("avi,hevc,mov,mp4,m4a,3gp,3g2,mj2");
 
-    mars_debug_(ffmpeg, "Opening file {}", filename);
-    if (avformat_open_input(&formatCtx, _filename.c_str(), nullptr, nullptr) != 0) {
-        mars_warn_(ffmpeg, "Couldn't open input {}", _filename);
-        throw std::runtime_error(fmt::format("Couldn't open input {}", _filename));
+    mars_debug_(ffmpeg, "Opening file {}", _filepath);
+    if (avformat_open_input(&formatCtx, _filepath.c_str(), nullptr, nullptr) != 0) {
+        mars_warn_(ffmpeg, "Couldn't open input {}", _filepath);
+        throw std::runtime_error(fmt::format("Couldn't open input {}", _filepath));
     }
 
     if (avformat_find_stream_info(formatCtx, NULL) < 0) {
@@ -77,8 +78,6 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
     }
 
     mars_debug_(ffmpeg, "Codec name = {}", pCodec->long_name);
-
-    av_dump_format(formatCtx, 0, _filename.c_str(), 0);
 }
 
 FFMPEGRenderer::~FFMPEGRenderer()
@@ -104,37 +103,47 @@ boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
     int ret = 0, got_picture = 0;
     int videoIndex = 0;
 
-    if (av_read_frame(formatCtx, packet) >= 0) {
-        mars_debug_(ffmpeg, "Getting a frame for {} pos = {}", _filename, packet->pos);
-        if (packet->stream_index == videoIndex) {
-            ret = avcodec_decode_video2(codecCtx, pFrame, &got_picture, packet);
+    // TODO: This only decodes video for now, needs to be improved for audio also
 
-            if (ret < 0) {
-                mars_warn_(ffmpeg, "Unable to decode");
+    while (true) {
+        if (av_read_frame(formatCtx, packet) >= 0) {
+            mars_debug_(ffmpeg, "Getting a frame for {} pos = {}", _filename, packet->pos);
+            if (packet->stream_index == videoIndex) {
+                ret = avcodec_decode_video2(codecCtx, pFrame, &got_picture, packet);
+
+                if (ret < 0) {
+                    mars_warn_(ffmpeg, "Unable to decode");
+                }
+
+                if (got_picture) {
+                    sws_scale(img_convert_ctx, (const unsigned char* const*)pFrame->data, pFrame->linesize, 0,
+                        codecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
+
+                    break;
+                } else {
+                    mars_debug_(ffmpeg, "Didn't receive frame");
+                }
+            } else {
+                mars_debug_(ffmpeg, "Packet is not a video frame");
             }
 
-            if (got_picture) {
-                sws_scale(img_convert_ctx, (const unsigned char* const*)pFrame->data, pFrame->linesize, 0,
-                    codecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
-            }
+        } else {
+            mars_warn_(ffmpeg, "There is no frames left in {}", _filename);
+            return boost::optional<VideoFrame>{};
         }
-        av_packet_unref(packet);
-        av_packet_free(&packet);
-        VideoFrame frame;
-        frame.planes[0] = { pFrameYUV->data[0], pFrameYUV->linesize[0] };
-        frame.planes[1] = { pFrameYUV->data[1], pFrameYUV->linesize[1] };
-        frame.planes[2] = { pFrameYUV->data[2], pFrameYUV->linesize[2] };
-        av_frame_free(&pFrame);
-        av_frame_free(&pFrameYUV);
-        av_free(out_buffer);
-        sws_freeContext(img_convert_ctx);
-
-        return frame;
-    } else {
-        mars_warn_(ffmpeg, "There is no frames left in {}", _filename);
     }
 
-    return boost::optional<VideoFrame>{};
+    av_packet_unref(packet);
+    av_packet_free(&packet);
+    VideoFrame frame;
+    frame.planes[0] = { pFrameYUV->data[0], pFrameYUV->linesize[0] };
+    frame.planes[1] = { pFrameYUV->data[1], pFrameYUV->linesize[1] };
+    frame.planes[2] = { pFrameYUV->data[2], pFrameYUV->linesize[2] };
+    av_frame_free(&pFrame);
+    av_frame_free(&pFrameYUV);
+    av_free(out_buffer);
+    sws_freeContext(img_convert_ctx);
+    return frame;
 }
 
 VideoInfo FFMPEGRenderer::info() const noexcept
@@ -152,16 +161,20 @@ FFMPEGBackend::FFMPEGBackend()
         std::string str{ buff };
         str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
         if (level == AV_LOG_DEBUG) {
-            ffmpegLogger->debug("{}", str);
+            ffmpegLibLogger->debug("{}", str);
         } else if (level == AV_LOG_INFO) {
-            ffmpegLogger->info("{}", str);
+            ffmpegLibLogger->info("{}", str);
         } else if (level == AV_LOG_WARNING) {
-            ffmpegLogger->warn("{}", str);
+            ffmpegLibLogger->warn("{}", str);
         } else if (level == AV_LOG_ERROR) {
-            ffmpegLogger->error("{}", str);
+            ffmpegLibLogger->error("{}", str);
+        } else if (level == AV_LOG_TRACE) {
+            ffmpegLibLogger->trace("{}", str);
+        } else if (level == AV_LOG_VERBOSE) {
+            ffmpegLibLogger->trace("{}", str);
         } else {
-            mars_debug_(ffmpeg, "Unknow level type {}", level);
-            ffmpegLogger->debug("{}", str);
+            mars_error("Unknow level type {}", level);
+            ffmpegLibLogger->debug("{}", str);
         }
     });
 }

@@ -11,6 +11,9 @@
 
 int main(int argc, char* argv[])
 {
+    if (argc < 2) {
+        return EXIT_FAILURE;
+    }
     using namespace SDL2pp;
     try {
         SDL sdl(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
@@ -20,23 +23,32 @@ int main(int argc, char* argv[])
 
         mars::ui::SDLRenderer sdlRenderer{ window.Get() };
         mars::rendering::FFMPEGBackend videoBackend;
-        const std::string url = std::string{ TEST_DIR } + "/bigbuckbunny_480x272.h265";
+        const std::string url = argv[1];
         mars::ui::widgets::VideoWidget vw{ url, sdlRenderer, videoBackend };
 
         SDL_Event ev;
+        bool started = false;
 
         while (true) {
             auto r = SDL_WaitEventTimeout(&ev, 40);
             if (r > 0) {
+                mars_trace("Received event 0x{:x}", ev.type);
                 if (ev.type == SDL_QUIT) {
                     break;
+                } else if (ev.type == SDL_KEYDOWN) {
+                    if (ev.key.keysym.sym == SDLK_SPACE) {
+                        mars_debug("Staring playback");
+                        started = !started;
+                    }
+                }
+            }
+            sdlRenderer.clear();
+            if (started) {
+                if (vw.update()) {
+                    vw.render();
                 }
             }
 
-            if (vw.update()) {
-                sdlRenderer.clear();
-                vw.render();
-            }
             sdlRenderer.render();
         }
 
