@@ -10,7 +10,7 @@
 
 namespace mars {
 namespace webengine {
-BrowserClient::BrowserClient(CefRefPtr<CefRenderHandler> ptr)
+BrowserClient::BrowserClient(const CefRefPtr<CefRenderHandler>& ptr)
     : _handler(ptr)
 {
 }

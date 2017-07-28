@@ -8,7 +8,7 @@ namespace webengine {
 
 struct BrowserClient : public CefClient, public CefLifeSpanHandler, public CefLoadHandler {
 public:
-    BrowserClient(CefRefPtr<CefRenderHandler> ptr);
+    BrowserClient(const CefRefPtr<CefRenderHandler>& ptr);
     CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override;
     CefRefPtr<CefLoadHandler> GetLoadHandler() override;
     CefRefPtr<CefRenderHandler> GetRenderHandler() override;
@@ -33,7 +33,7 @@ public:
     bool isLoaded() const;
 
 private:
-    int browser_id;
+    int browser_id{};
     bool closing = false;
     bool loaded = false;
     CefRefPtr<CefRenderHandler> _handler;

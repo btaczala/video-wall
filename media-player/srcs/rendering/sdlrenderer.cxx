@@ -49,7 +49,7 @@ void SDLTexture::put(const void* buffer, const TextureSize& size) noexcept
 void SDLTexture::render() noexcept
 {
     auto si = size();
-    SDL_Rect r;
+    SDL_Rect r{};
     r.x = 0;
     r.y = 0;
     r.w = si.first;
@@ -59,7 +59,7 @@ void SDLTexture::render() noexcept
 void SDLTexture::UpdateYUVTexture(const Rect& rect, std::uint8_t* yplane, int ypitch, std::uint8_t* uplane, int upitch,
     std::uint8_t* vplane, int vpitch) noexcept
 {
-    SDL_Rect sdl_rect;
+    SDL_Rect sdl_rect{};
     sdl_rect.x = rect.x;
     sdl_rect.y = rect.y;
     sdl_rect.w = rect.w;
@@ -83,7 +83,7 @@ void SDLRenderer::render() noexcept { SDL_RenderPresent(_renderer.get()); }
 void SDLRenderer::loop() noexcept
 {
     mars_info_(rendering, "Start rendering loop");
-    SDL_Event ev;
+    SDL_Event ev{};
     while (true) {
         auto r = SDL_WaitEventTimeout(&ev, 40);
         if (r > 0) {

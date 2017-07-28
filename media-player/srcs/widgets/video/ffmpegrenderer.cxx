@@ -135,10 +135,9 @@ boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
 
     av_packet_unref(packet);
     av_packet_free(&packet);
-    VideoFrame frame;
-    frame.planes[0] = { pFrameYUV->data[0], pFrameYUV->linesize[0] };
-    frame.planes[1] = { pFrameYUV->data[1], pFrameYUV->linesize[1] };
-    frame.planes[2] = { pFrameYUV->data[2], pFrameYUV->linesize[2] };
+    const VideoFrame frame{ { { VideoFrame::Plane{ pFrameYUV->data[0], pFrameYUV->linesize[0] },
+        VideoFrame::Plane{ pFrameYUV->data[1], pFrameYUV->linesize[1] },
+        VideoFrame::Plane{ pFrameYUV->data[2], pFrameYUV->linesize[2] } } } };
     av_frame_free(&pFrame);
     av_frame_free(&pFrameYUV);
     av_free(out_buffer);
@@ -158,7 +157,7 @@ FFMPEGBackend::FFMPEGBackend()
         char buff[1024];
         int prefix;
         av_log_format_line2(avcl, level, fmt, vl, buff, 1024, &prefix);
-        std::string str{ buff };
+        std::string str{ static_cast<char*>(buff) };
         str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
         if (level == AV_LOG_DEBUG) {
             ffmpegLibLogger->debug("{}", str);
