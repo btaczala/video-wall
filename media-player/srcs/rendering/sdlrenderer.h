@@ -7,7 +7,7 @@
 #include "irenderer.h"
 #include "itexture.h"
 #include "log.hpp"
-#include "sdlhelpers.hpp"
+#include "sdlhelpers.h"
 
 #include <SDL2/SDL_render.h>
 

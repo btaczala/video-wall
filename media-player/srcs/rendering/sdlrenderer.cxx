@@ -106,7 +106,13 @@ void SDLRenderer::loop() noexcept
     mars_debug_(rendering, "Finish rendering loop");
 }
 
-void SDLRenderer::addWidget(const std::shared_ptr<widgets::IWidget>& w) { _widgets.push_back(w); }
+void SDLRenderer::addWidget(const std::shared_ptr<widgets::IWidget>& w)
+{
+    if (_widgets.empty()) {
+        _focused = w;
+    }
+    _widgets.push_back(w);
+}
 
 } // namespace windowing
 } // namespace mars

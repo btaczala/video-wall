@@ -66,8 +66,9 @@ TEST_F(VideoWidgetCreatedTests, update_frames_left)
     using namespace mars::rendering;
     using namespace mars::windowing;
     using trompeloeil::_;
-    VideoFrame f{ { VideoFrame::Plane{ nullptr, 0 }, VideoFrame::Plane{ nullptr, 0 },
-        VideoFrame::Plane{ nullptr, 0 } } };
+    VideoFrame f{
+        { { VideoFrame::Plane{ nullptr, -1 }, VideoFrame::Plane{ nullptr, 0 }, VideoFrame::Plane{ nullptr, 0 } } }
+    };
     VideoInfo vi{ 10, 10, 15 };
     boost::optional<VideoFrame> ff{ f };
     REQUIRE_CALL(*video, info()).RETURN(vi).TIMES(AT_LEAST(1));

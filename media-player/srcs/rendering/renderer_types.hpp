@@ -19,9 +19,8 @@ namespace events {
 struct Quit {
 };
 struct Keyboard {
-    enum class Key {
-        Space = 0,
-    };
+    enum class Key { Unknown = 0, Space };
+    Key key{ Key::Unknown };
 };
 } // events
 
