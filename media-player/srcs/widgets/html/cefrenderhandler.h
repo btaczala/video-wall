@@ -7,7 +7,7 @@ namespace mars {
 namespace windowing {
 struct IRenderer;
 struct ITexture;
-}
+} // namespace windowing
 
 namespace webengine {
 struct RenderHandler : public CefRenderHandler {
@@ -23,7 +23,7 @@ private:
     const std::unique_ptr<windowing::ITexture> _renderingTexture;
     IMPLEMENT_REFCOUNTING(RenderHandler);
 };
-}
-}
+} // namespace webengine
+} // namespace mars
 
 #endif /* end of include guard: CEFRENDERHANDLER_H_YRSXP9QE */

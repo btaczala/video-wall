@@ -13,7 +13,7 @@ struct Rect {
 
 enum class PixelFormat { Unknown = 0, IYUV };
 
-} // windowing
-} // mars
+} // namespace windowing
+} // namespace mars
 
 #endif /* end of include guard: RENDERER_TYPES_HPP_TH4HPV7T */

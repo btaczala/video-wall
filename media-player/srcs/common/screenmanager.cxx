@@ -24,5 +24,5 @@ ScreensInfo ScreenManager::availableScreens() const
 
     return screens;
 }
-}
-}
+} // namespace common
+} // namespace mars

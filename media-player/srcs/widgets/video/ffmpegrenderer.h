@@ -35,7 +35,7 @@ struct FFMPEGBackend : public IVideoBackend {
     FFMPEGBackend();
     std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const override;
 };
-} // rendering
-} // mars
+} // namespace rendering
+} // namespace mars
 
 #endif /* end of include guard: FFMPEGRENDERER_H_HQ7BVLAR */

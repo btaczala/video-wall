@@ -14,7 +14,7 @@ struct XmlConfigurationManager : public IConfigurationManager {
 private:
     const std::string _file;
 };
-}
-}
+} // namespace common
+} // namespace mars
 
 #endif /* end of include guard: XMLCONFIGURATION_H_3OQ6MZ4I */

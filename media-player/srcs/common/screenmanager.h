@@ -20,7 +20,7 @@ struct ScreenManager {
 
     ScreensInfo availableScreens() const;
 };
-}
-}
+} // namespace common
+} // namespace mars
 
 #endif /* end of include guard: SCREENMANAGER_H_3NQUV5JU */

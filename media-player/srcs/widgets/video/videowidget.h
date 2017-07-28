@@ -9,12 +9,12 @@ namespace mars {
 namespace rendering {
 struct IVideoRenderer;
 struct IVideoBackend;
-} // rendering
+} // namespace rendering
 
 namespace windowing {
 struct IRenderer;
 struct ITexture;
-}
+} // namespace windowing
 namespace widgets {
 
 struct VideoWidget : public IWidget {
@@ -29,7 +29,7 @@ private:
     const std::unique_ptr<rendering::IVideoRenderer> _video;
     const std::unique_ptr<windowing::ITexture> _texture;
 };
-} // widgets
-} // mars
+} // namespace widgets
+} // namespace mars
 
 #endif /* end of include guard: VIDEOWIDGET_H_JMZKEF5D */

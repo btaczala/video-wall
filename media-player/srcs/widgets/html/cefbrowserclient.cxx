@@ -63,5 +63,5 @@ void BrowserClient::OnLoadingStateChange(
 bool BrowserClient::closeAllowed() const { return closing; }
 
 bool BrowserClient::isLoaded() const { return loaded; }
-}
-}
+} // namespace webengine
+} // namespace mars

@@ -18,7 +18,7 @@ struct SystemManager {
 
     std::string uuid() const;
 };
-}
-}
+} // namespace common
+} // namespace mars
 
 #endif /* end of include guard: SYSTEMMANAGER_H_5VFOCN9H */

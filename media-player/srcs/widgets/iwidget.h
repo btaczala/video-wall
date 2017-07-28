@@ -25,7 +25,7 @@ struct IWidget {
 
     virtual void moveTo(std::uint16_t newX, std::uint16_t newY) = 0;
 };
-}
-}
+} // namespace widgets
+} // namespace mars
 
 #endif /* end of include guard: IWIDGET_H_G5T74RQZ */

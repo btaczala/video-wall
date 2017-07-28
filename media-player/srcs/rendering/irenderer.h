@@ -10,7 +10,7 @@
 namespace mars {
 namespace widgets {
 struct IWidget;
-}
+} // namespace widgets
 namespace windowing {
 
 struct ITexture;
@@ -43,7 +43,7 @@ struct IRenderer {
 
     virtual void addWidget(const std::shared_ptr<widgets::IWidget>& w) = 0;
 };
-} // rendering
-} // mars
+} // namespace windowing
+} // namespace mars
 
 #endif /* end of include guard: IRENDERER_H_HBWR9AKY */

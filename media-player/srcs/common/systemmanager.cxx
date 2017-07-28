@@ -54,5 +54,5 @@ std::string SystemManager::uuid() const
     mars_error("NOT IMPLEMENTED");
     return "";
 }
-}
-}
+} // namespace common
+} // namespace mars

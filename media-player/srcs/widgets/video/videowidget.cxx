@@ -32,5 +32,5 @@ bool VideoWidget::update() noexcept
 void VideoWidget::render() noexcept { _texture->render(); }
 
 void VideoWidget::moveTo(std::uint16_t newX, std::uint16_t newY) noexcept {}
-} // widgets
-} // mars
+} // namespace widgets
+} // namespace mars

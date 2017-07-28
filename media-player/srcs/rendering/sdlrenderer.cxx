@@ -15,7 +15,7 @@ int convertPixelFormat(mars::windowing::PixelFormat format)
 
     return SDL_PIXELFORMAT_UNKNOWN;
 }
-}
+} // namespace
 
 namespace mars {
 namespace windowing {
@@ -108,5 +108,5 @@ void SDLRenderer::loop() noexcept
 
 void SDLRenderer::addWidget(const std::shared_ptr<widgets::IWidget>& w) { _widgets.push_back(w); }
 
-} // ui
-} // mars
+} // namespace windowing
+} // namespace mars

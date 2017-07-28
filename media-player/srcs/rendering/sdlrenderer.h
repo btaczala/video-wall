@@ -14,7 +14,7 @@
 namespace mars {
 namespace widgets {
 struct IWidget;
-}
+} // namespace widgets
 namespace windowing {
 
 struct SDLTexture : public ITexture {
@@ -48,7 +48,7 @@ private:
     std::vector<std::shared_ptr<widgets::IWidget>> _widgets;
     std::shared_ptr<widgets::IWidget> _focused;
 };
-}
-}
+} // namespace windowing
+} // namespace mars
 
 #endif /* end of include guard: SDLRENDERER_H_LA7HA5NV */

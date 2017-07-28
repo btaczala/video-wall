@@ -19,7 +19,7 @@ struct DisplayUnitConfiguration {
 struct Configuration {
     const std::vector<DisplayUnitConfiguration> _displays;
 };
-}
-}
+} // namespace common
+} // namespace mars
 
 #endif /* end of include guard: CONFIGURATION_H_AYME0F2K */

@@ -183,5 +183,5 @@ std::unique_ptr<IVideoRenderer> FFMPEGBackend::createVideo(const std::string& fi
 {
     return std::make_unique<FFMPEGRenderer>(filename);
 }
-} // rendering
-} // mars
+} // namespace rendering
+} // namespace mars

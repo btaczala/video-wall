@@ -30,5 +30,5 @@ Configuration XmlConfigurationManager::parse() const
 
     return cfg;
 }
-}
-}
+} // namespace common
+} // namespace mars

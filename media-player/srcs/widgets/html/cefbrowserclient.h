@@ -39,7 +39,7 @@ private:
     CefRefPtr<CefRenderHandler> _handler;
     IMPLEMENT_REFCOUNTING(BrowserClient);
 };
-}
-}
+} // namespace webengine
+} // namespace mars
 
 #endif /* end of include guard: CEFBROWSERCLIENT_H_OT7PORY5 */

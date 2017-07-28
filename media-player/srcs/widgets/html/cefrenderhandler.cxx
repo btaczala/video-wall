@@ -29,5 +29,5 @@ void RenderHandler::OnPaint(
 }
 
 void RenderHandler::render() { _renderingTexture->render(); }
-}
-}
+} // namespace webengine
+} // namespace mars

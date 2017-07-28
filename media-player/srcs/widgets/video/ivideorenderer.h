@@ -38,7 +38,7 @@ struct IVideoBackend {
 
     virtual std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const = 0;
 };
-}
-}
+} // namespace rendering
+} // namespace mars
 
 #endif /* end of include guard: IVIDEORENDERER_H_YAQ1STO2 */

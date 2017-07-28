@@ -18,7 +18,7 @@ struct ITexture {
     virtual void render() noexcept = 0;
     virtual void UpdateYUVTexture(const Rect&, std::uint8_t*, int, std::uint8_t*, int, std::uint8_t*, int) noexcept = 0;
 };
-} // windowing
-} // mars
+} // namespace windowing
+} // namespace mars
 
 #endif /* end of include guard: ITEXTURE_H_LFG1JAQW */
