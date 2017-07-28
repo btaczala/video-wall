@@ -24,6 +24,8 @@ struct VideoWidget : public IWidget {
     void render() noexcept override;
     void moveTo(std::uint16_t newX, std::uint16_t newY) noexcept override;
 
+    bool event(const windowing::EventVariant& event) noexcept override;
+
 private:
     windowing::IRenderer& _renderer;
     const std::unique_ptr<rendering::IVideoRenderer> _video;

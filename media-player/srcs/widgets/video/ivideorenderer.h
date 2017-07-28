@@ -36,6 +36,13 @@ struct IVideoRenderer {
 struct IVideoBackend {
     virtual ~IVideoBackend() = default;
 
+    /**
+     * @brief Create a video renderer that will render a specified file
+     * @param filename
+     * @throw This function will throw an exception if anything bad happens
+     *
+     * @return 
+     */
     virtual std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const = 0;
 };
 } // namespace rendering

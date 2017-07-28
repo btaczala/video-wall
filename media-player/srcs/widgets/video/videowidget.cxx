@@ -3,7 +3,26 @@
 #include "itexture.h"
 #include "ivideorenderer.h"
 
+#include "renderer_types.hpp"
+
 #include "log.hpp"
+
+namespace {
+struct video_event_visitor : public boost::static_visitor<bool> {
+    template <typename T>
+    bool operator()(T&& t,
+        typename std::enable_if<!std::is_same<T, mars::windowing::events::Keyboard>::value>::type* = nullptr) const
+    {
+        return false;
+    }
+
+    bool operator()(const mars::windowing::events::Keyboard& t) const
+    {
+        mars_debug("Keyboard event received");
+        return true;
+    }
+};
+} // namespace
 
 namespace mars {
 namespace widgets {
@@ -32,5 +51,11 @@ bool VideoWidget::update() noexcept
 void VideoWidget::render() noexcept { _texture->render(); }
 
 void VideoWidget::moveTo(std::uint16_t newX, std::uint16_t newY) noexcept {}
+
+bool VideoWidget::event(const windowing::EventVariant& event) noexcept
+{
+    return boost::apply_visitor(video_event_visitor(), event);
+}
+
 } // namespace widgets
 } // namespace mars

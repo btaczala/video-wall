@@ -1,6 +1,8 @@
 #ifndef RENDERER_TYPES_HPP_TH4HPV7T
 #define RENDERER_TYPES_HPP_TH4HPV7T
 
+#include <boost/variant.hpp>
+
 namespace mars {
 namespace windowing {
 
@@ -12,6 +14,18 @@ struct Rect {
 };
 
 enum class PixelFormat { Unknown = 0, IYUV };
+
+namespace events {
+struct Quit {
+};
+struct Keyboard {
+    enum class Key {
+        Space = 0,
+    };
+};
+} // events
+
+using EventVariant = boost::variant<events::Quit, events::Keyboard>;
 
 } // namespace windowing
 } // namespace mars

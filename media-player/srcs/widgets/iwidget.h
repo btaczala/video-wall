@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+#include "renderer_types.hpp"
+
 namespace mars {
 namespace widgets {
 
@@ -24,6 +26,8 @@ struct IWidget {
     virtual void render() noexcept = 0;
 
     virtual void moveTo(std::uint16_t newX, std::uint16_t newY) = 0;
+
+    virtual bool event(const windowing::EventVariant& event) noexcept = 0;
 };
 } // namespace widgets
 } // namespace mars
