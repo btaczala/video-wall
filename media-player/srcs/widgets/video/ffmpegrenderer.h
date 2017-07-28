@@ -19,10 +19,10 @@ struct FFMPEGRenderer : public IVideoRenderer {
      */
     FFMPEGRenderer(const std::string& filename);
 
-    ~FFMPEGRenderer();
+    ~FFMPEGRenderer() override;
 
-    virtual boost::optional<VideoFrame> frame() noexcept override;
-    virtual VideoInfo info() const noexcept override;
+    boost::optional<VideoFrame> frame() noexcept override;
+    VideoInfo info() const noexcept override;
 
 private:
     const std::string _filepath;
@@ -33,9 +33,9 @@ private:
 
 struct FFMPEGBackend : public IVideoBackend {
     FFMPEGBackend();
-    virtual std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const override;
+    std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const override;
 };
-}
-}
+} // rendering
+} // mars
 
 #endif /* end of include guard: FFMPEGRENDERER_H_HQ7BVLAR */

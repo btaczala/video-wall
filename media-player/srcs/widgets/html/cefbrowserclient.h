@@ -9,9 +9,9 @@ namespace webengine {
 struct BrowserClient : public CefClient, public CefLifeSpanHandler, public CefLoadHandler {
 public:
     BrowserClient(CefRefPtr<CefRenderHandler> ptr);
-    virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override;
-    virtual CefRefPtr<CefLoadHandler> GetLoadHandler() override;
-    virtual CefRefPtr<CefRenderHandler> GetRenderHandler() override;
+    CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override;
+    CefRefPtr<CefLoadHandler> GetLoadHandler() override;
+    CefRefPtr<CefRenderHandler> GetRenderHandler() override;
 
     void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
 

@@ -18,40 +18,40 @@ extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
 #define mars_trace(fmt, ...)                                                                                           \
     do {                                                                                                               \
         kDefaultLogger->trace("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
-    } while (0)
+    } while (false)
 #define mars_debug(fmt, ...)                                                                                           \
     do {                                                                                                               \
         kDefaultLogger->debug("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
-    } while (0)
+    } while (false)
 #define mars_warn(fmt, ...)                                                                                            \
     do {                                                                                                               \
         kDefaultLogger->warn("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
-    } while (0)
+    } while (false)
 #define mars_error(fmt, ...)                                                                                           \
     do {                                                                                                               \
         kDefaultLogger->error("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
-    } while (0)
+    } while (false)
 #define mars_info(fmt, ...)                                                                                            \
     do {                                                                                                               \
         kDefaultLogger->info("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
-    } while (0)
+    } while (false)
 
 #define mars_trace_(logger, fmt, ...)                                                                                  \
     do {                                                                                                               \
         logger##Logger->trace("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
-    } while (0)
+    } while (false)
 #define mars_debug_(logger, fmt, ...)                                                                                  \
     do {                                                                                                               \
         logger##Logger->debug("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
-    } while (0)
+    } while (false)
 #define mars_info_(logger, fmt, ...)                                                                                   \
     do {                                                                                                               \
         logger##Logger->info("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
-    } while (0)
+    } while (false)
 #define mars_warn_(logger, fmt, ...)                                                                                   \
     do {                                                                                                               \
         logger##Logger->warn("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
-    } while (0)
+    } while (false)
 
 template <typename ex = std::runtime_error> void fatal_error(const std::string& e)
 {

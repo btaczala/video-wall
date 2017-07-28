@@ -39,9 +39,9 @@ void SDLTexture::put(const void* buffer, const TextureSize& size) noexcept
     if (tSize != size)
         return;
 
-    unsigned char* texture_data = NULL;
+    unsigned char* texture_data = nullptr;
     int texture_pitch = 0;
-    SDL_LockTexture(_texture.get(), 0, reinterpret_cast<void**>(&texture_data), &texture_pitch);
+    SDL_LockTexture(_texture.get(), nullptr, reinterpret_cast<void**>(&texture_data), &texture_pitch);
     memcpy(texture_data, buffer, size.first * size.second * 4);
     SDL_UnlockTexture(_texture.get());
 }

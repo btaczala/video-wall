@@ -10,7 +10,7 @@ namespace widgets {
  * @brief An interface for all drawable widgets like: video, html, text etc.
  */
 struct IWidget {
-    virtual ~IWidget() {}
+    virtual ~IWidget() = default;
 
     /**
      * @brief Updates an internal buffer with new content

@@ -33,15 +33,15 @@ private:
 struct SDLRenderer : public IRenderer {
     SDLRenderer(SDL_Window* window);
 
-    virtual std::unique_ptr<ITexture> createTexture(
+    std::unique_ptr<ITexture> createTexture(
         std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept override;
 
-    virtual void clear() noexcept override;
-    virtual void render() noexcept override;
+    void clear() noexcept override;
+    void render() noexcept override;
 
     void loop() noexcept;
 
-    virtual void addWidget(const std::shared_ptr<widgets::IWidget>& w) override;
+    void addWidget(const std::shared_ptr<widgets::IWidget>& w) override;
 
 private:
     const sdl_helpers::RendererPtr _renderer;

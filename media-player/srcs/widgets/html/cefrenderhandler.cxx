@@ -14,8 +14,6 @@ RenderHandler::RenderHandler(windowing::IRenderer* renderer, int w, int h)
 {
 }
 
-RenderHandler::~RenderHandler() {}
-
 bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
     rect = CefRect(0, 0, _renderingTexture->size().first, _renderingTexture->size().second);

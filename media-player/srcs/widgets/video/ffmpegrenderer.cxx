@@ -46,7 +46,7 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
         throw std::runtime_error(fmt::format("Couldn't open input {}", _filepath));
     }
 
-    if (avformat_find_stream_info(formatCtx, NULL) < 0) {
+    if (avformat_find_stream_info(formatCtx, nullptr) < 0) {
         mars_warn_(ffmpeg, "Couldn't find stream information");
         throw std::runtime_error("Couldn't find stream information");
     }
@@ -93,7 +93,7 @@ boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
 
     auto pFrame = av_frame_alloc();
     AVFrame* pFrameYUV = av_frame_alloc();
-    unsigned char* out_buffer = reinterpret_cast<unsigned char*>(
+    auto out_buffer = reinterpret_cast<unsigned char*>(
         av_malloc(av_image_get_buffer_size(AV_PIX_FMT_YUV420P, codecCtx->width, codecCtx->height, 1)));
     av_image_fill_arrays(
         pFrameYUV->data, pFrameYUV->linesize, out_buffer, AV_PIX_FMT_YUV420P, codecCtx->width, codecCtx->height, 1);

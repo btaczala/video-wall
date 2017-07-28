@@ -2,11 +2,11 @@
 #include "log.hpp"
 
 #include <arpa/inet.h>
+#include <cstdio>
+#include <cstdlib>
 #include <ifaddrs.h>
 #include <linux/if_link.h>
 #include <netdb.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
@@ -23,8 +23,8 @@ IPAddressList SystemManager::getIP()
         mars_warn("Unable to get IP address");
     }
     std::string iface;
-    for (ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++) {
-        if (ifa->ifa_addr == NULL)
+    for (ifa = ifaddr, n = 0; ifa != nullptr; ifa = ifa->ifa_next, n++) {
+        if (ifa->ifa_addr == nullptr)
             continue;
 
         family = ifa->ifa_addr->sa_family;
@@ -35,7 +35,7 @@ IPAddressList SystemManager::getIP()
 
         if (family == AF_INET || family == AF_INET6) {
             s = getnameinfo(ifa->ifa_addr,
-                (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6), host, NI_MAXHOST, NULL,
+                (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6), host, NI_MAXHOST, nullptr,
                 0, NI_NUMERICHOST);
             if (s != 0) {
                 mars_error("getnameinfo() failed: {}", gai_strerror(s));

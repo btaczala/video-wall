@@ -16,7 +16,7 @@ struct ScreenInfo {
 
 using ScreensInfo = std::vector<ScreenInfo>;
 struct ScreenManager {
-    ScreenManager();
+    ScreenManager() = default;
 
     ScreensInfo availableScreens() const;
 };

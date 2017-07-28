@@ -7,8 +7,6 @@
 namespace mars {
 namespace common {
 
-ScreenManager::ScreenManager() {}
-
 ScreensInfo ScreenManager::availableScreens() const
 {
     ScreensInfo screens;
