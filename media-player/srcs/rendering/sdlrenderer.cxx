@@ -73,7 +73,8 @@ SDLRenderer::SDLRenderer(SDL_Window* window)
 {
 }
 
-std::unique_ptr<ITexture> SDLRenderer::createTexture(std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept
+std::unique_ptr<ITexture> SDLRenderer::createTexture(
+    std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept
 {
     return std::make_unique<SDLTexture>(_renderer.get(), width, height, format);
 }
@@ -86,9 +87,12 @@ void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
     mars_info_(rendering, "Start rendering loop");
     SDL_Event ev{};
     while (true) {
+        // TODO: For now this is super wrong for rendering ffmpeg frames, as this 
+        // will render movie in a fast forward mode. 
+        // Either we can buffer 
         auto r = SDL_PollEvent(&ev);
         if (r > 0) {
-            mars_trace("Received event 0x{:x}", ev.type);
+            mars_trace_(rendering, "Received event 0x{:x}", ev.type);
             if (ev.type == SDL_QUIT) {
                 break;
             } else if (ev.type == SDL_KEYDOWN) {
@@ -107,7 +111,7 @@ void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
         }
         render();
     }
-    mars_debug_(rendering, "Finish rendering loop");
+    mars_info_(rendering, "Finish rendering loop");
 }
 
 void SDLRenderer::addWidget(const std::shared_ptr<widgets::Widget>& w)

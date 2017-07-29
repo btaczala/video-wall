@@ -21,6 +21,7 @@ TEST_F(FFMPEGRendererTest, valid_file)
     const std::string data_dir = std::string{ TEST_DIR } + "/test_data/bigbuckbunny_480x272.h265";
     auto renderer = backend.createVideo(data_dir);
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(40));
     ASSERT_TRUE(renderer);
     EXPECT_EQ(renderer->info().width, 480);
     EXPECT_EQ(renderer->info().height, 272);
@@ -34,15 +35,6 @@ TEST_F(FFMPEGRendererTest, valid_file)
     EXPECT_EQ(frame->planes[1].linesize, 240);
     EXPECT_NE(frame->planes[2].pixels, nullptr);
     EXPECT_EQ(frame->planes[2].linesize, 240);
-
-    auto second = renderer->frame();
-    ASSERT_TRUE(second);
-    EXPECT_NE(second->planes[0].pixels, nullptr);
-    EXPECT_EQ(second->planes[0].linesize, 480);
-    EXPECT_NE(second->planes[1].pixels, nullptr);
-    EXPECT_EQ(second->planes[1].linesize, 240);
-    EXPECT_NE(second->planes[2].pixels, nullptr);
-    EXPECT_EQ(second->planes[2].linesize, 240);
 
     // eat all frames
     while (renderer->frame())

@@ -23,6 +23,7 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
     , _filename(boost::filesystem::path(_filepath).filename().string())
     , formatCtx(nullptr)
     , codecCtx(nullptr)
+    , _keepRendering(true)
 {
     namespace bfs = boost::filesystem;
 
@@ -78,15 +79,40 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
     }
 
     mars_debug_(ffmpeg, "Codec name = {}", pCodec->long_name);
+
+    _renderingThread = std::thread([this]() {
+        mars_debug_(rendering, "Staring rendering thread for ffmpeg renderer {}", _filename);
+        while (_keepRendering) {
+            {
+                std::lock_guard<std::mutex> lg{ _frameLock };
+                _currentFrame = getNextFrame();
+                mars_trace_(rendering, "Frame updated for file {}", _filename);
+            }
+
+            // TODO: We should check if 40 ms is enough for all movies??
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(40ms);
+        }
+    });
 }
 
 FFMPEGRenderer::~FFMPEGRenderer()
 {
     avcodec_close(codecCtx);
     avformat_close_input(&formatCtx);
+
+    _keepRendering = false;
+    if (_renderingThread.joinable()) {
+        _renderingThread.join();
+    }
+}
+boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
+{
+    std::lock_guard<std::mutex> lg{ _frameLock };
+    return _currentFrame;
 }
 
-boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
+boost::optional<VideoFrame> FFMPEGRenderer::getNextFrame() noexcept
 {
     BOOST_ASSERT_MSG(formatCtx, "formatCtx must not be nullptr");
     BOOST_ASSERT_MSG(codecCtx, "formatCtx must not be nullptr");
