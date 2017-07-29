@@ -7,6 +7,7 @@ string(REPLACE "/usr/include/" "" FFMPEG_INCLUDE_DIR "${FFMPEG_INCLUDE_DIR}")
 add_library(mars-widgets 
     html/cefrenderhandler.cxx 
     html/cefbrowserclient.cxx
+    html/htmlwidget.cxx
     video/videowidget.cxx
     video/ffmpegrenderer.cxx
 )

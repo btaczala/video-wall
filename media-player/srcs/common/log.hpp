@@ -12,6 +12,7 @@ extern std::shared_ptr<spdlog::logger> uiLogger;
 extern std::shared_ptr<spdlog::logger> renderingLogger;
 extern std::shared_ptr<spdlog::logger> ffmpegLogger;
 extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
+extern std::shared_ptr<spdlog::logger> htmlLogger;
 
 #define __FILENAME__ (std::strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 

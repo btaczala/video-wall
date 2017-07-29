@@ -81,12 +81,12 @@ std::unique_ptr<ITexture> SDLRenderer::createTexture(std::uint16_t width, std::u
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }
 void SDLRenderer::render() noexcept { SDL_RenderPresent(_renderer.get()); }
 
-void SDLRenderer::loop() noexcept
+void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
 {
     mars_info_(rendering, "Start rendering loop");
     SDL_Event ev{};
     while (true) {
-        auto r = SDL_WaitEventTimeout(&ev, 40);
+        auto r = SDL_PollEvent(&ev);
         if (r > 0) {
             mars_trace("Received event 0x{:x}", ev.type);
             if (ev.type == SDL_QUIT) {
@@ -95,6 +95,9 @@ void SDLRenderer::loop() noexcept
                 if (ev.key.keysym.sym == SDLK_SPACE) {
                 }
             }
+        }
+        for (const auto& f : additionalFunctions) {
+            f();
         }
         clear();
         for (const auto& w : _widgets) {

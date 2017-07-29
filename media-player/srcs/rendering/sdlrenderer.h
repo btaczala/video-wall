@@ -1,6 +1,7 @@
 #ifndef SDLRENDERER_H_LA7HA5NV
 #define SDLRENDERER_H_LA7HA5NV
 
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -31,6 +32,7 @@ private:
 };
 
 struct SDLRenderer : public IRenderer {
+    using LoopFn = std::function<void()>;
     SDLRenderer(SDL_Window* window);
 
     std::unique_ptr<ITexture> createTexture(
@@ -39,7 +41,7 @@ struct SDLRenderer : public IRenderer {
     void clear() noexcept override;
     void render() noexcept override;
 
-    void loop() noexcept;
+    void loop(const std::vector<LoopFn>& additionalFunctions = std::vector<LoopFn>{}) noexcept;
 
     void addWidget(const std::shared_ptr<widgets::IWidget>& w) override;
 
