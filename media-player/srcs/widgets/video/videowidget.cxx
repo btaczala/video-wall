@@ -33,6 +33,10 @@ VideoWidget::VideoWidget(
     , _video(videoBackend.createVideo(filename))
     , _texture(_renderer.createTexture(_video->info().width, _video->info().height, windowing::PixelFormat::IYUV))
 {
+    _x = 0;
+    _y = 0;
+    _width = _video->info().width; 
+    _height = _video->info().height;
     mars_debug("VideoWidget video size {}x{}", _video->info().width, _video->info().height);
 }
 
@@ -49,8 +53,6 @@ bool VideoWidget::update() noexcept
     return !!frame;
 }
 void VideoWidget::render() noexcept { _texture->render(); }
-
-void VideoWidget::moveTo(std::uint16_t newX, std::uint16_t newY) noexcept {}
 
 bool VideoWidget::event(const windowing::EventVariant& event) noexcept
 {

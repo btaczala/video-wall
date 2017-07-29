@@ -42,23 +42,22 @@ HTMLWidget::HTMLWidget(
 
     window_info.SetAsWindowless(0);
     mars_info_(html, "Creating HTMLWidget with url = {}", url);
-    browser = CefBrowserHost::CreateBrowserSync(window_info, _browserClient.get(), url, browserSettings, nullptr);
+    _browser = CefBrowserHost::CreateBrowserSync(window_info, _browserClient.get(), url, browserSettings, nullptr);
 }
 
 HTMLWidget::~HTMLWidget()
 {
     mars_info_(html, "HTMLWidget::~HTMLWidget");
-    browser = nullptr;
+    _browser = nullptr;
     _browserClient = nullptr;
     _cefRenderer = nullptr;
 }
 
 bool HTMLWidget::update() noexcept { return true; }
 void HTMLWidget::render() noexcept { _cefRenderer->render(); }
-void HTMLWidget::moveTo(std::uint16_t newX, std::uint16_t newY) {}
 bool HTMLWidget::event(const windowing::EventVariant& event) noexcept
 {
-    return boost::apply_visitor(html_event_visitor(browser.get()), event);
+    return boost::apply_visitor(html_event_visitor(_browser.get()), event);
     return false;
 }
 

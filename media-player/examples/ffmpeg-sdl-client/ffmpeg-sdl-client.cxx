@@ -24,12 +24,8 @@ int main(int argc, char* argv[])
         mars::windowing::SDLRenderer sdlRenderer{ window.Get() };
         mars::rendering::FFMPEGBackend videoBackend;
         const std::string url = argv[1];
-        ;
 
-        auto vw
-            = std::shared_ptr<mars::widgets::IWidget>(new mars::widgets::VideoWidget{ url, sdlRenderer, videoBackend });
-
-        sdlRenderer.addWidget(vw);
+        sdlRenderer.addWidget(std::make_shared<mars::widgets::VideoWidget>(url, sdlRenderer, videoBackend));
 
         // this will block
         sdlRenderer.loop();

@@ -76,6 +76,11 @@ TEST_F(VideoWidgetCreatedTests, update_frames_left)
     REQUIRE_CALL(*_texture, UpdateYUVTexture(_, _, _, _, _, _, _));
 
     EXPECT_TRUE(vw->update());
+
+    EXPECT_EQ(vw->x(), 0);
+    EXPECT_EQ(vw->y(), 0);
+    EXPECT_EQ(vw->width(), 10);
+    EXPECT_EQ(vw->height(), 10);
 }
 
 TEST_F(VideoWidgetCreatedTests, handle_event)

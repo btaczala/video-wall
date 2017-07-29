@@ -1,7 +1,7 @@
 #ifndef VIDEOWIDGET_H_JMZKEF5D
 #define VIDEOWIDGET_H_JMZKEF5D
 
-#include "iwidget.h"
+#include "widget.h"
 #include <memory>
 
 namespace mars {
@@ -17,12 +17,11 @@ struct ITexture;
 } // namespace windowing
 namespace widgets {
 
-struct VideoWidget : public IWidget {
+struct VideoWidget : public Widget {
     VideoWidget(const std::string& filename, windowing::IRenderer& renderer, rendering::IVideoBackend& videoBackend);
 
     bool update() noexcept override;
     void render() noexcept override;
-    void moveTo(std::uint16_t newX, std::uint16_t newY) noexcept override;
 
     bool event(const windowing::EventVariant& event) noexcept override;
 

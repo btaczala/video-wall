@@ -9,7 +9,7 @@
 
 namespace mars {
 namespace widgets {
-struct IWidget;
+struct Widget;
 } // namespace widgets
 namespace windowing {
 
@@ -41,7 +41,7 @@ struct IRenderer {
      */
     virtual void render() noexcept = 0;
 
-    virtual void addWidget(const std::shared_ptr<widgets::IWidget>& w) = 0;
+    virtual void addWidget(const std::shared_ptr<widgets::Widget>& w) = 0;
 };
 } // namespace windowing
 } // namespace mars

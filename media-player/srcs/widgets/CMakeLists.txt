@@ -5,6 +5,7 @@ find_package(FFMPEG REQUIRED)
 string(REPLACE "/usr/include/" "" FFMPEG_INCLUDE_DIR "${FFMPEG_INCLUDE_DIR}")
 
 add_library(mars-widgets 
+    widget.cxx
     html/cefrenderhandler.cxx 
     html/cefbrowserclient.cxx
     html/htmlwidget.cxx

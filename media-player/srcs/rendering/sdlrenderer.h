@@ -14,7 +14,7 @@
 
 namespace mars {
 namespace widgets {
-struct IWidget;
+struct Widget;
 } // namespace widgets
 namespace windowing {
 
@@ -42,13 +42,12 @@ struct SDLRenderer : public IRenderer {
     void render() noexcept override;
 
     void loop(const std::vector<LoopFn>& additionalFunctions = std::vector<LoopFn>{}) noexcept;
-
-    void addWidget(const std::shared_ptr<widgets::IWidget>& w) override;
+    void addWidget(const std::shared_ptr<widgets::Widget>& w) override;
 
 private:
     const sdl_helpers::RendererPtr _renderer;
-    std::vector<std::shared_ptr<widgets::IWidget>> _widgets;
-    std::shared_ptr<widgets::IWidget> _focused;
+    std::vector<std::shared_ptr<widgets::Widget>> _widgets;
+    std::shared_ptr<widgets::Widget> _focused;
 };
 } // namespace windowing
 } // namespace mars

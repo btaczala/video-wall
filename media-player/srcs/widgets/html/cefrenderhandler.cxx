@@ -28,6 +28,7 @@ void RenderHandler::OnPaint(
     mars_trace_(ui, "OnPaint({}, {}, {}, {}, {}, {}", static_cast<void*>(browser), type, dirtyRects.size(),
         static_cast<const void*>(buffer), w, h);
     _renderingTexture->put(buffer, std::make_pair(w, h));
+    // schedule refresh
 }
 
 void RenderHandler::render() { _renderingTexture->render(); }

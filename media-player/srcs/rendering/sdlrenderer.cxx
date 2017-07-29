@@ -1,5 +1,5 @@
 #include "sdlrenderer.h"
-#include "widgets/iwidget.h"
+#include "widgets/widget.h"
 
 #include "log.hpp"
 
@@ -110,7 +110,7 @@ void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
     mars_debug_(rendering, "Finish rendering loop");
 }
 
-void SDLRenderer::addWidget(const std::shared_ptr<widgets::IWidget>& w)
+void SDLRenderer::addWidget(const std::shared_ptr<widgets::Widget>& w)
 {
     if (_widgets.empty()) {
         _focused = w;
