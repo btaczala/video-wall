@@ -36,8 +36,9 @@ ITexture::TextureSize SDLTexture::size() const noexcept
 void SDLTexture::put(const void* buffer, const TextureSize& size) noexcept
 {
     const auto tSize = this->size();
-    if (tSize != size)
+    if (tSize != size) {
         return;
+    }
 
     unsigned char* texture_data = nullptr;
     int texture_pitch = 0;
@@ -72,9 +73,9 @@ SDLRenderer::SDLRenderer(SDL_Window* window)
 {
 }
 
-std::unique_ptr<ITexture> SDLRenderer::createTexture(std::uint16_t w, std::uint16_t h, PixelFormat format) noexcept
+std::unique_ptr<ITexture> SDLRenderer::createTexture(std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept
 {
-    return std::make_unique<SDLTexture>(_renderer.get(), w, h, format);
+    return std::make_unique<SDLTexture>(_renderer.get(), width, height, format);
 }
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }
