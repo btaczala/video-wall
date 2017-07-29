@@ -44,7 +44,7 @@ struct SDLRenderer : public IRenderer {
     void loop(const std::vector<LoopFn>& additionalFunctions = std::vector<LoopFn>{}) noexcept;
     void addWidget(const std::shared_ptr<widgets::Widget>& w) override;
 
-    void requestRefresh() noexcept override;
+    void requestRefresh(widgets::Widget* widget) noexcept override;
 
 private:
     const sdl_helpers::RendererPtr _renderer;

@@ -20,7 +20,7 @@ struct RendererMock : public mars::windowing::IRenderer {
     MAKE_MOCK0(render, void(), noexcept, override);
     MAKE_MOCK1(addWidget, void(const std::shared_ptr<mars::widgets::Widget>&), override);
 
-    MAKE_MOCK0(requestRefresh, void(), noexcept, override);
+    MAKE_MOCK1(requestRefresh, void(mars::widgets::Widget*), noexcept, override);
 };
 
 struct TextureMock : public mars::windowing::ITexture {

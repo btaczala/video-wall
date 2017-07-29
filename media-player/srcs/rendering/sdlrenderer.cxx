@@ -1,7 +1,8 @@
 #include "sdlrenderer.h"
-#include "widgets/widget.h"
-
+#include "fps.hpp"
 #include "log.hpp"
+
+#include "widgets/widget.h"
 
 namespace {
 
@@ -15,6 +16,7 @@ int convertPixelFormat(mars::windowing::PixelFormat format)
 
     return SDL_PIXELFORMAT_UNKNOWN;
 }
+const std::uint32_t kRefreshEvent = SDL_RegisterEvents(1);
 } // namespace
 
 namespace mars {
@@ -119,11 +121,14 @@ void SDLRenderer::addWidget(const std::shared_ptr<widgets::Widget>& w)
     _widgets.push_back(w);
 }
 
-void SDLRenderer::requestRefresh() noexcept
+void SDLRenderer::requestRefresh(widgets::Widget* widget) noexcept
 {
     mars_trace_(rendering, "Scheduling a refresh");
     SDL_Event ev;
-    ev.type = SDL_USEREVENT + 1;
+    std::memset(&ev, 0, sizeof(SDL_Event));
+    ev.type = kRefreshEvent;
+    ev.user.data1 = widget;
+    ev.user.data2 = nullptr;
 
     SDL_PushEvent(&ev);
 }

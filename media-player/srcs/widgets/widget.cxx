@@ -16,7 +16,7 @@ bool Widget::event(const windowing::EventVariant& event) noexcept { return false
 void Widget::requestRefresh()
 {
     mars_debug_(ui, "Scheduling refresh for widget {}", static_cast<void*>(this));
-    _parentRenderer.requestRefresh();
+    _parentRenderer.requestRefresh(this);
 }
 
 void Widget::move(std::uint32_t x, std::uint32_t y)
