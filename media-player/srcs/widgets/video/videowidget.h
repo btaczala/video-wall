@@ -26,7 +26,6 @@ struct VideoWidget : public Widget {
     bool event(const windowing::EventVariant& event) noexcept override;
 
 private:
-    windowing::IRenderer& _renderer;
     const std::unique_ptr<rendering::IVideoRenderer> _video;
     const std::unique_ptr<windowing::ITexture> _texture;
 };

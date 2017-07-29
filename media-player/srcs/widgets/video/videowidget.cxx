@@ -29,9 +29,9 @@ namespace widgets {
 
 VideoWidget::VideoWidget(
     const std::string& filename, windowing::IRenderer& renderer, rendering::IVideoBackend& videoBackend)
-    : _renderer(renderer)
+    : Widget(renderer)
     , _video(videoBackend.createVideo(filename))
-    , _texture(_renderer.createTexture(_video->info().width, _video->info().height, windowing::PixelFormat::IYUV))
+    , _texture(_parentRenderer.createTexture(_video->info().width, _video->info().height, windowing::PixelFormat::IYUV))
 {
     _x = 0;
     _y = 0;

@@ -6,12 +6,18 @@
 #include "renderer_types.hpp"
 
 namespace mars {
+namespace windowing {
+struct IRenderer;
+struct ITexture;
+}
 namespace widgets {
 
 /**
  * @brief An interface for all drawable widgets like: video, html, text etc.
  */
 struct Widget {
+
+    Widget(windowing::IRenderer& renderer);
 
     virtual ~Widget() = default;
 
@@ -28,16 +34,21 @@ struct Widget {
 
     virtual bool event(const windowing::EventVariant& event) noexcept;
 
-    std::uint32_t x() const noexcept { return _x; }
-    std::uint32_t y() const noexcept { return _y; }
-    std::uint32_t width() const noexcept { return _width; }
-    std::uint32_t height() const noexcept { return _height; }
+    std::uint32_t x() const noexcept {
+        return _x; }
+    std::uint32_t y() const noexcept {
+        return _y; }
+    std::uint32_t width() const noexcept {
+        return _width; }
+    std::uint32_t height() const noexcept {
+        return _height; }
 
     virtual void move(std::uint32_t x, std::uint32_t y);
 
 protected:
     void requestRefresh();
 
+    windowing::IRenderer& _parentRenderer;
     std::uint32_t _x;
     std::uint32_t _y;
     std::uint32_t _width;

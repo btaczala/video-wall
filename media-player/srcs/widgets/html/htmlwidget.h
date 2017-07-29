@@ -10,6 +10,7 @@
 namespace mars {
 namespace windowing {
 struct IRenderer;
+struct ITexture;
 } // namespace rendering
 
 namespace widgets {
@@ -26,6 +27,11 @@ struct HTMLWidget : public Widget {
     bool event(const windowing::EventVariant& event) noexcept override;
 
 private:
+
+    void updateBuffer(const void* buffer);
+
+    const std::unique_ptr<windowing::ITexture> _renderingTexture;
+
     CefRefPtr<mars::webengine::RenderHandler> _cefRenderer;
     CefRefPtr<mars::webengine::BrowserClient> _browserClient;
     CefRefPtr<CefBrowser> _browser;

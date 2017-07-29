@@ -2,6 +2,7 @@
 #define CEFRENDERHANDLER_H_YRSXP9QE
 
 #include <cef_render_handler.h>
+#include <functional>
 
 namespace mars {
 namespace windowing {
@@ -11,7 +12,8 @@ struct ITexture;
 
 namespace webengine {
 struct RenderHandler : public CefRenderHandler {
-    RenderHandler(windowing::IRenderer* renderer, int w, int h);
+    using PaintCallback = std::function<void(const void*)>;
+    RenderHandler(const PaintCallback &cb, int w, int h);
     ~RenderHandler();
 
     bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
@@ -19,10 +21,11 @@ struct RenderHandler : public CefRenderHandler {
     void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList& dirtyRects, const void* buffer,
         int w, int h) override;
 
-    void render(std::uint32_t x, std::uint32_t y);
+    //void render(std::uint32_t x, std::uint32_t y);
 
 private:
-    const std::unique_ptr<windowing::ITexture> _renderingTexture;
+    const PaintCallback _cb;
+    const int _w, _h;
     IMPLEMENT_REFCOUNTING(RenderHandler);
 };
 } // namespace webengine

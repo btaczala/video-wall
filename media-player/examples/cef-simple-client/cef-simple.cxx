@@ -12,9 +12,9 @@
 #include <cef_render_handler.h>
 #include <wrapper/cef_helpers.h>
 
+#include "fps.hpp"
 #include "html/cefbrowserclient.h"
 #include "html/cefrenderhandler.h"
-#include "fps.hpp"
 #include "log.hpp"
 #include "sdlrenderer.h"
 #include "stopwatch.hpp"
@@ -73,59 +73,60 @@ int main(int argc, char* argv[])
     if (window) {
         mars::windowing::SDLRenderer renderer{ window };
         if (true) {
-            SDL_Event e;
+            // SDL_Event e;
 
-            CefRefPtr<mars::webengine::RenderHandler> renderHandler
-                = new mars::webengine::RenderHandler(&renderer, width * 2, height * 2);
+            // CefRefPtr<mars::webengine::RenderHandler> renderHandler
+            //= new mars::webengine::RenderHandler(&renderer, width * 2, height * 2);
 
-            // create browser-window
-            CefRefPtr<CefBrowser> browser;
-            CefRefPtr<mars::webengine::BrowserClient> browserClient;
+            //// create browser-window
+            // CefRefPtr<CefBrowser> browser;
+            // CefRefPtr<mars::webengine::BrowserClient> browserClient;
 
-            {
-                CefWindowInfo window_info;
-                CefBrowserSettings browserSettings;
-                browserSettings.webgl = STATE_ENABLED;
+            //{
+            // CefWindowInfo window_info;
+            // CefBrowserSettings browserSettings;
+            // browserSettings.webgl = STATE_ENABLED;
 
-                window_info.SetAsWindowless(0);
-                browserClient = new mars::webengine::BrowserClient(renderHandler);
+            // window_info.SetAsWindowless(0);
+            // browserClient = new mars::webengine::BrowserClient(renderHandler);
 
-                const std::string url{ std::string{ "file:///" } + std::string(HTML_DIR)
-                    + "/webgl-hello-world-master/webgl-demo.htm" };
-                mars_debug("Url = {}", url);
-                browser = CefBrowserHost::CreateBrowserSync(
-                    window_info, browserClient.get(), url, browserSettings, nullptr);
-            }
+            // const std::string url{ std::string{ "file:///" } + std::string(HTML_DIR)
+            //+ "/webgl-hello-world-master/webgl-demo.htm" };
+            // mars_debug("Url = {}", url);
+            // browser = CefBrowserHost::CreateBrowserSync(
+            // window_info, browserClient.get(), url, browserSettings, nullptr);
+            //}
 
-            bool shutdown = false;
-            while (!browserClient->closeAllowed()) {
-                // send events to browser
-                while (!shutdown && SDL_PollEvent(&e) != 0) {
-                    switch (e.type) {
-                    case SDL_QUIT:
-                        shutdown = true;
-                        browser->GetHost()->CloseBrowser(false);
-                        break;
-                    }
-                }
+            // bool shutdown = false;
+            // while (!browserClient->closeAllowed()) {
+            //// send events to browser
+            // while (!shutdown && SDL_PollEvent(&e) != 0) {
+            // switch (e.type) {
+            // case SDL_QUIT:
+            // shutdown = true;
+            // browser->GetHost()->CloseBrowser(false);
+            // break;
+            //}
+            //}
 
-                // let browser process events
-                CefDoMessageLoopWork();
+            //// let browser process events
+            // CefDoMessageLoopWork();
 
-                // render
-                renderer.clear();
+            //// render
+            // renderer.clear();
 
-                renderHandler->render(40,40);
+            ////renderHandler->render(40,40);
 
-                // Update screen
-                renderer.render();
-            }
+            //// Update screen
+            // renderer.render();
+            //}
 
-            browser = nullptr;
-            browserClient = nullptr;
-            renderHandler = nullptr;
+            // browser = nullptr;
+            // browserClient = nullptr;
+            // renderHandler = nullptr;
 
-            CefShutdown();
+            // CefShutdown();
+            //}
         }
     }
 

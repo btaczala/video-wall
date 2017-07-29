@@ -43,6 +43,8 @@ struct IRenderer {
 
     virtual void addWidget(const std::shared_ptr<widgets::Widget>& w) = 0;
 
+    virtual void requestRefresh() noexcept = 0;
+
 };
 } // namespace windowing
 } // namespace mars
