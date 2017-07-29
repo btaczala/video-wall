@@ -87,9 +87,9 @@ void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
     mars_info_(rendering, "Start rendering loop");
     SDL_Event ev{};
     while (true) {
-        // TODO: For now this is super wrong for rendering ffmpeg frames, as this 
-        // will render movie in a fast forward mode. 
-        // Either we can buffer 
+        // TODO: For now this is super wrong for rendering ffmpeg frames, as this
+        // will render movie in a fast forward mode.
+        // Either we can buffer
         auto r = SDL_PollEvent(&ev);
         if (r > 0) {
             mars_trace_(rendering, "Received event 0x{:x}", ev.type);
@@ -110,6 +110,8 @@ void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
             }
         }
         render();
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(13ms);
     }
     mars_info_(rendering, "Finish rendering loop");
 }
