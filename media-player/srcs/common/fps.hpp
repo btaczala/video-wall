@@ -26,9 +26,8 @@ struct Fps {
                 seconds++;
                 std::this_thread::sleep_for(std::chrono::seconds(1));
 
-                mars_debug("{} {}", ticks, seconds);
                 double fps = static_cast<double>(ticks) / static_cast<double>(seconds);
-                mars_debug("Current fps = {}", fps);
+                perfLogger->info("Current fps = {} ms", fps);
 
                 ticks = 0;
                 seconds = 0;

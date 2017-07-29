@@ -1,5 +1,6 @@
 #include "ffmpegrenderer.h"
 #include "log.hpp"
+#include "stopwatch.hpp"
 
 #include <boost/assert.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -83,10 +84,15 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
     _renderingThread = std::thread([this]() {
         mars_debug_(rendering, "Staring rendering thread for ffmpeg renderer {}", _filename);
         while (_keepRendering) {
+            Stopwatch<> sw;
             {
                 std::lock_guard<std::mutex> lg{ _frameLock };
                 _currentFrame = getNextFrame();
                 mars_trace_(rendering, "Frame updated for file {}", _filename);
+            }
+
+            if (sw.elapsed() > 5) {
+                perfLogger->info("Rendering a frame for {}, took {} ms", _filename, sw.elapsed());
             }
 
             // TODO: We should check if 40 ms is enough for all movies??
