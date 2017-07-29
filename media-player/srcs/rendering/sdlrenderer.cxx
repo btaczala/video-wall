@@ -47,12 +47,12 @@ void SDLTexture::put(const void* buffer, const TextureSize& size) noexcept
     SDL_UnlockTexture(_texture.get());
 }
 
-void SDLTexture::render() noexcept
+void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
 {
     auto si = size();
     SDL_Rect r{};
-    r.x = 0;
-    r.y = 0;
+    r.x = x;
+    r.y = y;
     r.w = si.first;
     r.h = si.second;
     SDL_RenderCopy(_renderer, _texture.get(), nullptr, &r);

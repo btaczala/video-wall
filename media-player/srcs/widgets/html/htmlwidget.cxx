@@ -54,7 +54,7 @@ HTMLWidget::~HTMLWidget()
 }
 
 bool HTMLWidget::update() noexcept { return true; }
-void HTMLWidget::render() noexcept { _cefRenderer->render(); }
+void HTMLWidget::render() noexcept { _cefRenderer->render(_x, _y); }
 bool HTMLWidget::event(const windowing::EventVariant& event) noexcept
 {
     return boost::apply_visitor(html_event_visitor(_browser.get()), event);

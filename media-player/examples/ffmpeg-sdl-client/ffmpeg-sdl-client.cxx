@@ -25,7 +25,10 @@ int main(int argc, char* argv[])
         mars::rendering::FFMPEGBackend videoBackend;
         const std::string url = argv[1];
 
-        sdlRenderer.addWidget(std::make_shared<mars::widgets::VideoWidget>(url, sdlRenderer, videoBackend));
+        auto video = std::make_shared<mars::widgets::VideoWidget>(url, sdlRenderer, videoBackend);
+        sdlRenderer.addWidget(video);
+
+        video->move(100, 100);
 
         // this will block
         sdlRenderer.loop();

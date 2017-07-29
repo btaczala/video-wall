@@ -19,7 +19,7 @@ struct RenderHandler : public CefRenderHandler {
     void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList& dirtyRects, const void* buffer,
         int w, int h) override;
 
-    void render();
+    void render(std::uint32_t x, std::uint32_t y);
 
 private:
     const std::unique_ptr<windowing::ITexture> _renderingTexture;

@@ -81,7 +81,9 @@ int main(int argc, char* argv[])
 
             const std::string url{ std::string{ "file:///" } + std::string(HTML_DIR)
                 + "/webgl-hello-world-master/webgl-demo.htm" };
-            renderer.addWidget(std::make_shared<HTMLWidget>(url, renderer, width, height));
+            auto html = std::make_shared<HTMLWidget>(url, renderer, width, height);
+            html->move(100,100);
+            renderer.addWidget(html);
             renderer.loop({ { []() { CefDoMessageLoopWork(); } } });
         }
     }

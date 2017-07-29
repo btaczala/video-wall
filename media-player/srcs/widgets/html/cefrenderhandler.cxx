@@ -31,6 +31,6 @@ void RenderHandler::OnPaint(
     // schedule refresh
 }
 
-void RenderHandler::render() { _renderingTexture->render(); }
+void RenderHandler::render(std::uint32_t x, std::uint32_t y) { _renderingTexture->render(x, y); }
 } // namespace webengine
 } // namespace mars

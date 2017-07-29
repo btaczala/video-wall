@@ -62,6 +62,7 @@ int main(int argc, char* argv[])
         mars::rendering::FFMPEGBackend videoBackend;
         auto video = std::make_shared<mars::widgets::VideoWidget>(argv[2], sdlRenderer, videoBackend);
 
+
         sdlRenderer.addWidget(html);
         sdlRenderer.addWidget(video);
 

@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
                 // render
                 renderer.clear();
 
-                renderHandler->render();
+                renderHandler->render(40,40);
 
                 // Update screen
                 renderer.render();

@@ -35,7 +35,7 @@ VideoWidget::VideoWidget(
 {
     _x = 0;
     _y = 0;
-    _width = _video->info().width; 
+    _width = _video->info().width;
     _height = _video->info().height;
     mars_debug("VideoWidget video size {}x{}", _video->info().width, _video->info().height);
 }
@@ -52,7 +52,7 @@ bool VideoWidget::update() noexcept
 
     return !!frame;
 }
-void VideoWidget::render() noexcept { _texture->render(); }
+void VideoWidget::render() noexcept { _texture->render(_x, _y); }
 
 bool VideoWidget::event(const windowing::EventVariant& event) noexcept
 {

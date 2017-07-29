@@ -33,6 +33,8 @@ struct Widget {
     std::uint32_t width() const noexcept { return _width; }
     std::uint32_t height() const noexcept { return _height; }
 
+    virtual void move(std::uint32_t x, std::uint32_t y);
+
 protected:
     void requestRefresh();
 

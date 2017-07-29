@@ -24,7 +24,7 @@ struct RendererMock : public mars::windowing::IRenderer {
 struct TextureMock : public mars::windowing::ITexture {
     MAKE_CONST_MOCK0(size, mars::windowing::ITexture::TextureSize(), noexcept, override);
     MAKE_MOCK2(put, void(const void*, const mars::windowing::ITexture::TextureSize&), noexcept, override);
-    MAKE_MOCK0(render, void(), noexcept, override);
+    MAKE_MOCK2(render, void(std::uint32_t x, std::uint32_t y), noexcept, override);
     MAKE_MOCK7(UpdateYUVTexture,
         void(const mars::windowing::Rect&, std::uint8_t*, int, std::uint8_t*, int, std::uint8_t*, int), noexcept,
         override);
