@@ -13,12 +13,12 @@
 #include <wrapper/cef_helpers.h>
 
 #include "fps.hpp"
-#include "html/cefbrowserclient.h"
-#include "html/cefrenderhandler.h"
 #include "log.hpp"
 #include "sdlrenderer.h"
 #include "stopwatch.hpp"
 
+#include "html/cefbrowserclient.h"
+#include "html/cefrenderhandler.h"
 #include "html/htmlwidget.h"
 
 int main(int argc, char* argv[])

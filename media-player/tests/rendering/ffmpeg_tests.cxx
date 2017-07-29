@@ -2,8 +2,8 @@
 #include <fstream>
 #include <gtest/gtest.h>
 
-#include "video/ffmpegrenderer.h"
 #include "log.hpp"
+#include "video/ffmpegrenderer.h"
 
 struct FFMPEGRendererTest : public ::testing::Test {
     mars::rendering::FFMPEGBackend backend;
