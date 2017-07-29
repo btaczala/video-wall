@@ -1,11 +1,3 @@
-add_executable(SystemManagerTests systemmanager_tests.cxx)
-target_link_libraries(SystemManagerTests gtest gtest_main mars-common test_helpers)
-gtest_add_tests(SystemManagerTests "" systemmanager_tests.cxx)
-
-add_executable(ScreenManagerTests screenmanager_tests.cxx)
-target_link_libraries(ScreenManagerTests gtest gtest_main mars-common test_helpers X11)
-gtest_add_tests(ScreenManagerTests "" screenmanager_tests.cxx)
-
-add_executable(ConfigurationManagerTests configurationmanager_tests.cxx)
-target_link_libraries(ConfigurationManagerTests gtest gtest_main mars-common test_helpers X11)
-gtest_add_tests(ConfigurationManagerTests "" configurationmanager_tests.cxx)
+mars_add_test(systemmanager)
+mars_add_test(screenmanager)
+mars_add_test(configurationmanager)

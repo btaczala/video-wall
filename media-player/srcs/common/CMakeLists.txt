@@ -22,4 +22,5 @@ target_link_libraries(mars-common
     ${XRANDR_LIBRARIES}
     ${XCB_LIBRARIES}
     ${Boost_LIBRARIES}
+    X11
 )
