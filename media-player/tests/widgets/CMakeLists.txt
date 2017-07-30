@@ -1,5 +1,6 @@
 mars_add_test(videowidget)
 mars_add_test(htmlwidget)
+mars_add_test(textwidget)
 
 add_executable(htmlwidget_test_subprocess html_subprocess.cxx)
 target_link_libraries(htmlwidget_test_subprocess mars-widgets)

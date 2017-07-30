@@ -11,6 +11,7 @@ add_library(mars-widgets
     html/htmlwidget.cxx
     video/videowidget.cxx
     video/ffmpegrenderer.cxx
+    text/textwidget.cxx
 )
 
 target_link_libraries(mars-widgets

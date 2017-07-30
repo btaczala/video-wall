@@ -62,7 +62,7 @@ HTMLWidget::~HTMLWidget()
     _cefRenderer = nullptr;
 }
 
-bool HTMLWidget::update() noexcept { return true; }
+bool HTMLWidget::update() const noexcept { return true; }
 void HTMLWidget::render() noexcept
 {
     mars_trace_(html, "HTMLWidget [{}] render()", static_cast<void*>(this));

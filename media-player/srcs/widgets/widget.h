@@ -25,7 +25,7 @@ struct Widget {
      * @brief Updates an internal buffer with new content
      * @return true if there is an update, false if buffer cannot be updated (video finished etc)
      */
-    virtual bool update() noexcept = 0;
+    virtual bool update() const noexcept = 0;
 
     /**
      * @brief Schedules a repaint of buffer

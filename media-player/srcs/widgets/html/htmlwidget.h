@@ -20,7 +20,7 @@ struct HTMLWidget : public Widget {
     HTMLWidget(const std::string& url, windowing::IRenderer& renderer, std::uint16_t width, std::uint16_t height);
     ~HTMLWidget();
 
-    bool update() noexcept override;
+    bool update() const noexcept override;
 
     void render() noexcept override;
 

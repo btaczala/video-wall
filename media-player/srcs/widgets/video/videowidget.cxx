@@ -41,7 +41,7 @@ VideoWidget::VideoWidget(
         _video->info().width, _video->info().height);
 }
 
-bool VideoWidget::update() noexcept
+bool VideoWidget::update() const noexcept
 {
     auto frame = _video->frame();
     if (frame) {

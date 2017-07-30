@@ -20,7 +20,7 @@ namespace widgets {
 struct VideoWidget : public Widget {
     VideoWidget(const std::string& filename, windowing::IRenderer& renderer, rendering::IVideoBackend& videoBackend);
 
-    bool update() noexcept override;
+    bool update() const noexcept override;
     void render() noexcept override;
 
     bool event(const windowing::EventVariant& event) noexcept override;
