@@ -8,6 +8,7 @@ add_library(mars-rendering-sdl
     sdlrenderer.cxx 
     sdlhelpers.cxx
     sdlfont.cxx
+    sdltexture.cxx
 )
 target_include_directories(mars-rendering-sdl
     PRIVATE 

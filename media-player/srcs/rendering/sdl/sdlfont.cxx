@@ -1,5 +1,6 @@
 #include "sdlfont.h"
 #include "sdlrenderer.h"
+#include "sdltexture.h"
 
 namespace mars {
 namespace windowing {
