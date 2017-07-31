@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 
+#include "ifont.h"
 #include "irenderer.h"
 #include "itexture.h"
 #include "log.hpp"
@@ -20,6 +21,7 @@ namespace windowing {
 
 struct SDLTexture : public ITexture {
     SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_t height, PixelFormat format);
+    SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture);
 
     TextureSize size() const noexcept override;
     void put(const void* buffer, const TextureSize& size) noexcept override;
@@ -37,6 +39,7 @@ struct SDLRenderer : public IRenderer {
 
     std::unique_ptr<ITexture> createTexture(
         std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept override;
+    std::unique_ptr<IFont> createFont(const std::string& family, std::uint16_t size) noexcept override;
 
     void clear() noexcept override;
     void render() noexcept override;

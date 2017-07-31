@@ -16,9 +16,15 @@ struct deleter {
         if (ptr)
             SDL_DestroyRenderer(ptr);
     }
+    void operator()(SDL_Surface* ptr)
+    {
+        if (ptr)
+            SDL_FreeSurface(ptr);
+    }
 };
 using TexturePtr = std::unique_ptr<SDL_Texture, deleter>;
 using RendererPtr = std::unique_ptr<SDL_Renderer, deleter>;
+using SurfacePtr = std::unique_ptr<SDL_Surface, deleter>;
 
 mars::windowing::EventVariant translateEvent(const SDL_Event& ev);
 

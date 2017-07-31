@@ -4,7 +4,11 @@ find_package(SDL2_ttf REQUIRED)
 
 find_package(Boost REQUIRED COMPONENTS filesystem)
 
-add_library(mars-rendering sdlrenderer.cxx sdlhelpers.cxx)
+add_library(mars-rendering 
+    sdlrenderer.cxx 
+    sdlhelpers.cxx
+    sdlfont.cxx
+)
 target_include_directories(mars-rendering 
     PUBLIC 
         ${CMAKE_CURRENT_SOURCE_DIR}

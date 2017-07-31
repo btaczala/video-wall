@@ -1,6 +1,7 @@
 #include "sdlrenderer.h"
 #include "fps.hpp"
 #include "log.hpp"
+#include "sdlfont.h"
 
 #include "widgets/widget.h"
 
@@ -25,6 +26,12 @@ namespace windowing {
 SDLTexture::SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_t height, PixelFormat format)
     : _renderer(renderer)
     , _texture(SDL_CreateTexture(_renderer, ::convertPixelFormat(format), SDL_TEXTUREACCESS_STREAMING, width, height))
+{
+}
+
+SDLTexture::SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture)
+    : _renderer(renderer)
+    , _texture(texture)
 {
 }
 
@@ -79,6 +86,11 @@ std::unique_ptr<ITexture> SDLRenderer::createTexture(
     std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept
 {
     return std::make_unique<SDLTexture>(_renderer.get(), width, height, format);
+}
+
+std::unique_ptr<IFont> SDLRenderer::createFont(const std::string& family, std::uint16_t size) noexcept
+{
+    return std::make_unique<SDLFont>(_renderer.get(), family, size);
 }
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }

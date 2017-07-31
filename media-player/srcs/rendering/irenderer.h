@@ -14,6 +14,7 @@ struct Widget;
 namespace windowing {
 
 struct ITexture;
+struct IFont;
 
 /**
  * @brief This is a base class for windowing system
@@ -29,6 +30,7 @@ struct IRenderer {
      */
     virtual std::unique_ptr<ITexture> createTexture(std::uint16_t width, std::uint16_t height, PixelFormat e) noexcept
         = 0;
+    virtual std::unique_ptr<IFont> createFont(const std::string& family, std::uint16_t size) noexcept = 0;
 
     /**
      * @brief Clears a renderer
