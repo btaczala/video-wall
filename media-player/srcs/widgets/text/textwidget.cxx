@@ -18,5 +18,5 @@ void TextWidget::render() noexcept
     // TODO: Implement me
 }
 
-} // widgets
-} // mars
+} // namespace widgets
+} // namespace mars

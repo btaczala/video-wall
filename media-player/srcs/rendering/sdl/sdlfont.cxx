@@ -19,5 +19,5 @@ std::unique_ptr<ITexture> SDLFont::renderText(const std::string& text) noexcept
     return std::make_unique<SDLTexture>(_renderer, texture);
 }
 
-} // windowing
-} // mars
+} // namespace windowing
+} // namespace mars

@@ -28,4 +28,4 @@ const std::map<std::uint32_t, translateFunction_t> kTranslator{
 
 namespace sdl_helpers {
 mars::windowing::EventVariant translateEvent(const SDL_Event& ev) { return kTranslator.at(ev.type)(ev); }
-} // sdl_helpers
+} // namespace sdl_helpers

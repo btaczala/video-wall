@@ -80,5 +80,5 @@ void HTMLWidget::updateBuffer(const void* buffer)
     requestRefresh();
 }
 
-} // widgets
-} // mars
+} // namespace widgets
+} // namespace mars
