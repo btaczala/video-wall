@@ -8,6 +8,10 @@ namespace widgets {
 
 Widget::Widget(windowing::IRenderer& renderer)
     : _parentRenderer(renderer)
+    , _x(0)
+    , _y(0)
+    , _width(0)
+    , _height(0)
 {
 }
 

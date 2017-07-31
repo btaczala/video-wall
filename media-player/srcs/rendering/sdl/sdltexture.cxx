@@ -3,6 +3,7 @@
 #include "sdllogging.hpp"
 
 #include <SDL2/SDL_render.h>
+#include <boost/assert.hpp>
 
 namespace {
 
@@ -56,6 +57,8 @@ void SDLTexture::put(const void* buffer, const TextureSize& size) noexcept
 
 void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
 {
+    BOOST_ASSERT_MSG(_texture, "Texture cannot be null");
+    BOOST_ASSERT_MSG(_renderer, "Renderer cannot be null");
     auto si = size();
     SDL_Rect r{};
     r.x = x;

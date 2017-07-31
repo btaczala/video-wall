@@ -35,6 +35,8 @@ struct SDLRenderer : public IRenderer {
 
     void requestRefresh(widgets::Widget* widget) noexcept override;
 
+    static void initialize();
+
 private:
     const sdl_helpers::RendererPtr _renderer;
     std::vector<std::shared_ptr<widgets::Widget>> _widgets;

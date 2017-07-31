@@ -2,7 +2,7 @@
 #define SDLHELPERS_HPP_WQF0GKRU
 
 #include "renderer_types.hpp"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 namespace sdl_helpers {
 struct deleter {

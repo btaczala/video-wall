@@ -7,6 +7,9 @@
 
 #include "widgets/widget.h"
 
+#include <SDL_ttf.h>
+#include <spdlog/fmt/fmt.h>
+
 namespace {
 const std::uint32_t kRefreshEvent = SDL_RegisterEvents(1);
 }
@@ -40,7 +43,7 @@ void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
     while (true) {
         auto r = SDL_WaitEventTimeout(&ev, 10);
         if (r > 0) {
-            mars_debug_(rendering, "Received event 0x{:x}", ev.type);
+            mars_trace_(rendering, "Received event 0x{:x}", ev.type);
             if (ev.type == SDL_QUIT) {
                 break;
             } else if (ev.type == SDL_KEYDOWN) {
@@ -80,6 +83,18 @@ void SDLRenderer::requestRefresh(widgets::Widget* widget) noexcept
     ev.user.data2 = nullptr;
 
     SDL_PushEvent(&ev);
+}
+
+void /* static */ SDLRenderer::initialize()
+{
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        mars_error_(rendering, "Unable to init sdl ec = {}", SDL_GetError());
+        throw std::runtime_error(fmt::format("Unable to init sdl ec = {}", SDL_GetError()));
+    }
+    if (TTF_Init() < 0) {
+        mars_error_(rendering, "Unable to init ttl ec = {}", TTF_GetError());
+        throw std::runtime_error(fmt::format("Unable to init ttl ec = {}", TTF_GetError()));
+    }
 }
 
 } // namespace windowing

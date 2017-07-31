@@ -54,6 +54,10 @@ extern std::shared_ptr<spdlog::logger> perfLogger;
     do {                                                                                                               \
         logger##Logger->warn("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                   \
     } while (false)
+#define mars_error_(logger, fmt, ...)                                                                                  \
+    do {                                                                                                               \
+        logger##Logger->error("[{}@{}] " fmt, __FILENAME__, __LINE__, ##__VA_ARGS__);                                  \
+    } while (false)
 
 template <typename ex = std::runtime_error> void fatal_error(const std::string& e)
 {
