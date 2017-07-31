@@ -22,6 +22,9 @@ namespace windowing {
 SDLRenderer::SDLRenderer(SDL_Window* window)
     : _renderer(SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED))
 {
+    int w, h;
+    SDL_GetRendererOutputSize(_renderer.get(), &w, &h);
+    mars_info_(rendering, "Created a renderer {} size {}x{}", static_cast<void*>(_renderer.get()), w, h);
 }
 
 std::unique_ptr<ITexture> SDLRenderer::createTexture(
