@@ -14,7 +14,10 @@ TextWidget::TextWidget(
 {
 }
 
-void TextWidget::render() noexcept { _textTexture->render(_x, _y); }
+void TextWidget::render() noexcept
+{
+    _textTexture->render(_x, _y);
+}
 
 } // namespace widgets
 } // namespace mars

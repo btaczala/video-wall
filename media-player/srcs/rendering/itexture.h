@@ -1,9 +1,9 @@
 #ifndef ITEXTURE_H_LFG1JAQW
 #define ITEXTURE_H_LFG1JAQW
 
+#include "renderer_types.hpp"
 #include <cstdint>
 #include <utility>
-#include "renderer_types.hpp"
 
 namespace mars {
 namespace windowing {

@@ -3,10 +3,12 @@
 #include "log.hpp"
 #include "renderer_types.hpp"
 #include "sdlfont.h"
+#include "sdlimage.h"
 #include "sdltexture.h"
 
 #include "widgets/widget.h"
 
+#include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <spdlog/fmt/fmt.h>
 
@@ -31,6 +33,11 @@ std::unique_ptr<ITexture> SDLRenderer::createTexture(
 std::unique_ptr<IFont> SDLRenderer::createFont(const std::string& family, std::uint16_t size) noexcept
 {
     return std::make_unique<SDLFont>(_renderer.get(), family, size);
+}
+
+std::unique_ptr<IImage> SDLRenderer::createImage(const std::string& imagePath) noexcept
+{
+    return std::make_unique<SDLImage>(imagePath, _renderer.get());
 }
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }
@@ -67,10 +74,14 @@ void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
 
 void SDLRenderer::addWidget(const std::shared_ptr<widgets::Widget>& w)
 {
+    mars_info_(rendering, "Adding widget {}", static_cast<void*>(w.get()));
     if (_widgets.empty()) {
         _focused = w;
     }
     _widgets.push_back(w);
+
+    std::sort(
+        std::begin(_widgets), std::end(_widgets), [](const auto& sp1, const auto& sp2) { return sp1->z() > sp2->z(); });
 }
 
 void SDLRenderer::requestRefresh(widgets::Widget* widget) noexcept
@@ -94,6 +105,12 @@ void /* static */ SDLRenderer::initialize()
     if (TTF_Init() < 0) {
         mars_error_(rendering, "Unable to init ttl ec = {}", TTF_GetError());
         throw std::runtime_error(fmt::format("Unable to init ttl ec = {}", TTF_GetError()));
+    }
+
+    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF;
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        mars_error_(rendering, "Unable to init image library ec = {}", IMG_GetError());
+        throw std::runtime_error(fmt::format("Unable to init image library ec = {}", IMG_GetError()));
     }
 }
 

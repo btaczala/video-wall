@@ -34,16 +34,16 @@ struct Widget {
 
     virtual bool event(const windowing::EventVariant& event) noexcept;
 
-    std::uint32_t x() const noexcept {
-        return _x; }
-    std::uint32_t y() const noexcept {
-        return _y; }
-    std::uint32_t width() const noexcept {
-        return _width; }
-    std::uint32_t height() const noexcept {
-        return _height; }
+    std::uint32_t x() const noexcept { return _x; }
+    std::uint32_t y() const noexcept { return _y; }
+    std::uint32_t width() const noexcept { return _width; }
+    std::uint32_t height() const noexcept { return _height; }
+
+    std::uint32_t z() const noexcept { return _z; }
 
     virtual void move(std::uint32_t x, std::uint32_t y);
+
+    void setZ(std::uint32_t z) { _z = z; }
 
 protected:
     void requestRefresh();
@@ -53,6 +53,7 @@ protected:
     std::uint32_t _y;
     std::uint32_t _width;
     std::uint32_t _height;
+    std::uint32_t _z;
 };
 } // namespace widgets
 } // namespace mars

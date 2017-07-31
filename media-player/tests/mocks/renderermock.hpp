@@ -2,6 +2,7 @@
 #define RENDERERMOCK_HPP_AZXKKSZ0
 
 #include "ifont.h"
+#include "iimage.h"
 #include "irenderer.h"
 #include "itexture.h"
 #include "renderer_types.hpp"
@@ -18,10 +19,15 @@ struct RendererMock : public mars::windowing::IRenderer {
     {
         return std::unique_ptr<mars::windowing::IFont>(createFontProxy(name, size));
     }
+    std::unique_ptr<mars::windowing::IImage> createImage(const std::string& name) noexcept
+    {
+        return std::unique_ptr<mars::windowing::IImage>(createImageProxy(name));
+    }
 
     MAKE_MOCK3(createTextureProxy,
         mars::windowing::ITexture*(std::uint16_t, std::uint16_t, mars::windowing::PixelFormat), noexcept);
     MAKE_MOCK2(createFontProxy, mars::windowing::IFont*(const std::string&, std::uint16_t), noexcept);
+    MAKE_MOCK1(createImageProxy, mars::windowing::IImage*(const std::string&), noexcept);
     MAKE_MOCK0(clear, void(), noexcept, override);
     MAKE_MOCK0(render, void(), noexcept, override);
     MAKE_MOCK1(addWidget, void(const std::shared_ptr<mars::widgets::Widget>&), override);
@@ -44,6 +50,9 @@ struct FontMock : public mars::windowing::IFont {
         return std::unique_ptr<mars::windowing::ITexture>(renderTextProxy(text));
     }
     MAKE_MOCK1(renderTextProxy, mars::windowing::ITexture*(const std::string&), noexcept);
+};
+
+struct ImageMock : public mars::windowing::IImage {
 };
 
 #endif /* end of include guard: RENDERERMOCK_HPP_AZXKKSZ0 */

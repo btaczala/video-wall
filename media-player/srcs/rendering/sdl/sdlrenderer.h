@@ -26,6 +26,7 @@ struct SDLRenderer : public IRenderer {
     std::unique_ptr<ITexture> createTexture(
         std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept override;
     std::unique_ptr<IFont> createFont(const std::string& family, std::uint16_t size) noexcept override;
+    virtual std::unique_ptr<IImage> createImage(const std::string& imagePath) noexcept override;
 
     void clear() noexcept override;
     void render() noexcept override;
