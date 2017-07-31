@@ -42,19 +42,19 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
     formatCtx = avformat_alloc_context();
     formatCtx->format_whitelist = av_strdup("avi,hevc,mov,mp4,m4a,3gp,3g2,mj2");
 
-    mars_debug_(ffmpeg, "Opening file {}", _filepath);
+    mars_debug_(video, "Opening file {}", _filepath);
     if (avformat_open_input(&formatCtx, _filepath.c_str(), nullptr, nullptr) != 0) {
-        mars_warn_(ffmpeg, "Couldn't open input {}", _filepath);
+        mars_warn_(video, "Couldn't open input {}", _filepath);
         throw std::runtime_error(fmt::format("Couldn't open input {}", _filepath));
     }
 
     if (avformat_find_stream_info(formatCtx, nullptr) < 0) {
-        mars_warn_(ffmpeg, "Couldn't find stream information");
+        mars_warn_(video, "Couldn't find stream information");
         throw std::runtime_error("Couldn't find stream information");
     }
 
     int videoindex = -1;
-    mars_debug_(ffmpeg, "Number of streams {}", formatCtx->nb_streams);
+    mars_debug_(video, "Number of streams {}", formatCtx->nb_streams);
     for (decltype(formatCtx->nb_streams) i = 0; i < formatCtx->nb_streams; i++)
         if (formatCtx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
             videoindex = i;
@@ -62,24 +62,24 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
         }
 
     if (videoindex == -1) {
-        mars_warn_(ffmpeg, "Didn't find a video stream");
+        mars_warn_(video, "Didn't find a video stream");
         throw std::runtime_error("Didn't find a video stream");
     }
 
-    mars_debug_(ffmpeg, "Video index for file {} is {}", filename, videoindex);
+    mars_debug_(video, "Video index for file {} is {}", filename, videoindex);
 
     codecCtx = formatCtx->streams[videoindex]->codec;
     pCodec = avcodec_find_decoder(codecCtx->codec_id);
     if (!pCodec) {
-        mars_warn_(ffmpeg, "Codec not found");
+        mars_warn_(video, "Codec not found");
         throw std::runtime_error("Codec not found");
     }
     if (avcodec_open2(codecCtx, pCodec, nullptr) < 0) {
-        mars_warn_(ffmpeg, "Could not open codec");
+        mars_warn_(video, "Could not open codec");
         throw std::runtime_error("Could not open codec");
     }
 
-    mars_debug_(ffmpeg, "Codec name = {}", pCodec->long_name);
+    mars_debug_(video, "Codec name = {}", pCodec->long_name);
 
     _renderingThread = std::thread([this]() {
         mars_debug_(rendering, "Staring rendering thread for ffmpeg renderer {}", _filename);
@@ -139,12 +139,12 @@ boost::optional<VideoFrame> FFMPEGRenderer::getNextFrame() noexcept
 
     while (true) {
         if (av_read_frame(formatCtx, packet) >= 0) {
-            mars_debug_(ffmpeg, "Getting a frame for {} pos = {}", _filename, packet->pos);
+            mars_debug_(video, "Getting a frame for {} pos = {}", _filename, packet->pos);
             if (packet->stream_index == videoIndex) {
                 ret = avcodec_decode_video2(codecCtx, pFrame, &got_picture, packet);
 
                 if (ret < 0) {
-                    mars_warn_(ffmpeg, "Unable to decode");
+                    mars_warn_(video, "Unable to decode");
                 }
 
                 if (got_picture) {
@@ -153,14 +153,14 @@ boost::optional<VideoFrame> FFMPEGRenderer::getNextFrame() noexcept
 
                     break;
                 } else {
-                    mars_debug_(ffmpeg, "Didn't receive frame");
+                    mars_debug_(video, "Didn't receive frame");
                 }
             } else {
-                mars_debug_(ffmpeg, "Packet is not a video frame");
+                mars_debug_(video, "Packet is not a video frame");
             }
 
         } else {
-            mars_warn_(ffmpeg, "There is no frames left in {}", _filename);
+            mars_warn_(video, "There is no frames left in {}", _filename);
             return boost::optional<VideoFrame>{};
         }
     }

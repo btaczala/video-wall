@@ -15,7 +15,7 @@ TextWidget::TextWidget(windowing::IRenderer& renderer, const std::string& text, 
 
 void TextWidget::render() noexcept
 {
-    // TODO: Implement me
+    _textTexture->render(_x, _y);
 }
 
 } // namespace widgets

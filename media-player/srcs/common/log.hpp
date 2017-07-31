@@ -10,7 +10,7 @@
 extern std::shared_ptr<spdlog::logger> kDefaultLogger;
 extern std::shared_ptr<spdlog::logger> uiLogger;
 extern std::shared_ptr<spdlog::logger> renderingLogger;
-extern std::shared_ptr<spdlog::logger> ffmpegLogger;
+extern std::shared_ptr<spdlog::logger> videoLogger;
 extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
 extern std::shared_ptr<spdlog::logger> htmlLogger;
 extern std::shared_ptr<spdlog::logger> perfLogger;

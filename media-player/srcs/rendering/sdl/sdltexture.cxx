@@ -1,6 +1,7 @@
 #include "sdltexture.h"
-#include <SDL2/SDL_render.h>
+#include "log.hpp"
 
+#include <SDL2/SDL_render.h>
 
 namespace {
 
@@ -60,6 +61,7 @@ void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
     r.y = y;
     r.w = si.first;
     r.h = si.second;
+    mars_debug_(rendering, "[{}] Rendering under {} ", static_cast<void*>(this));
     SDL_RenderCopy(_renderer, _texture.get(), nullptr, &r);
 }
 void SDLTexture::UpdateYUVTexture(const Rect& rect, std::uint8_t* yplane, int ypitch, std::uint8_t* uplane, int upitch,

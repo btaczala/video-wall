@@ -37,7 +37,7 @@ VideoWidget::VideoWidget(
     _y = 0;
     _width = _video->info().width;
     _height = _video->info().height;
-    mars_info_(ffmpeg, "[{}] VideoWidget video url = {}, size {}x{}", static_cast<void*>(this), filename,
+    mars_info_(video, "[{}] VideoWidget video url = {}, size {}x{}", static_cast<void*>(this), filename,
         _video->info().width, _video->info().height);
 }
 
