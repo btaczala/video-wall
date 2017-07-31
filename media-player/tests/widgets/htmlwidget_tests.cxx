@@ -6,7 +6,7 @@
 #include "html/htmlwidget.h"
 #include "renderermock.hpp"
 
-struct HTMLWidgetTestCEFSetup : public ::testing::Test {
+struct HTMLWidgetTestCEFSetup_it : public ::testing::Test {
     static void SetUpTestCase()
     {
         std::cout << "Running!" << std::endl;
@@ -21,7 +21,7 @@ struct HTMLWidgetTestCEFSetup : public ::testing::Test {
     static void TearDownTestCase() { CefShutdown(); }
 };
 
-TEST_F(HTMLWidgetTestCEFSetup, creation)
+TEST_F(HTMLWidgetTestCEFSetup_it, creation)
 {
     using namespace mars::windowing;
     RendererMock rMock;

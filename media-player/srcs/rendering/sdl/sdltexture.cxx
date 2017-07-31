@@ -1,5 +1,6 @@
 #include "sdltexture.h"
 #include "log.hpp"
+#include "sdllogging.hpp"
 
 #include <SDL2/SDL_render.h>
 
@@ -49,7 +50,7 @@ void SDLTexture::put(const void* buffer, const TextureSize& size) noexcept
     unsigned char* texture_data = nullptr;
     int texture_pitch = 0;
     SDL_LockTexture(_texture.get(), nullptr, reinterpret_cast<void**>(&texture_data), &texture_pitch);
-    memcpy(texture_data, buffer, size.first * size.second * 4);
+    std::memcpy(texture_data, buffer, size.first * size.second * 4);
     SDL_UnlockTexture(_texture.get());
 }
 
@@ -61,7 +62,8 @@ void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
     r.y = y;
     r.w = si.first;
     r.h = si.second;
-    mars_debug_(rendering, "[{}] Rendering under {} ", static_cast<void*>(this));
+    mars_debug_(rendering, "[{}] Rendering texture {} under rect {} ", static_cast<void*>(this),
+        static_cast<void*>(_texture.get()), r);
     SDL_RenderCopy(_renderer, _texture.get(), nullptr, &r);
 }
 void SDLTexture::UpdateYUVTexture(const Rect& rect, std::uint8_t* yplane, int ypitch, std::uint8_t* uplane, int upitch,
@@ -72,6 +74,8 @@ void SDLTexture::UpdateYUVTexture(const Rect& rect, std::uint8_t* yplane, int yp
     sdl_rect.y = rect.y;
     sdl_rect.w = rect.w;
     sdl_rect.h = rect.h;
+    mars_debug_(rendering, "[{}] Rendering YUV texture {} under rect {} ", static_cast<void*>(this),
+        static_cast<void*>(_texture.get()), sdl_rect);
     SDL_UpdateYUVTexture(_texture.get(), &sdl_rect, yplane, ypitch, uplane, upitch, vplane, vpitch);
 }
 } // namespace windowing

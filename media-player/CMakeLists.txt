@@ -31,6 +31,12 @@ if(BUILD_WITH_UNIT_TESTS)
     enable_testing()
     include(GTEST_ADD_TESTS)
     add_subdirectory(tests)
+    add_custom_target(unit_tests
+        COMMAND ctest -R .*_ut.*
+    )
+    add_custom_target(integration_tests
+        COMMAND ctest -R .*_it.*
+    )
 endif()
 
 if(BUILD_WITH_EXAMPLES)

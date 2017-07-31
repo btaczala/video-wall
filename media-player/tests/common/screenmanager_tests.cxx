@@ -2,7 +2,7 @@
 
 #include "screenmanager.h"
 
-TEST(ScreenManager, availableScreens)
+TEST(ScreenManager_it, availableScreens)
 {
     mars::common::ScreenManager screenmgr;
 

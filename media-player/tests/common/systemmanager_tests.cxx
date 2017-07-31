@@ -2,7 +2,7 @@
 #include "systemmanager.h"
 #include <gtest/gtest.h>
 
-TEST(SystemManager, simple)
+TEST(SystemManager_it, simple)
 {
     mars::common::SystemManager smgr;
     auto addresses = smgr.getIP();

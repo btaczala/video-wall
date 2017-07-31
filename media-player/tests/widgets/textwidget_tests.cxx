@@ -3,7 +3,7 @@
 #include "text/textwidget.h"
 #include <gtest/gtest.h>
 
-TEST(TextWidget, simple)
+TEST(TextWidget_ut, simple)
 {
     auto* fontMock = new FontMock;
     RendererMock mock;

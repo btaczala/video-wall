@@ -11,13 +11,13 @@ std::ostream& operator<<(std::ostream& os, const mars::rendering::VideoFrame&) {
 
 #include <boost/optional/optional_io.hpp>
 
-struct VideoWidgetTests : public ::testing::Test {
+struct VideoWidgetTests_ut : public ::testing::Test {
 
     RendererMock _mock;
     VideoBackendMock _videoBackendMock;
 };
 
-TEST_F(VideoWidgetTests, create_video_widget)
+TEST_F(VideoWidgetTests_ut, create_video_widget)
 {
     using namespace mars::rendering;
     using namespace mars::windowing;
@@ -35,7 +35,7 @@ TEST_F(VideoWidgetTests, create_video_widget)
     EXPECT_NO_THROW(fn());
 }
 
-struct VideoWidgetCreatedTests : public ::testing::Test {
+struct VideoWidgetCreatedTests_ut : public ::testing::Test {
 
     void SetUp() override
     {
@@ -61,7 +61,7 @@ struct VideoWidgetCreatedTests : public ::testing::Test {
     TextureMock* _texture;
 };
 
-TEST_F(VideoWidgetCreatedTests, update_frames_left)
+TEST_F(VideoWidgetCreatedTests_ut, update_frames_left)
 {
     using namespace mars::rendering;
     using namespace mars::windowing;
@@ -83,7 +83,7 @@ TEST_F(VideoWidgetCreatedTests, update_frames_left)
     EXPECT_EQ(vw->height(), 10);
 }
 
-TEST_F(VideoWidgetCreatedTests, handle_event)
+TEST_F(VideoWidgetCreatedTests_ut, handle_event)
 {
     mars::windowing::EventVariant event;
     event = mars::windowing::events::Keyboard{};
