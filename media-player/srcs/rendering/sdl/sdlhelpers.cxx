@@ -37,7 +37,7 @@ boost::optional<mars::windowing::EventVariant> translateEvent(const SDL_Event& e
 {
     if (kTranslator.find(ev.type) != kTranslator.end()) {
         auto translated = kTranslator.at(ev.type)(ev);
-        mars_info_(rendering, "Translated event {:x} to {}", ev.type, translated.type().name());
+        mars_trace_(rendering, "Translated event {:x} to {}", ev.type, translated.type().name());
         return translated;
     }
 
