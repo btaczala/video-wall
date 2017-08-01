@@ -104,13 +104,13 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
 
 FFMPEGRenderer::~FFMPEGRenderer()
 {
-    avcodec_close(codecCtx);
-    avformat_close_input(&formatCtx);
-
     _keepRendering = false;
     if (_renderingThread.joinable()) {
         _renderingThread.join();
     }
+
+    avcodec_close(codecCtx);
+    avformat_close_input(&formatCtx);
 }
 boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
 {
