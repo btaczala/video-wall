@@ -77,9 +77,25 @@ std::vector<std::string> ConfigurationManager::fontPaths() const
     return paths;
 }
 
-std::string ConfigurationManager::uuid() const 
+std::string ConfigurationManager::uuid() const { return _jsonObject["uuid"].get<std::string>(); }
+
+void ConfigurationManager::adjustLoggers()
 {
-    return _jsonObject["uuid"].get<std::string>();
+    auto o = _jsonObject["logging"];
+
+    mars_debug("{}", o.dump());
+
+    for (nlohmann::json::iterator it = o.begin(); it != o.end(); ++it) {
+        const std::string level = it.value().get<std::string>();
+        for (int i = spdlog::level::trace; i <= spdlog::level::off; ++i) {
+            if (std::string{ spdlog::level::level_names[i] } == level) {
+                mars_debug("Setting log level for {} to {} i = {}", it.key(), level, i);
+                spdlog::get(it.key())->set_level(static_cast<spdlog::level::level_enum>(i));
+                break;
+            }
+        }
+        spdlog::level::to_str(spdlog::level::debug);
+    }
 }
 
 } // namespace core

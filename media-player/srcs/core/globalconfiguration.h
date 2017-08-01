@@ -15,6 +15,8 @@ struct ConfigurationManager {
 
     std::string uuid() const;
 
+    void adjustLoggers();
+
 private:
     const std::string _configPath;
     const nlohmann::json _jsonObject;

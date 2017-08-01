@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "globalconfiguration.h"
+#include "log.hpp"
 
 TEST(GlobalConfigurationTests_ut, fontPaths)
 {
@@ -18,4 +19,16 @@ TEST(GlobalConfigurationTests_ut, uuid)
     mars::core::ConfigurationManager cfg;
 
     EXPECT_EQ(cfg.uuid(), "%UUID%");
+}
+
+TEST(GlobalConfigurationTests_ut, adjustLoggers)
+{
+    mars::core::ConfigurationManager cfg;
+
+    EXPECT_NO_THROW(cfg.adjustLoggers());
+
+    EXPECT_EQ(kDefaultLogger->level(), spdlog::level::debug);
+    EXPECT_EQ(perfLogger->level(), spdlog::level::info);
+    EXPECT_EQ(ffmpegLibLogger->level(), spdlog::level::warn);
+
 }

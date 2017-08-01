@@ -4,5 +4,14 @@
         "/opt/mars/fonts",
         "$HOME/.config/mars/fonts"
     ],
-    "uuid": "%UUID%"
+    "uuid": "%UUID%",
+    "logging": {
+        "mars": "debug",
+        "mars-ui": "info",
+        "mars-rendering": "info",
+        "mars-ffmpeg": "info",
+        "mars-video-ffmpeg": "warning",
+        "mars-html": "info",
+        "mars-perf": "info"
+    }
 }
