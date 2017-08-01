@@ -1,8 +1,8 @@
 #include "htmlwidget.h"
 #include "cefrenderhandler.h"
-#include "renderer.h"
 #include "itexture.h"
 #include "log.hpp"
+#include "renderer.h"
 
 namespace {
 struct html_event_visitor : public boost::static_visitor<bool> {
@@ -33,8 +33,7 @@ private:
 namespace mars {
 namespace widgets {
 
-HTMLWidget::HTMLWidget(
-    const std::string& url, windowing::Renderer& renderer, std::uint16_t width, std::uint16_t height)
+HTMLWidget::HTMLWidget(const std::string& url, windowing::Renderer& renderer, std::uint16_t width, std::uint16_t height)
     : Widget(renderer)
     , _renderingTexture(renderer.createTexture(width, height, windowing::PixelFormat::Unknown))
     , _cefRenderer(new mars::webengine::RenderHandler(

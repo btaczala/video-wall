@@ -3,8 +3,8 @@
 
 #include "ifont.h"
 #include "iimage.h"
-#include "renderer.h"
 #include "itexture.h"
+#include "renderer.h"
 #include "renderer_types.hpp"
 #include <trompeloeil.hpp>
 

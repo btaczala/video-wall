@@ -1,7 +1,7 @@
 #include "textwidget.h"
 #include "ifont.h"
-#include "renderer.h"
 #include "itexture.h"
+#include "renderer.h"
 
 namespace mars {
 namespace widgets {
@@ -14,10 +14,7 @@ TextWidget::TextWidget(
 {
 }
 
-void TextWidget::render() noexcept
-{
-    _textTexture->render(_x, _y);
-}
+void TextWidget::render() noexcept { _textTexture->render(_x, _y); }
 
 } // namespace widgets
 } // namespace mars

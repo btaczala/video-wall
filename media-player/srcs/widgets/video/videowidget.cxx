@@ -1,7 +1,7 @@
 #include "videowidget.h"
-#include "renderer.h"
 #include "itexture.h"
 #include "ivideorenderer.h"
+#include "renderer.h"
 
 #include "renderer_types.hpp"
 

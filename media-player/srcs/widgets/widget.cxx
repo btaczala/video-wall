@@ -1,6 +1,6 @@
 #include "widget.h"
-#include "renderer.h"
 #include "log.hpp"
+#include "renderer.h"
 #include "renderer_types.hpp"
 
 namespace mars {

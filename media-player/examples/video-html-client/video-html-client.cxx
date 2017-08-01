@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <cef_app.h>
 #include <SDL2/SDL.h>
+#include <cef_app.h>
 
 #include "html/htmlwidget.h"
 #include "sdlrenderer.h"

@@ -6,9 +6,9 @@
 #include <vector>
 
 #include "ifont.h"
-#include "renderer.h"
 #include "itexture.h"
 #include "log.hpp"
+#include "renderer.h"
 #include "sdlhelpers.h"
 
 #include <SDL2/SDL_render.h>
