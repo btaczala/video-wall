@@ -15,6 +15,7 @@ struct VideoBackendMock : public mars::rendering::IVideoBackend {
 struct VideoRendererMock : public mars::rendering::IVideoRenderer {
     MAKE_MOCK0(frame, boost::optional<mars::rendering::VideoFrame>(), noexcept, override);
     MAKE_CONST_MOCK0(info, mars::rendering::VideoInfo(), noexcept, override);
+    MAKE_MOCK1(setFrameReadyCb, void(const mars::rendering::IVideoRenderer::FrameReadyCb&), noexcept, override);
 };
 
 #endif /* end of include guard: VIDEOBACKENDMOCK_HPP_RZ8MNCJU */

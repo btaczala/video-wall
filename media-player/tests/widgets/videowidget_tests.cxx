@@ -27,6 +27,7 @@ TEST_F(VideoWidgetTests_ut, create_video_widget)
 
     REQUIRE_CALL(_videoBackendMock, createVideoProxy(trompeloeil::_)).RETURN(video);
     REQUIRE_CALL(*video, info()).RETURN(vi).TIMES(AT_LEAST(1));
+    REQUIRE_CALL(*video, setFrameReadyCb(trompeloeil::_));
 
     ITexture* texture = nullptr;
     REQUIRE_CALL(_mock, createTextureProxy(vi.width, vi.height, mars::windowing::PixelFormat::IYUV)).RETURN(texture);
@@ -47,6 +48,7 @@ struct VideoWidgetCreatedTests_ut : public ::testing::Test {
 
         REQUIRE_CALL(_videoBackendMock, createVideoProxy("")).RETURN(video);
         REQUIRE_CALL(*video, info()).RETURN(vi).TIMES(AT_LEAST(1));
+        REQUIRE_CALL(*video, setFrameReadyCb(trompeloeil::_));
 
         _texture = new TextureMock;
         REQUIRE_CALL(_mock, createTextureProxy(vi.width, vi.height, mars::windowing::PixelFormat::IYUV))

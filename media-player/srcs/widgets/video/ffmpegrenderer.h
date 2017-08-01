@@ -26,6 +26,7 @@ struct FFMPEGRenderer : public IVideoRenderer {
 
     boost::optional<VideoFrame> frame() noexcept override;
     VideoInfo info() const noexcept override;
+    void setFrameReadyCb(const FrameReadyCb& cb) noexcept override;
 
 private:
 
@@ -40,6 +41,7 @@ private:
     std::mutex _frameLock;
 
     boost::optional<VideoFrame> _currentFrame;
+    FrameReadyCb _frameReadyCb;
 };
 
 struct FFMPEGBackend : public IVideoBackend {

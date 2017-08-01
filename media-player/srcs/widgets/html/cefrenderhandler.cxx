@@ -4,7 +4,10 @@
 namespace mars {
 namespace webengine {
 
-RenderHandler::RenderHandler(const PaintCallback &cb, int w, int h): _cb(cb), _w(w), _h(h)
+RenderHandler::RenderHandler(const PaintCallback& cb, int w, int h)
+    : _cb(cb)
+    , _w(w)
+    , _h(h)
 {
 }
 
@@ -13,6 +16,7 @@ RenderHandler::~RenderHandler() {}
 bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
     rect = CefRect(0, 0, _w, _h);
+    mars_debug_(html, "CefRect(0, 0, {}, {})", _w, _h);
     return true;
 }
 

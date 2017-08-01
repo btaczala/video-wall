@@ -39,6 +39,8 @@ VideoWidget::VideoWidget(
     _height = _video->info().height;
     mars_info_(video, "[{}] VideoWidget video url = {}, size {}x{}", static_cast<void*>(this), filename,
         _video->info().width, _video->info().height);
+
+    _video->setFrameReadyCb([this]() { _parentRenderer.requestRefresh(this); });
 }
 
 bool VideoWidget::update() const noexcept

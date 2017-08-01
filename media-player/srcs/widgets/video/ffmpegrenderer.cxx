@@ -90,6 +90,7 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
                 _currentFrame = getNextFrame();
                 mars_trace_(rendering, "Frame updated for file {}", _filename);
             }
+            _frameReadyCb();
 
             if (sw.elapsed() > 5) {
                 perfLogger->info("Rendering a frame for {}, took {} ms", _filename, sw.elapsed());
@@ -182,6 +183,8 @@ VideoInfo FFMPEGRenderer::info() const noexcept
     return VideoInfo{ static_cast<std::uint16_t>(codecCtx->width), static_cast<std::uint16_t>(codecCtx->height),
         formatCtx->duration };
 }
+
+void FFMPEGRenderer::setFrameReadyCb(const FrameReadyCb& cb) noexcept { _frameReadyCb = cb; }
 
 FFMPEGBackend::FFMPEGBackend()
 {

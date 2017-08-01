@@ -23,13 +23,14 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
 {
     mars_info_(rendering, "Start rendering loop");
     bool running = true;
+    bool rendering = true;
     while (running) {
         auto event = pollEvent();
 
         if (event) {
             auto visitor = boost::hana::overload([](mars::windowing::events::Keyboard k) {},
                 [&running](const mars::windowing::events::Quit& ev) { running = false; },
-                [](const mars::windowing::events::Refresh& ev) {});
+                [&rendering](const mars::windowing::events::Refresh& ev) { rendering = true; });
             // clang-format on
             boost::apply_visitor(visitor, event.get());
         }
@@ -37,13 +38,16 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
         for (const auto& f : additionalFunctions) {
             f();
         }
-        clear();
-        for (const auto& w : _widgets) {
-            if (w->update()) {
-                w->render();
+        if (rendering) {
+            clear();
+            for (const auto& w : _widgets) {
+                if (w->update()) {
+                    w->render();
+                }
             }
+            render();
+            rendering = false;
         }
-        render();
     }
     mars_info_(rendering, "Finish rendering loop");
 }

@@ -3,6 +3,7 @@
 
 #include <array>
 #include <boost/optional.hpp>
+#include <functional>
 #include <memory>
 
 namespace mars {
@@ -26,11 +27,13 @@ struct VideoInfo {
  * @brief  A base class for every type capable of producing a video frame: ffmpeg and libVA
  */
 struct IVideoRenderer {
+    typedef std::function<void()> FrameReadyCb;
+
+    // TODO: Document me
     virtual ~IVideoRenderer() = default;
-
     virtual boost::optional<VideoFrame> frame() noexcept = 0;
-
     virtual VideoInfo info() const noexcept = 0;
+    virtual void setFrameReadyCb(const FrameReadyCb& cb) noexcept = 0;
 };
 
 struct IVideoBackend {
@@ -41,7 +44,7 @@ struct IVideoBackend {
      * @param filename
      * @throw This function will throw an exception if anything bad happens
      *
-     * @return 
+     * @return
      */
     virtual std::unique_ptr<IVideoRenderer> createVideo(const std::string& filename) const = 0;
 };
