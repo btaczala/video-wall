@@ -7,3 +7,6 @@
 [submodule "media-player/3rdParty/trompeloeil"]
 	path = media-player/3rdParty/trompeloeil
 	url = https://github.com/rollbear/trompeloeil.git
+[submodule "media-player/3rdParty/embed-resource"]
+	path = media-player/3rdParty/embed-resource
+	url = https://github.com/cyrilcode/embed-resource.git

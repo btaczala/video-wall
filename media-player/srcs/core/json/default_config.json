@@ -1,0 +1,8 @@
+{
+    "fontPaths": [
+        "/usr/share/fonts",
+        "/opt/mars/fonts",
+        "$HOME/.config/mars/fonts"
+    ],
+    "uuid": "%UUID%"
+}
