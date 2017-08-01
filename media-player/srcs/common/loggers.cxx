@@ -1,10 +1,18 @@
-
 #include "log.hpp"
+
+#include <cstdlib>
 
 std::shared_ptr<spdlog::logger> loggerSetup(const std::string& name, spdlog::level::level_enum ll = spdlog::level::info)
 {
     auto log = spdlog::stdout_color_mt(name);
-    log->set_level(ll);
+
+    auto debug = std::getenv("MARS_DEBUG");
+
+    if (!debug) {
+        log->set_level(ll);
+    } else {
+        log->set_level(spdlog::level::debug);
+    }
     return log;
 }
 
