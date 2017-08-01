@@ -23,7 +23,6 @@
 
 int main(int argc, char* argv[])
 {
-
     mars_debug("Star rendering html content pid = {}", getpid());
 
     CefMainArgs args(argc, argv);
@@ -69,11 +68,10 @@ int main(int argc, char* argv[])
     std::uint16_t width = 800;
     std::uint16_t height = 600;
 
-    auto window = SDL_CreateWindow("Render CEF with SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width,
-        height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-    mars_debug("SDL window = {}", static_cast<void*>(window));
+    auto window = mars::windowing::SDLRenderer::createFullScreenWindow();
+    mars_debug("SDL window = {}", static_cast<void*>(window.get()));
     if (window) {
-        mars::windowing::SDLRenderer renderer{ window };
+        mars::windowing::SDLRenderer renderer{ window.get() };
         if (true) {
             // SDL_Event e;
 
@@ -82,14 +80,13 @@ int main(int argc, char* argv[])
             const std::string url{ std::string{ "file:///" } + std::string(HTML_DIR)
                 + "/webgl-hello-world-master/webgl-demo.htm" };
             auto html = std::make_shared<HTMLWidget>(url, renderer, width, height);
-            html->move(100,100);
+            html->move(100, 100);
             renderer.addWidget(html);
             renderer.loop({ { []() { CefDoMessageLoopWork(); } } });
         }
     }
 
     CefShutdown();
-    SDL_DestroyWindow(window);
     SDL_Quit();
 
     return 0;

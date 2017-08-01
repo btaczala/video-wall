@@ -2,8 +2,8 @@
 set(SDL2PP_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/3rdParty/libSDL2pp.git/ ${CMAKE_BINARY_DIR}/3rdParty/libSDL2pp.git/)
 
 add_executable(video-html-client video-html-client.cxx)
-target_link_libraries(video-html-client mars-widgets mars-rendering mars-common SDL2pp)
-target_include_directories(video-html-client PUBLIC ${SDL2_INCLUDE_DIR} ${SDL2PP_INCLUDE_DIRS})
+target_link_libraries(video-html-client mars-widgets mars-rendering mars-common)
+target_include_directories(video-html-client PUBLIC ${SDL2_INCLUDE_DIR})
 
 file(COPY ${CEF_ROOT}/Resources/icudtl.dat DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${CEF_ROOT}/Resources/cef.pak DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

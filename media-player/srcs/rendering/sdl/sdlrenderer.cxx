@@ -117,5 +117,15 @@ void /* static */ SDLRenderer::initialize()
     }
 }
 
+/*static*/ sdl_helpers::WindowPtr SDLRenderer::createFullScreenWindow()
+{
+    const int width = 800;
+    const int height = 600;
+    auto window = SDL_CreateWindow("Render CEF with SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width,
+        height, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL);
+
+    return sdl_helpers::WindowPtr{ window };
+}
+
 } // namespace windowing
 } // namespace mars

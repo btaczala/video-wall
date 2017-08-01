@@ -67,11 +67,10 @@ int main(int argc, char* argv[])
     int width = 800;
     int height = 600;
 
-    auto window = SDL_CreateWindow("Render CEF with SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width,
-        height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-    mars_debug("SDL window = {}", static_cast<void*>(window));
+    auto window = mars::windowing::SDLRenderer::createFullScreenWindow();
+    mars_debug("SDL window = {}", static_cast<void*>(window.get()));
     if (window) {
-        mars::windowing::SDLRenderer renderer{ window };
+        mars::windowing::SDLRenderer renderer{ window.get() };
         if (true) {
             // SDL_Event e;
 
@@ -130,7 +129,6 @@ int main(int argc, char* argv[])
         }
     }
 
-    SDL_DestroyWindow(window);
     SDL_Quit();
 
     return 0;

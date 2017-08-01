@@ -38,6 +38,8 @@ struct SDLRenderer : public IRenderer {
 
     static void initialize();
 
+    static sdl_helpers::WindowPtr createFullScreenWindow();
+
 private:
     const sdl_helpers::RendererPtr _renderer;
     std::vector<std::shared_ptr<widgets::Widget>> _widgets;
