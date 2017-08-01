@@ -3,6 +3,7 @@
 
 #include "renderer_types.hpp"
 #include <SDL2/SDL.h>
+#include <boost/optional.hpp>
 
 namespace sdl_helpers {
 struct deleter {
@@ -32,7 +33,7 @@ using RendererPtr = std::unique_ptr<SDL_Renderer, deleter>;
 using SurfacePtr = std::unique_ptr<SDL_Surface, deleter>;
 using WindowPtr = std::unique_ptr<SDL_Window, deleter>;
 
-mars::windowing::EventVariant translateEvent(const SDL_Event& ev);
+boost::optional<mars::windowing::EventVariant> translateEvent(const SDL_Event& ev);
 
 } // namespace sdl_helpers
 

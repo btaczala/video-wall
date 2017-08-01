@@ -6,14 +6,14 @@
 
 namespace mars {
 namespace windowing {
-struct IRenderer;
+struct Renderer;
 struct IImage;
 }
 namespace widgets {
 
 enum class ImageType { normal = 0, stretched };
 struct ImageWidget : public Widget {
-    ImageWidget(const std::string& imagePath, windowing::IRenderer& renderer);
+    ImageWidget(const std::string& imagePath, windowing::Renderer& renderer);
     ~ImageWidget();
 
     bool update() const noexcept override { return true; }

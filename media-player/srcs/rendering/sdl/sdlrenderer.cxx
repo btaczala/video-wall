@@ -45,48 +45,6 @@ std::unique_ptr<IImage> SDLRenderer::createImage(const std::string& imagePath) n
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }
 void SDLRenderer::render() noexcept { SDL_RenderPresent(_renderer.get()); }
-
-void SDLRenderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
-{
-    mars_info_(rendering, "Start rendering loop");
-    SDL_Event ev{};
-    while (true) {
-        auto r = SDL_WaitEventTimeout(&ev, 10);
-        if (r > 0) {
-            mars_trace_(rendering, "Received event 0x{:x}", ev.type);
-            if (ev.type == SDL_QUIT) {
-                break;
-            } else if (ev.type == SDL_KEYDOWN) {
-                if (ev.key.keysym.sym == SDLK_SPACE) {
-                }
-            }
-        }
-        for (const auto& f : additionalFunctions) {
-            f();
-        }
-        clear();
-        for (const auto& w : _widgets) {
-            if (w->update()) {
-                w->render();
-            }
-        }
-        render();
-    }
-    mars_info_(rendering, "Finish rendering loop");
-}
-
-void SDLRenderer::addWidget(const std::shared_ptr<widgets::Widget>& w)
-{
-    mars_info_(rendering, "Adding widget {}", static_cast<void*>(w.get()));
-    if (_widgets.empty()) {
-        _focused = w;
-    }
-    _widgets.push_back(w);
-
-    std::sort(
-        std::begin(_widgets), std::end(_widgets), [](const auto& sp1, const auto& sp2) { return sp1->z() > sp2->z(); });
-}
-
 void SDLRenderer::requestRefresh(widgets::Widget* widget) noexcept
 {
     mars_trace_(rendering, "Scheduling a refresh");
@@ -97,6 +55,18 @@ void SDLRenderer::requestRefresh(widgets::Widget* widget) noexcept
     ev.user.data2 = nullptr;
 
     SDL_PushEvent(&ev);
+}
+
+boost::optional<EventVariant> SDLRenderer::pollEvent() noexcept
+{
+    SDL_Event ev{};
+    auto r = SDL_WaitEventTimeout(&ev, 10);
+    if (r > 0) {
+        mars_trace_(rendering, "Received event 0x{:x}", ev.type);
+        return sdl_helpers::translateEvent(ev);
+    }
+
+    return boost::optional<EventVariant>{};
 }
 
 void /* static */ SDLRenderer::initialize()

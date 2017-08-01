@@ -18,7 +18,7 @@ struct ITexture;
 namespace widgets {
 
 struct VideoWidget : public Widget {
-    VideoWidget(const std::string& filename, windowing::IRenderer& renderer, rendering::IVideoBackend& videoBackend);
+    VideoWidget(const std::string& filename, windowing::Renderer& renderer, rendering::IVideoBackend& videoBackend);
 
     bool update() const noexcept override;
     void render() noexcept override;

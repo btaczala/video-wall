@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "ifont.h"
-#include "irenderer.h"
+#include "renderer.h"
 #include "itexture.h"
 #include "log.hpp"
 #include "sdlhelpers.h"
@@ -19,8 +19,7 @@ struct Widget;
 } // namespace widgets
 namespace windowing {
 
-struct SDLRenderer : public IRenderer {
-    using LoopFn = std::function<void()>;
+struct SDLRenderer : public Renderer {
     SDLRenderer(SDL_Window* window);
 
     std::unique_ptr<ITexture> createTexture(
@@ -31,10 +30,9 @@ struct SDLRenderer : public IRenderer {
     void clear() noexcept override;
     void render() noexcept override;
 
-    void loop(const std::vector<LoopFn>& additionalFunctions = std::vector<LoopFn>{}) noexcept;
-    void addWidget(const std::shared_ptr<widgets::Widget>& w) override;
 
     void requestRefresh(widgets::Widget* widget) noexcept override;
+    boost::optional<EventVariant> pollEvent() noexcept override;
 
     static void initialize();
 
@@ -43,7 +41,6 @@ struct SDLRenderer : public IRenderer {
 private:
     const sdl_helpers::RendererPtr _renderer;
     std::vector<std::shared_ptr<widgets::Widget>> _widgets;
-    std::shared_ptr<widgets::Widget> _focused;
 };
 } // namespace windowing
 } // namespace mars

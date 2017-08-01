@@ -9,7 +9,7 @@
 
 namespace mars {
 namespace windowing {
-struct IRenderer;
+struct Renderer;
 struct ITexture;
 } // namespace rendering
 
@@ -17,7 +17,7 @@ namespace widgets {
 
 struct HTMLWidget : public Widget {
 
-    HTMLWidget(const std::string& url, windowing::IRenderer& renderer, std::uint16_t width, std::uint16_t height);
+    HTMLWidget(const std::string& url, windowing::Renderer& renderer, std::uint16_t width, std::uint16_t height);
     ~HTMLWidget();
 
     bool update() const noexcept override;

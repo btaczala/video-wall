@@ -1,12 +1,12 @@
 #include "textwidget.h"
 #include "ifont.h"
-#include "irenderer.h"
+#include "renderer.h"
 #include "itexture.h"
 
 namespace mars {
 namespace widgets {
 TextWidget::TextWidget(
-    windowing::IRenderer& renderer, const std::string& text, const std::string& font, std::uint32_t textSize)
+    windowing::Renderer& renderer, const std::string& text, const std::string& font, std::uint32_t textSize)
     : Widget(renderer)
     , _text(text)
     , _font(renderer.createFont(font, textSize))

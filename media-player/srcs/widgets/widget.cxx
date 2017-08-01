@@ -1,12 +1,12 @@
 #include "widget.h"
-#include "irenderer.h"
+#include "renderer.h"
 #include "log.hpp"
 #include "renderer_types.hpp"
 
 namespace mars {
 namespace widgets {
 
-Widget::Widget(windowing::IRenderer& renderer)
+Widget::Widget(windowing::Renderer& renderer)
     : _parentRenderer(renderer)
     , _x(0)
     , _y(0)

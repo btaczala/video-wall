@@ -7,13 +7,13 @@
 
 namespace mars {
 namespace windowing {
-struct IRenderer;
+struct Renderer;
 struct ITexture;
 } // windowing
 namespace widgets {
 struct TextWidget : public Widget {
     TextWidget(
-        windowing::IRenderer& renderer, const std::string& text, const std::string& font, std::uint32_t textSize);
+        windowing::Renderer& renderer, const std::string& text, const std::string& font, std::uint32_t textSize);
 
     bool update() const noexcept override { return true; }
     void render() noexcept override;

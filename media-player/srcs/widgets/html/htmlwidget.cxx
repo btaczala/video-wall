@@ -1,6 +1,6 @@
 #include "htmlwidget.h"
 #include "cefrenderhandler.h"
-#include "irenderer.h"
+#include "renderer.h"
 #include "itexture.h"
 #include "log.hpp"
 
@@ -34,7 +34,7 @@ namespace mars {
 namespace widgets {
 
 HTMLWidget::HTMLWidget(
-    const std::string& url, windowing::IRenderer& renderer, std::uint16_t width, std::uint16_t height)
+    const std::string& url, windowing::Renderer& renderer, std::uint16_t width, std::uint16_t height)
     : Widget(renderer)
     , _renderingTexture(renderer.createTexture(width, height, windowing::PixelFormat::Unknown))
     , _cefRenderer(new mars::webengine::RenderHandler(

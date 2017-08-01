@@ -64,9 +64,6 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    int width = 800;
-    int height = 600;
-
     auto window = mars::windowing::SDLRenderer::createFullScreenWindow();
     mars_debug("SDL window = {}", static_cast<void*>(window.get()));
     if (window) {

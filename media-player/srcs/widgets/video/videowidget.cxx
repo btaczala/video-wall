@@ -1,5 +1,5 @@
 #include "videowidget.h"
-#include "irenderer.h"
+#include "renderer.h"
 #include "itexture.h"
 #include "ivideorenderer.h"
 
@@ -28,7 +28,7 @@ namespace mars {
 namespace widgets {
 
 VideoWidget::VideoWidget(
-    const std::string& filename, windowing::IRenderer& renderer, rendering::IVideoBackend& videoBackend)
+    const std::string& filename, windowing::Renderer& renderer, rendering::IVideoBackend& videoBackend)
     : Widget(renderer)
     , _video(videoBackend.createVideo(filename))
     , _texture(_parentRenderer.createTexture(_video->info().width, _video->info().height, windowing::PixelFormat::IYUV))

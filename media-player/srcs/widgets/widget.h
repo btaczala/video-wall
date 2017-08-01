@@ -7,7 +7,7 @@
 
 namespace mars {
 namespace windowing {
-struct IRenderer;
+struct Renderer;
 struct ITexture;
 }
 namespace widgets {
@@ -17,7 +17,7 @@ namespace widgets {
  */
 struct Widget {
 
-    Widget(windowing::IRenderer& renderer);
+    Widget(windowing::Renderer& renderer);
 
     virtual ~Widget() = default;
 
@@ -48,7 +48,7 @@ struct Widget {
 protected:
     void requestRefresh();
 
-    windowing::IRenderer& _parentRenderer;
+    windowing::Renderer& _parentRenderer;
     std::uint32_t _x;
     std::uint32_t _y;
     std::uint32_t _width;

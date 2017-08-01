@@ -2,8 +2,12 @@
 #define IRENDERER_H_HBWR9AKY
 
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <utility>
+#include <vector>
+
+#include <boost/optional.hpp>
 
 #include "renderer_types.hpp"
 
@@ -22,8 +26,9 @@ struct IImage;
  *  Provides a surface with a buffer where all other widgets are rendering.
  *  Each widget (texture) has to be associated with a renderer to know where to actually render.
  */
-struct IRenderer {
-    virtual ~IRenderer() = default;
+struct Renderer {
+    using LoopFn = std::function<void()>;
+    virtual ~Renderer() = default;
 
     /**
      * @brief Creates a texture
@@ -45,10 +50,16 @@ struct IRenderer {
      * @brief This function copies renderer buffor to actuall window buffer
      */
     virtual void render() noexcept = 0;
-
-    virtual void addWidget(const std::shared_ptr<widgets::Widget>& w) = 0;
-
     virtual void requestRefresh(widgets::Widget* = nullptr) noexcept = 0;
+
+    virtual boost::optional<EventVariant> pollEvent() noexcept = 0;
+
+    void addWidget(const std::shared_ptr<widgets::Widget>& w);
+    void loop(const std::vector<LoopFn>& additionalFunctions = std::vector<LoopFn>{}) noexcept;
+
+private:
+    std::vector<std::shared_ptr<widgets::Widget>> _widgets;
+    std::shared_ptr<widgets::Widget> _focused;
 };
 } // namespace windowing
 } // namespace mars
