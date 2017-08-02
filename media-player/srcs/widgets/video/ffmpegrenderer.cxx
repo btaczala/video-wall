@@ -90,7 +90,9 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
                 _currentFrame = getNextFrame();
                 mars_trace_(rendering, "Frame updated for file {}", _filename);
             }
-            _frameReadyCb();
+            if (_frameReadyCb) {
+                _frameReadyCb();
+            }
 
             if (sw.elapsed() > 5) {
                 perfLogger->info("Rendering a frame for {}, took {} ms", _filename, sw.elapsed());
