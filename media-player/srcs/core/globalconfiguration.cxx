@@ -83,14 +83,14 @@ void ConfigurationManager::adjustLoggers()
 {
     auto o = _jsonObject["logging"];
 
-    mars_debug("{}", o.dump());
-
     for (nlohmann::json::iterator it = o.begin(); it != o.end(); ++it) {
         const std::string level = it.value().get<std::string>();
         for (int i = spdlog::level::trace; i <= spdlog::level::off; ++i) {
             if (std::string{ spdlog::level::level_names[i] } == level) {
-                mars_debug("Setting log level for {} to {} i = {}", it.key(), level, i);
-                spdlog::get(it.key())->set_level(static_cast<spdlog::level::level_enum>(i));
+                auto logger = spdlog::get(it.key());
+                if (logger) {
+                    logger->set_level(static_cast<spdlog::level::level_enum>(i));
+                }
                 break;
             }
         }

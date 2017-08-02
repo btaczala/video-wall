@@ -55,5 +55,5 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
     }
     mars_info_(rendering, "Finish rendering loop");
 }
-}
-}
+} // namespace windowing
+} // namespace mars

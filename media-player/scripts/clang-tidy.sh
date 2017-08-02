@@ -18,7 +18,7 @@ cmake $mp_dir/ -DCMAKE_BUILD_TYPE=Debug -DBUILD_WITH_EXAMPLE=OFF -DBUILD_WITH_UN
 cd $mp_dir
 ln -s  $tmp_build_dir/compile_commands.json
 
-/usr/share/clang/run-clang-tidy.py -header-filter=$mp_srcs_dir -checks=boost-*,clang-analyzer-*,llvm-*,performance-* -p $tmp_build_dir
+/usr/share/clang/run-clang-tidy.py -header-filter=$mp_srcs_dir -checks=boost-*,clang-analyzer-*,llvm-*,performance-* -p $tmp_build_dir $@
 
 rm $mp_dir/compile_commands.json
 

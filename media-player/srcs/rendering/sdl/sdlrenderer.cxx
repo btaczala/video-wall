@@ -14,7 +14,7 @@
 
 namespace {
 const std::uint32_t kRefreshEvent = SDL_RegisterEvents(1);
-}
+} // namespace
 
 namespace mars {
 namespace windowing {

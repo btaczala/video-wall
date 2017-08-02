@@ -15,5 +15,5 @@ SDLImage::SDLImage(const std::string& filename, SDL_Renderer* renderer)
 SDLImage::~SDLImage() {}
 
 void SDLImage::render(std::uint32_t x, std::uint32_t y) noexcept { _texture->render(x, y); }
-}
-}
+} // namespace windowing
+} // namespace mars
