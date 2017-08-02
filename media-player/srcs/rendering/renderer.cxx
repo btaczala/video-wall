@@ -40,14 +40,14 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
 {
     using namespace mars::windowing;
     mars_info_(rendering, "Start rendering loop");
-    bool running = true;
+    bool quit = false;
     bool rendering = true;
-    while (running) {
+    while (!quit) {
         auto event = pollEvent();
 
         if (event) {
             // TODO: Implement a proper lambda visitation here
-            auto vis = event_visitor(running, rendering);
+            auto vis = event_visitor(quit, rendering);
             boost::apply_visitor(vis, event.get());
         }
 

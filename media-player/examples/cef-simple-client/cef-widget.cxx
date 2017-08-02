@@ -58,12 +58,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    // Initialize SDL
-    mars_debug("Initializing SDL pid = {}", getpid());
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
-        return 1;
-    }
+    mars::windowing::SDLRenderer::initialize();
 
     std::uint16_t width = 800;
     std::uint16_t height = 600;
