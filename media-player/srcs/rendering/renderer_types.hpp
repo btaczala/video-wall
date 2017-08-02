@@ -2,11 +2,9 @@
 #define RENDERER_TYPES_HPP_TH4HPV7T
 
 #include <boost/variant.hpp>
+#include "events.hpp"
 
 namespace mars {
-namespace widgets {
-struct Widget;
-} // namespace widgets
 namespace windowing {
 
 struct Rect {
@@ -18,21 +16,7 @@ struct Rect {
 
 enum class PixelFormat { Unknown = 0, IYUV };
 
-namespace events {
-struct Quit {
-};
-struct Keyboard {
-    enum class Key { Unknown = 0, Space };
-    Key key{ Key::Unknown };
-};
-
-struct Refresh {
-    widgets::Widget* widget;
-};
-
-} // events
-
-using EventVariant = boost::variant<events::Quit, events::Keyboard, events::Refresh>;
+using EventVariant = boost::variant<events::Quit, events::Keyboard, events::Refresh, events::Window>;
 
 } // namespace windowing
 } // namespace mars

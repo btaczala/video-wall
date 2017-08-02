@@ -85,6 +85,9 @@ void /* static */ SDLRenderer::initialize()
         mars_error_(rendering, "Unable to init image library ec = {}", IMG_GetError());
         throw std::runtime_error(fmt::format("Unable to init image library ec = {}", IMG_GetError()));
     }
+
+    SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+    SDL_EventState(SDL_KEYDOWN, SDL_IGNORE);
 }
 
 /*static*/ sdl_helpers::WindowPtr SDLRenderer::createFullScreenWindow()

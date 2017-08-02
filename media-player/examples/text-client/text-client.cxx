@@ -22,7 +22,7 @@ int main()
         mars::windowing::SDLRenderer renderer{ window };
 
         renderer.addWidget(std::make_shared<mars::widgets::TextWidget>(
-            renderer, "this is a simple text", "/usr/share/fonts/TTF/arial.ttf", 24));
+            renderer, "this is a simple text", "/usr/share/fonts/TTF/Hack-Regular.ttf", 24));
 
         renderer.loop();
     }

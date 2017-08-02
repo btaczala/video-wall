@@ -21,6 +21,7 @@ void Renderer::addWidget(const std::shared_ptr<widgets::Widget>& w)
 
 void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
 {
+    using namespace mars::windowing;
     mars_info_(rendering, "Start rendering loop");
     bool running = true;
     bool rendering = true;
@@ -28,9 +29,10 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
         auto event = pollEvent();
 
         if (event) {
-            auto visitor = boost::hana::overload([](mars::windowing::events::Keyboard k) {},
-                [&running](const mars::windowing::events::Quit& ev) { running = false; },
-                [&rendering](const mars::windowing::events::Refresh& ev) { rendering = true; });
+            auto visitor = boost::hana::overload([](events::Keyboard k) {},
+                [&running](const events::Quit& ev) { running = false; },
+                [&rendering](const events::Refresh& ev) { rendering = true; },
+                [&rendering](const events::Window& ev) { rendering = true; });
             // clang-format on
             boost::apply_visitor(visitor, event.get());
         }
@@ -38,7 +40,9 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
         for (const auto& f : additionalFunctions) {
             f();
         }
+
         if (rendering) {
+            mars_debug_(rendering, "Trigger rendering");
             clear();
             for (const auto& w : _widgets) {
                 if (w->update()) {
