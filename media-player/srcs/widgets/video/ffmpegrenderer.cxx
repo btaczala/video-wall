@@ -100,7 +100,7 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
 
             // TODO: We should check if 40 ms is enough for all movies??
             using namespace std::chrono_literals;
-            std::this_thread::sleep_for(40ms);
+            std::this_thread::sleep_for(13ms);
         }
     });
 }
@@ -144,15 +144,23 @@ boost::optional<VideoFrame> FFMPEGRenderer::getNextFrame() noexcept
         if (av_read_frame(formatCtx, packet) >= 0) {
             mars_debug_(video, "Getting a frame for {} pos = {}", _filename, packet->pos);
             if (packet->stream_index == videoIndex) {
-                ret = avcodec_decode_video2(codecCtx, pFrame, &got_picture, packet);
+                {
+                    Stopwatch<> sw;
+                    ret = avcodec_decode_video2(codecCtx, pFrame, &got_picture, packet);
+                    mars_debug_(perf, "[avcodec_decode_video2] {}", sw.elapsed());
+                }
 
                 if (ret < 0) {
                     mars_warn_(video, "Unable to decode");
                 }
 
                 if (got_picture) {
-                    sws_scale(img_convert_ctx, (const unsigned char* const*)pFrame->data, pFrame->linesize, 0,
-                        codecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
+                    {
+                        Stopwatch<> sw;
+                        sws_scale(img_convert_ctx, (const unsigned char* const*)pFrame->data, pFrame->linesize, 0,
+                            codecCtx->height, pFrameYUV->data, pFrameYUV->linesize);
+                        mars_debug_(perf, "[sws_scale] {}", sw.elapsed());
+                    }
 
                     break;
                 } else {

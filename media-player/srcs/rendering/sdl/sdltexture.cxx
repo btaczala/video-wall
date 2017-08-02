@@ -65,9 +65,14 @@ void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
     r.y = y;
     r.w = si.first;
     r.h = si.second;
-    mars_debug_(rendering, "[{}] Rendering texture {} under rect {} ", static_cast<void*>(this),
-        static_cast<void*>(_texture.get()), r);
-    SDL_RenderCopy(_renderer, _texture.get(), nullptr, &r);
+    if (!_fullscreen) {
+        mars_debug_(rendering, "[{}] Rendering texture {} under rect {} ", static_cast<void*>(this),
+            static_cast<void*>(_texture.get()), r);
+        SDL_RenderCopy(_renderer, _texture.get(), nullptr, &r);
+    } else {
+        mars_debug_(rendering, "[{}] Rendering texture fullscreen ", static_cast<void*>(this));
+        SDL_RenderCopy(_renderer, _texture.get(), nullptr, nullptr);
+    }
 }
 void SDLTexture::UpdateYUVTexture(const Rect& rect, std::uint8_t* yplane, int ypitch, std::uint8_t* uplane, int upitch,
     std::uint8_t* vplane, int vpitch) noexcept

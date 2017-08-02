@@ -38,9 +38,10 @@ std::unique_ptr<IFont> SDLRenderer::createFont(const std::string& family, std::u
     return std::make_unique<SDLFont>(_renderer.get(), family, size);
 }
 
-std::unique_ptr<IImage> SDLRenderer::createImage(const std::string& imagePath) noexcept
+std::unique_ptr<IImage> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen) noexcept
 {
-    return std::make_unique<SDLImage>(imagePath, _renderer.get());
+    mars_info_(rendering, "createImage(imagePath={}, fullscreen={})", imagePath, fullscreen);
+    return std::make_unique<SDLImage>(imagePath, fullscreen, _renderer.get());
 }
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }

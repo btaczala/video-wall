@@ -26,7 +26,8 @@ int main(int argc, char* argv[])
     if (window) {
         mars::windowing::SDLRenderer renderer{ window };
 
-        renderer.addWidget(std::make_shared<mars::widgets::ImageWidget>(argv[1], renderer));
+        renderer.addWidget(
+            std::make_shared<mars::widgets::ImageWidget>(argv[1], mars::windowing::ImageType::stretched, renderer));
 
         renderer.loop();
     }

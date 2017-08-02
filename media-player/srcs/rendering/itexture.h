@@ -19,6 +19,11 @@ struct ITexture {
     virtual void put(const void* buffer, const TextureSize& size) noexcept = 0;
     virtual void render(std::uint32_t x, std::uint32_t y) noexcept = 0;
     virtual void UpdateYUVTexture(const Rect&, std::uint8_t*, int, std::uint8_t*, int, std::uint8_t*, int) noexcept = 0;
+
+    void setFullscreen(bool fullscreen) { _fullscreen = fullscreen; }
+
+protected:
+    bool _fullscreen;
 };
 } // namespace windowing
 } // namespace mars

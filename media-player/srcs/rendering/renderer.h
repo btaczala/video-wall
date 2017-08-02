@@ -38,7 +38,7 @@ struct Renderer {
         = 0;
     virtual std::unique_ptr<IFont> createFont(const std::string& family, std::uint16_t size) noexcept = 0;
 
-    virtual std::unique_ptr<IImage> createImage(const std::string& imagePath) noexcept = 0;
+    virtual std::unique_ptr<IImage> createImage(const std::string& imagePath, bool fullscreen) noexcept = 0;
 
     /**
      * @brief Clears a renderer

@@ -6,10 +6,11 @@
 
 namespace mars {
 namespace windowing {
-SDLImage::SDLImage(const std::string& filename, SDL_Renderer* renderer)
+SDLImage::SDLImage(const std::string& filename, bool fullscreen, SDL_Renderer* renderer)
     : _surface(IMG_Load(filename.c_str()))
     , _texture(std::make_unique<SDLTexture>(renderer, SDL_CreateTextureFromSurface(renderer, _surface.get())))
 {
+    _texture->setFullscreen(fullscreen);
 }
 
 SDLImage::~SDLImage() {}

@@ -1,6 +1,7 @@
 #ifndef IMAGEWIDGET_H_SKFR8KQO
 #define IMAGEWIDGET_H_SKFR8KQO
 
+#include "iimage.h"
 #include "widget.h"
 #include <string>
 
@@ -11,9 +12,8 @@ struct IImage;
 }
 namespace widgets {
 
-enum class ImageType { normal = 0, stretched };
 struct ImageWidget : public Widget {
-    ImageWidget(const std::string& imagePath, windowing::Renderer& renderer);
+    ImageWidget(const std::string& imagePath, windowing::ImageType type, windowing::Renderer& renderer);
     ~ImageWidget();
 
     bool update() const noexcept override { return true; }

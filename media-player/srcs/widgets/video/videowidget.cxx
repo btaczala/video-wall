@@ -2,6 +2,7 @@
 #include "itexture.h"
 #include "ivideorenderer.h"
 #include "renderer.h"
+#include "stopwatch.hpp"
 
 #include "renderer_types.hpp"
 
@@ -55,7 +56,12 @@ bool VideoWidget::update() const noexcept
 
     return !!frame;
 }
-void VideoWidget::render() noexcept { _texture->render(_x, _y); }
+void VideoWidget::render() noexcept
+{
+    Stopwatch<> sw;
+    _texture->render(_x, _y);
+    mars_debug_(perf, "VideoWidget::render() took {}", sw.elapsed());
+}
 
 bool VideoWidget::event(const windowing::EventVariant& event) noexcept
 {

@@ -5,9 +5,9 @@
 namespace mars {
 namespace widgets {
 
-ImageWidget::ImageWidget(const std::string& imagePath, windowing::Renderer& renderer)
+ImageWidget::ImageWidget(const std::string& imagePath, windowing::ImageType type, windowing::Renderer& renderer)
     : Widget(renderer)
-    , _image(renderer.createImage(imagePath))
+    , _image(renderer.createImage(imagePath, type == windowing::ImageType::stretched))
 {
 }
 

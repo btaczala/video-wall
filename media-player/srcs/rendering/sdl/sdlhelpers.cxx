@@ -26,7 +26,7 @@ events::Refresh refreshEvent(const SDL_Event& ev)
 events::Window windowEvent(const SDL_Event& ev)
 {
     auto t = ev.window.event;
-    mars_debug_(rendering, "window event window.type=0x{:x}", t);
+    mars_trace_(rendering, "window event window.type=0x{:x}", t);
     events::Window we;
     switch (t) {
     case SDL_WINDOWEVENT_SHOWN:
