@@ -2,7 +2,24 @@
 #include "log.hpp"
 #include "widget.h"
 
-#include <boost/hana.hpp>
+namespace {
+using namespace mars::windowing;
+struct event_visitor : public boost::static_visitor<void> {
+    event_visitor(bool& quitFlag, bool& renderingFlag)
+        : _quitFlag(quitFlag)
+        , _renderingFlag(renderingFlag)
+    {
+    }
+
+    void operator()(events::Keyboard) {}
+    void operator()(events::Quit) { _quitFlag = true; }
+    void operator()(events::Refresh) { _renderingFlag = true; }
+    void operator()(events::Window) { _renderingFlag = true; }
+
+    bool& _quitFlag;
+    bool& _renderingFlag;
+};
+} // namespace
 
 namespace mars {
 namespace windowing {
@@ -29,12 +46,9 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
         auto event = pollEvent();
 
         if (event) {
-            auto visitor = boost::hana::overload([](events::Keyboard k) {},
-                [&running](const events::Quit& ev) { running = false; },
-                [&rendering](const events::Refresh& ev) { rendering = true; },
-                [&rendering](const events::Window& ev) { rendering = true; });
-            // clang-format on
-            boost::apply_visitor(visitor, event.get());
+            // TODO: Implement a proper lambda visitation here
+            auto vis = event_visitor(running, rendering);
+            boost::apply_visitor(vis, event.get());
         }
 
         for (const auto& f : additionalFunctions) {

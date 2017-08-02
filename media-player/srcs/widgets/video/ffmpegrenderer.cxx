@@ -56,7 +56,7 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
     int videoindex = -1;
     mars_debug_(video, "Number of streams {}", formatCtx->nb_streams);
     for (decltype(formatCtx->nb_streams) i = 0; i < formatCtx->nb_streams; i++)
-        if (formatCtx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO) {
+        if (formatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
             videoindex = i;
             break;
         }
@@ -167,7 +167,6 @@ boost::optional<VideoFrame> FFMPEGRenderer::getNextFrame() noexcept
     }
 
     av_packet_unref(packet);
-    av_packet_free(&packet);
     const VideoFrame frame{ { { VideoFrame::Plane{ pFrameYUV->data[0], pFrameYUV->linesize[0] },
         VideoFrame::Plane{ pFrameYUV->data[1], pFrameYUV->linesize[1] },
         VideoFrame::Plane{ pFrameYUV->data[2], pFrameYUV->linesize[2] } } } };
@@ -191,7 +190,7 @@ FFMPEGBackend::FFMPEGBackend()
     av_log_set_callback([](void* avcl, int level, const char* fmt, va_list vl) {
         char buff[1024];
         int prefix;
-        av_log_format_line2(avcl, level, fmt, vl, buff, 1024, &prefix);
+        av_log_format_line(avcl, level, fmt, vl, buff, 1024, &prefix);
         std::string str{ static_cast<char*>(buff) };
         str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
         if (level == AV_LOG_DEBUG) {
