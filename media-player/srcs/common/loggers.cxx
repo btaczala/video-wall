@@ -22,4 +22,4 @@ std::shared_ptr<spdlog::logger> renderingLogger{ loggerSetup("mars-rendering") }
 std::shared_ptr<spdlog::logger> videoLogger{ loggerSetup("mars-video") };
 std::shared_ptr<spdlog::logger> ffmpegLibLogger{ loggerSetup("ffmpeg") };
 std::shared_ptr<spdlog::logger> htmlLogger{ loggerSetup("mars-html") };
-std::shared_ptr<spdlog::logger> perfLogger{ loggerSetup("mars-perf", spdlog::level::debug) };
+std::shared_ptr<spdlog::logger> perfLogger{ loggerSetup("mars-perf") };

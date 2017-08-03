@@ -1,3 +1,1 @@
 mars_add_test(systemmanager)
-mars_add_test(screenmanager)
-mars_add_test(configurationmanager)

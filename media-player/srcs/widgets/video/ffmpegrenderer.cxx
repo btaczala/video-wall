@@ -115,6 +115,7 @@ FFMPEGRenderer::~FFMPEGRenderer()
     avcodec_close(codecCtx);
     avformat_close_input(&formatCtx);
 }
+
 boost::optional<VideoFrame> FFMPEGRenderer::frame() noexcept
 {
     std::lock_guard<std::mutex> lg{ _frameLock };

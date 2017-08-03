@@ -14,7 +14,6 @@ function(mars_add_test name)
 endfunction()
 
 add_subdirectory(mocks)
-add_subdirectory(rendering)
 add_subdirectory(common)
 add_subdirectory(ui)
 add_subdirectory(widgets)

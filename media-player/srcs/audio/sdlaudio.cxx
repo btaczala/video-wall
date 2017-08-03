@@ -38,7 +38,8 @@ SDLAudio::SDLAudio(const std::string& audio)
 void SDLAudio::play()
 {
     mars_debug("Playing music");
-    Mix_PlayMusic(current, 1);
+    auto r = Mix_PlayMusic(current, 1);
+    mars_info("Playing audio {} ret={}", static_cast<void*>(current), r);
 }
 
 void SDLAudio::pause() { Mix_PauseMusic(); }

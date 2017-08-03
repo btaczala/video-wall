@@ -4,6 +4,8 @@ embed_resources(default_json json/default_config.json)
 
 add_library(mars-core
     globalconfiguration.cxx
+    systemmanager.cxx
+    screenmanager.cxx
     ${default_json}
 )
 

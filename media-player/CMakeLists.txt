@@ -5,6 +5,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 
 option(BUILD_WITH_UNIT_TESTS "Build unit tests" ON)
+option(BUILD_WITH_INTEGRATION_TESTS "Build integration tests" OFF)
 option(BUILD_WITH_EXAMPLES "Build examples folder" OFF)
 option(BUILD_WITH_COVERAGE "Build examples folder" OFF)
 
@@ -31,12 +32,10 @@ if(BUILD_WITH_UNIT_TESTS)
     enable_testing()
     include(GTEST_ADD_TESTS)
     add_subdirectory(tests)
-    add_custom_target(unit_tests
-        COMMAND ctest -R .*_ut.*
-    )
-    add_custom_target(integration_tests
-        COMMAND ctest -R .*_it.*
-    )
+endif()
+
+if(BUILD_WITH_INTEGRATION_TESTS)
+    add_subdirectory(integration_tests)
 endif()
 
 if(BUILD_WITH_EXAMPLES)

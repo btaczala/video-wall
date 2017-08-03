@@ -5,9 +5,6 @@ find_package(Boost REQUIRED COMPONENTS filesystem)
 
 add_library(mars-common
     loggers.cxx
-    systemmanager.cxx
-    screenmanager.cxx
-    xmlconfiguration.cxx
 )
 target_include_directories(mars-common
     PUBLIC
