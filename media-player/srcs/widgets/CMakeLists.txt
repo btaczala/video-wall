@@ -20,6 +20,7 @@ target_link_libraries(mars-widgets
     ${FFMPEG_LIBRARIES}
     mars-rendering 
     mars-common
+    mars-core
 )
 target_include_directories(mars-widgets 
     PUBLIC 

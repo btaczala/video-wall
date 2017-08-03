@@ -11,7 +11,7 @@ TEST(GlobalConfigurationTests_ut, fontPaths)
     const std::string homeFontsPath
         = (boost::filesystem::path{ std::getenv("HOME") } / ".config" / "mars" / "fonts").string();
     std::vector<std::string> expectedFontPaths{ "/usr/share/fonts", "/opt/mars/fonts", homeFontsPath };
-    EXPECT_EQ(cfg.fontPaths(), expectedFontPaths);
+    EXPECT_EQ(cfg.fontsPaths(), expectedFontPaths);
 }
 
 TEST(GlobalConfigurationTests_ut, uuid)

@@ -1,10 +1,12 @@
+#include "configurationmanagermock.hpp"
 #include "log.hpp"
 #include "systemmanager.h"
 #include <gtest/gtest.h>
 
 TEST(SystemManager_it, simple)
 {
-    mars::common::SystemManager smgr;
+    ConfigurationManagerMock cfgMock;
+    mars::core::SystemManager smgr{ cfgMock };
     auto addresses = smgr.getIP();
 
     auto contains = [](const auto& container, const auto& value) -> bool {

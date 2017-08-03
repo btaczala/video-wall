@@ -62,7 +62,7 @@ ConfigurationManager::ConfigurationManager()
 {
 }
 
-std::vector<std::string> ConfigurationManager::fontPaths() const
+std::vector<std::string> ConfigurationManager::fontsPaths() const
 {
     auto z = _jsonObject["fontPaths"];
     auto paths = z.get<std::vector<std::string>>();

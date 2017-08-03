@@ -1,3 +1,4 @@
+#include "iconfigurationmanager.h"
 #include "log.hpp"
 #include "sdlrenderer.h"
 #include "text/textwidget.h"
@@ -5,6 +6,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+
+struct DummyConfigurationManager : public mars::core::IConfigurationManager {
+    std::string uuid() const override { return ""; }
+    std::vector<std::string> fontsPaths() const override { return { { "/usr/share/fonts" } }; }
+};
 
 int main()
 {
@@ -21,8 +27,9 @@ int main()
     if (window) {
         mars::windowing::SDLRenderer renderer{ window };
 
+        DummyConfigurationManager cfgMgr;
         renderer.addWidget(std::make_shared<mars::widgets::TextWidget>(
-            renderer, "this is a simple text", "/usr/share/fonts/TTF/Hack-Regular.ttf", 24));
+            "this is a simple text", "/usr/share/fonts/TTF/Hack-Regular.ttf", 24, renderer, cfgMgr));
 
         renderer.loop();
     }

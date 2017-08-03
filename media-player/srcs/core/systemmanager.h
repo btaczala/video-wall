@@ -5,7 +5,8 @@
 #include <vector>
 
 namespace mars {
-namespace common {
+namespace core {
+struct IConfigurationManager;
 
 struct IPAddress {
     const std::string address;
@@ -14,11 +15,18 @@ struct IPAddress {
 
 using IPAddressList = std::vector<IPAddress>;
 struct SystemManager {
+    SystemManager(IConfigurationManager& configurationManager)
+        : _cfg(configurationManager)
+    {
+    }
     IPAddressList getIP();
 
     std::string uuid() const;
+
+private:
+    IConfigurationManager& _cfg;
 };
-} // namespace common
+} // namespace core
 } // namespace mars
 
 #endif /* end of include guard: SYSTEMMANAGER_H_5VFOCN9H */

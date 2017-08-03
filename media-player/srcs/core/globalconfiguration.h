@@ -1,19 +1,20 @@
 #ifndef GLOBALCONFIGURATION_H_LNVOITNZ
 #define GLOBALCONFIGURATION_H_LNVOITNZ
 
+#include "iconfigurationmanager.h"
+#include <json.hpp>
+
 #include <string>
 #include <vector>
 
-#include "json.hpp"
-
 namespace mars {
 namespace core {
-struct ConfigurationManager {
+struct ConfigurationManager : public IConfigurationManager {
     ConfigurationManager();
 
-    std::vector<std::string> fontPaths() const;
+    std::vector<std::string> fontsPaths() const override;
 
-    std::string uuid() const;
+    std::string uuid() const override;
 
     void adjustLoggers();
 

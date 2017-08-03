@@ -1,4 +1,5 @@
 #include "systemmanager.h"
+#include "iconfigurationmanager.h"
 #include "log.hpp"
 
 #include <arpa/inet.h>
@@ -11,7 +12,7 @@
 #include <unistd.h>
 
 namespace mars {
-namespace common {
+namespace core {
 
 IPAddressList SystemManager::getIP()
 {
@@ -50,10 +51,6 @@ IPAddressList SystemManager::getIP()
     return addresses;
 }
 
-std::string SystemManager::uuid() const
-{
-    mars_error("NOT IMPLEMENTED");
-    return "";
-}
+std::string SystemManager::uuid() const { return _cfg.uuid(); }
 } // namespace common
 } // namespace mars

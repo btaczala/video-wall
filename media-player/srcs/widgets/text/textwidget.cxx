@@ -1,4 +1,5 @@
 #include "textwidget.h"
+#include "iconfigurationmanager.h"
 #include "ifont.h"
 #include "itexture.h"
 #include "log.hpp"
@@ -11,13 +12,17 @@ namespace {
 
 using namespace boost::filesystem;
 
-const std::vector<std::string> kFontPaths{ "/usr/share/fonts", current_path().string() };
-
-std::string fontPath(const std::string& fontName)
+std::string fontPath(const std::string& fontName, mars::core::IConfigurationManager& configManager)
 {
+    auto fontPaths = configManager.fontsPaths();
+
+    fontPaths.push_back(current_path().string());
+
     if (fontName.empty()) {
+        mars_error_(rendering, "Font name cannot be empty");
         throw std::runtime_error("font name cannot be empty");
     }
+
     mars_debug_(rendering, "Searching for font {}", fontName);
     path fontPath{ fontName };
 
@@ -26,23 +31,24 @@ std::string fontPath(const std::string& fontName)
         return fontPath.string();
     }
 
-    for (const auto& p : kFontPaths) {
+    for (const auto& p : fontPaths) {
         if (exists(p / fontPath)) {
             return (p / fontPath).string();
         }
     }
 
+    mars_error_(rendering, "Unable to find font {}", fontName);
     throw std::runtime_error(fmt::format("Unable to find font {}", fontName));
 }
 } // namespace
 
 namespace mars {
 namespace widgets {
-TextWidget::TextWidget(
-    windowing::Renderer& renderer, const std::string& text, const std::string& font, std::uint32_t textSize)
+TextWidget::TextWidget(const std::string& text, const std::string& font, std::uint32_t textSize,
+    windowing::Renderer& renderer, core::IConfigurationManager& cm)
     : Widget(renderer)
     , _text(text)
-    , _font(renderer.createFont(fontPath(font), textSize))
+    , _font(renderer.createFont(fontPath(font, cm), textSize))
     , _textTexture(_font->renderText(text))
 {
     mars_info("Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
