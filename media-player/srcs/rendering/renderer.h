@@ -50,6 +50,7 @@ struct Renderer {
      * @brief This function copies renderer buffor to actuall window buffer
      */
     virtual void render() noexcept = 0;
+
     virtual void requestRefresh(widgets::Widget* = nullptr) noexcept = 0;
 
     virtual boost::optional<EventVariant> pollEvent() noexcept = 0;

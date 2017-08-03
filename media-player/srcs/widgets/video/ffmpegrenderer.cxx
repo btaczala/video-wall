@@ -55,11 +55,12 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
 
     int videoindex = -1;
     mars_debug_(video, "Number of streams {}", formatCtx->nb_streams);
-    for (decltype(formatCtx->nb_streams) i = 0; i < formatCtx->nb_streams; i++)
+    for (decltype(formatCtx->nb_streams) i = 0; i < formatCtx->nb_streams; i++) {
         if (formatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
             videoindex = i;
             break;
         }
+    }
 
     if (videoindex == -1) {
         mars_warn_(video, "Didn't find a video stream");
@@ -81,7 +82,7 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
 
     mars_debug_(video, "Codec name = {}", pCodec->long_name);
 
-    _renderingThread = std::thread([this]() {
+    _renderingThread = std::thread([this, videoindex]() {
         mars_debug_(rendering, "Staring rendering thread for ffmpeg renderer {}", _filename);
         while (_keepRendering) {
             Stopwatch<> sw;
@@ -99,8 +100,12 @@ FFMPEGRenderer::FFMPEGRenderer(const std::string& filename)
             }
 
             // TODO: We should check if 40 ms is enough for all movies??
-            using namespace std::chrono_literals;
-            std::this_thread::sleep_for(13ms);
+            double frameRate = static_cast<double>(formatCtx->streams[videoindex]->avg_frame_rate.num)
+                / static_cast<double>(formatCtx->streams[videoindex]->avg_frame_rate.den);
+
+            double sleepTime = 1000.0f / frameRate;
+            mars_debug_(video, "Sleeping for {}", sleepTime);
+            std::this_thread::sleep_for(std::chrono::microseconds(static_cast<int>(sleepTime) * 1000));
         }
     });
 }
@@ -168,7 +173,7 @@ boost::optional<VideoFrame> FFMPEGRenderer::getNextFrame() noexcept
                     mars_debug_(video, "Didn't receive frame");
                 }
             } else {
-                mars_debug_(video, "Packet is not a video frame");
+                mars_trace_(video, "Packet is not a video frame");
             }
 
         } else {
