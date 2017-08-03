@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     CefMainArgs main_args(argc, argv);
 
     // Optional implementation of the CefApp interface.
-    //CefRefPtr<MyApp> app(new MyApp);
+    // CefRefPtr<MyApp> app(new MyApp);
 
     // Execute the sub-process logic. This will block until the sub-process should exit.
     return CefExecuteProcess(main_args, nullptr, nullptr);

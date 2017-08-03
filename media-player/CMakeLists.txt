@@ -18,7 +18,10 @@ set(CMAKE_CXX_STANDARD 14)
 if(BUILD_WITH_COVERAGE)
     include(CodeCoverage)
     append_coverage_compiler_flags()
-    set(COVERAGE_EXCLUDES '${CMAKE_SOURCE_DIR}/3rdParty/*' '/usr/include/*')
+    set(COVERAGE_EXCLUDES '${CMAKE_SOURCE_DIR}/3rdParty/*'
+        '/usr/include/*' '${CMAKE_SOURCE_DIR}/integration_tests/*' '${CMAKE_SOURCE_DIR}/tests/*'
+        '${CEF_ROOT}/*'
+        )
     setup_target_for_coverage(
         NAME coverage
         EXECUTABLE ctest -j ${PROCESSOR_COUNT}

@@ -36,8 +36,8 @@ IPAddressList SystemManager::getIP()
 
         if (family == AF_INET || family == AF_INET6) {
             s = getnameinfo(ifa->ifa_addr,
-                (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6), host, NI_MAXHOST, nullptr,
-                0, NI_NUMERICHOST);
+                (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6), host, NI_MAXHOST,
+                nullptr, 0, NI_NUMERICHOST);
             if (s != 0) {
                 mars_error("getnameinfo() failed: {}", gai_strerror(s));
             }
