@@ -56,7 +56,7 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
         }
 
         if (rendering) {
-            mars_debug_(rendering, "Trigger rendering");
+            mars_trace_(rendering, "Trigger rendering");
             clear();
             for (const auto& w : _widgets) {
                 if (w->update()) {

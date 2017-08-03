@@ -53,6 +53,7 @@ TextWidget::TextWidget(const std::string& text, const std::string& font, std::ui
 {
     mars_info("Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
         static_cast<void*>(_textTexture.get()));
+    mars_info("texture size={}", _textTexture->size());
 }
 
 void TextWidget::render() noexcept { _textTexture->render(_x, _y); }

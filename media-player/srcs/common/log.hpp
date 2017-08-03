@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include <memory>
+#include <utility>
 
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
@@ -14,6 +15,12 @@ extern std::shared_ptr<spdlog::logger> videoLogger;
 extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
 extern std::shared_ptr<spdlog::logger> htmlLogger;
 extern std::shared_ptr<spdlog::logger> perfLogger;
+
+template <typename F, typename S> std::ostream& operator<<(std::ostream& os, const std::pair<F, S>& p)
+{
+    os << "{" << p.first << " ," << p.second << "}";
+    return os;
+}
 
 #define __FILENAME__ (std::strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 

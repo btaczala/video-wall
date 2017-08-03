@@ -66,11 +66,11 @@ void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
     r.w = si.first;
     r.h = si.second;
     if (!_fullscreen) {
-        mars_debug_(rendering, "[{}] Rendering texture {} under rect {} ", static_cast<void*>(this),
+        mars_trace_(rendering, "[{}] Rendering texture {} under rect {} ", static_cast<void*>(this),
             static_cast<void*>(_texture.get()), r);
         SDL_RenderCopy(_renderer, _texture.get(), nullptr, &r);
     } else {
-        mars_debug_(rendering, "[{}] Rendering texture fullscreen ", static_cast<void*>(this));
+        mars_trace_(rendering, "[{}] Rendering texture fullscreen ", static_cast<void*>(this));
         SDL_RenderCopy(_renderer, _texture.get(), nullptr, nullptr);
     }
 }
