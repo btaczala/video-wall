@@ -29,7 +29,7 @@ struct SDLRenderer : public Renderer {
 
     void clear() noexcept override;
     void render() noexcept override;
-
+    void quit() noexcept;
 
     void requestRefresh(widgets::Widget* widget) noexcept override;
     boost::optional<EventVariant> pollEvent() noexcept override;

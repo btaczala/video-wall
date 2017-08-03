@@ -46,6 +46,15 @@ std::unique_ptr<IImage> SDLRenderer::createImage(const std::string& imagePath, b
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }
 void SDLRenderer::render() noexcept { SDL_RenderPresent(_renderer.get()); }
+void SDLRenderer::quit() noexcept
+{
+    mars_debug_(rendering, "Quiting rendering");
+    SDL_Event ev;
+    std::memset(&ev, 0, sizeof(SDL_Event));
+    ev.type = SDL_QUIT;
+    SDL_PushEvent(&ev);
+}
+
 void SDLRenderer::requestRefresh(widgets::Widget* widget) noexcept
 {
     mars_trace_(rendering, "Scheduling a refresh");

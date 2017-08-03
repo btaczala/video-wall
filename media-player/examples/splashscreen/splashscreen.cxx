@@ -4,10 +4,11 @@
 #include "sdlrenderer.h"
 #include "text/textwidget.h"
 
+#include <iostream>
+#include <thread>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <iostream>
-
 #include <boost/filesystem.hpp>
 
 struct DummyConfigurationManager : public mars::core::IConfigurationManager {
@@ -25,6 +26,8 @@ int main()
 
     auto window = SDLRenderer::createSplashScreenWindow();
 
+    auto timeout = 5;
+
     SDLRenderer renderer{ window.get() };
     DummyConfigurationManager cfgMgr;
 
@@ -38,7 +41,15 @@ int main()
 
     renderer.addWidget(imageWidget);
     renderer.addWidget(textWidget);
+
+    std::thread quitThread{ [&renderer, timeout]() {
+        std::this_thread::sleep_for(std::chrono::seconds(timeout));
+        renderer.quit();
+    } };
+
     renderer.loop();
+
+    quitThread.join();
 
     return 0;
 }
