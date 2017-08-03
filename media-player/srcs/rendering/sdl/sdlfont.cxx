@@ -23,7 +23,7 @@ SDLFont::SDLFont(SDL_Renderer* renderer, const std::string& familyName, std::uin
 std::unique_ptr<ITexture> SDLFont::renderText(const std::string& text) noexcept
 {
     SDL_Color White = { 255, 255, 255, 0 };
-    _surface.reset(TTF_RenderText_Solid(_font, text.c_str(), White));
+    _surface.reset(TTF_RenderText_Blended(_font, text.c_str(), White));
     auto texture = SDL_CreateTextureFromSurface(_renderer, _surface.get());
 
     mars_debug_(rendering, "Created texture {} from surface {}", static_cast<void*>(texture),
