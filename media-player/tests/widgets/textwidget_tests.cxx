@@ -5,7 +5,7 @@
 #include "text/textwidget.h"
 #include <gtest/gtest.h>
 
-TEST(TextWidget_ut, fontname_empty)
+TEST(TextWidget, fontname_empty)
 {
     RendererMock mock;
     ConfigurationManagerMock cfgMock;
@@ -13,7 +13,7 @@ TEST(TextWidget_ut, fontname_empty)
     EXPECT_ANY_THROW(fn());
 }
 
-TEST(TextWidget_ut, font_doesnt_exists)
+TEST(TextWidget, font_doesnt_exists)
 {
     RendererMock mock;
     ConfigurationManagerMock cfgMock;
@@ -24,7 +24,7 @@ TEST(TextWidget_ut, font_doesnt_exists)
     EXPECT_ANY_THROW(fn());
 }
 
-TEST(TextWidget_ut, font_full_path)
+TEST(TextWidget, font_full_path)
 {
     const std::string fontPath = std::string{ TEST_DIR } + "/Hack-Regular.ttf";
     const std::vector<std::string> paths;
@@ -42,7 +42,7 @@ TEST(TextWidget_ut, font_full_path)
     EXPECT_NO_THROW(fn());
 }
 
-TEST(TextWidget_ut, proper_font_path_combination)
+TEST(TextWidget, proper_font_path_combination)
 {
     const std::string fontPath = std::string{ TEST_DIR } + "/Hack-Regular.ttf";
     const std::vector<std::string> paths{ std::string{ TEST_DIR } };

@@ -19,7 +19,7 @@ struct RendererMock : public mars::windowing::Renderer {
     {
         return std::unique_ptr<mars::windowing::IFont>(createFontProxy(name, size));
     }
-    std::unique_ptr<mars::windowing::IImage> createImage(const std::string& name, bool fullscreen) noexcept
+    std::unique_ptr<mars::windowing::IImage> createImage(const std::string& name, bool fullscreen) noexcept override
     {
         return std::unique_ptr<mars::windowing::IImage>(createImageProxy(name, fullscreen));
     }

@@ -3,7 +3,7 @@
 #include "systemmanager.h"
 #include <gtest/gtest.h>
 
-TEST(SystemManager_it, simple)
+TEST(SystemManager, simple)
 {
     ConfigurationManagerMock cfgMock;
     mars::core::SystemManager smgr{ cfgMock };

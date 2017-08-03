@@ -24,7 +24,7 @@ if(BUILD_WITH_COVERAGE)
         )
     setup_target_for_coverage(
         NAME coverage
-        EXECUTABLE ctest -j ${PROCESSOR_COUNT}
+        EXECUTABLE ctest
     )
 endif()
 

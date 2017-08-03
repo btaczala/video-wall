@@ -5,7 +5,7 @@
 #include "globalconfiguration.h"
 #include "log.hpp"
 
-TEST(GlobalConfigurationTests_ut, fontPaths)
+TEST(GlobalConfigurationTests, fontPaths)
 {
     mars::core::ConfigurationManager cfg;
     const std::string homeFontsPath
@@ -14,14 +14,14 @@ TEST(GlobalConfigurationTests_ut, fontPaths)
     EXPECT_EQ(cfg.fontsPaths(), expectedFontPaths);
 }
 
-TEST(GlobalConfigurationTests_ut, uuid)
+TEST(GlobalConfigurationTests, uuid)
 {
     mars::core::ConfigurationManager cfg;
 
     EXPECT_EQ(cfg.uuid(), "%UUID%");
 }
 
-TEST(GlobalConfigurationTests_ut, adjustLoggers)
+TEST(GlobalConfigurationTests, adjustLoggers)
 {
     mars::core::ConfigurationManager cfg;
 

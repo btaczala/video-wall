@@ -7,7 +7,7 @@
 
 using namespace mars::audio;
 
-TEST(SDLAudio_it, file_does_not_exists)
+TEST(SDLAudio, file_does_not_exists)
 {
     SDLAudio player{ "" };
 
@@ -16,10 +16,10 @@ TEST(SDLAudio_it, file_does_not_exists)
     EXPECT_FALSE(player.playing());
 }
 
-struct SDLAudioTests_it : public ::testing::TestWithParam<std::tuple<int, std::string>> {
+struct SDLAudioTests : public ::testing::TestWithParam<std::tuple<int, std::string>> {
 };
 
-TEST_P(SDLAudioTests_it, file_exists)
+TEST_P(SDLAudioTests, file_exists)
 {
     const std::string file = std::string{ TEST_DIR } + "/" + std::get<std::string>(GetParam());
     SDLAudio::initialize();
@@ -44,5 +44,5 @@ TEST_P(SDLAudioTests_it, file_exists)
     EXPECT_FALSE(player.playing());
 }
 
-INSTANTIATE_TEST_CASE_P(Mp3OggFiles, SDLAudioTests_it,
+INSTANTIATE_TEST_CASE_P(Mp3OggFiles, SDLAudioTests,
     ::testing::Values(std::make_tuple(2, "DJ-Lazer.mp3"), std::make_tuple(2, "DJ-Lazer.ogg")));
