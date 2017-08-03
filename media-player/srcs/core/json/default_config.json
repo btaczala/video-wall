@@ -10,7 +10,7 @@
         "mars-ui": "info",
         "mars-rendering": "info",
         "mars-ffmpeg": "info",
-        "mars-video-ffmpeg": "warning",
+        "ffmpeg": "warning",
         "mars-html": "info",
         "mars-perf": "info"
     }
