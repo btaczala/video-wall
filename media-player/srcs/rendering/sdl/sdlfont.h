@@ -13,6 +13,7 @@ namespace mars {
 namespace windowing {
 struct SDLFont : public IFont {
     SDLFont(SDL_Renderer* renderer, const std::string& familyName, std::uint16_t size);
+    ~SDLFont();
     std::unique_ptr<ITexture> renderText(const std::string& text) noexcept override;
 
 private:
