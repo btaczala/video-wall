@@ -30,6 +30,12 @@ TEST_P(SDLAudioTests_it, file_exists)
     player.play();
     EXPECT_TRUE(player.playing());
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    player.pause();
+    EXPECT_FALSE(player.playing());
+
+    player.play();
     while (player.playing()) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }

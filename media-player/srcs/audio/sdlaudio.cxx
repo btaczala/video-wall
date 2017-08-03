@@ -42,9 +42,17 @@ void SDLAudio::play()
     mars_info("Playing audio {} ret={}", static_cast<void*>(current), r);
 }
 
-void SDLAudio::pause() { Mix_PauseMusic(); }
+void SDLAudio::pause()
+{
+    mars_debug("Pausing music");
+    Mix_PauseMusic();
+}
 
-bool SDLAudio::playing() const { return Mix_PlayingMusic() == 1; }
+bool SDLAudio::playing() const
+{
+    mars_trace("Music status playing={}, paused={}", Mix_PlayingMusic(), Mix_PausedMusic());
+    return Mix_PlayingMusic() == 1 && Mix_PausedMusic() != 1;
+}
 
 } // namespace audio
 } // namespace mars
