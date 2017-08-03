@@ -98,6 +98,27 @@ void /* static */ SDLRenderer::initialize()
     auto window = SDL_CreateWindow("Render CEF with SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width,
         height, SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL);
 
+    if (!window) {
+        mars_error_(rendering, "Unable to create window SDL_GetError()={}", SDL_GetError());
+        throw std::runtime_error("Unable to create window");
+    }
+    return sdl_helpers::WindowPtr{ window };
+}
+
+/*static*/ sdl_helpers::WindowPtr SDLRenderer::createSplashScreenWindow()
+{
+    const int width = 700;
+    const int height = 500;
+    auto window = SDL_CreateWindow(
+        "Splash window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+
+    if (!window) {
+        mars_error_(rendering, "Unable to create window SDL_GetError()={}", SDL_GetError());
+        throw std::runtime_error("Unable to create window");
+    }
+
+    SDL_SetWindowResizable(window, SDL_FALSE);
+
     return sdl_helpers::WindowPtr{ window };
 }
 

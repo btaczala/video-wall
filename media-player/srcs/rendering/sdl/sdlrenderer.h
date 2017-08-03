@@ -37,6 +37,7 @@ struct SDLRenderer : public Renderer {
     static void initialize();
 
     static sdl_helpers::WindowPtr createFullScreenWindow();
+    static sdl_helpers::WindowPtr createSplashScreenWindow();
 
 private:
     const sdl_helpers::RendererPtr _renderer;
