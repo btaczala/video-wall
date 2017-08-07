@@ -126,8 +126,6 @@ void /* static */ SDLRenderer::initialize()
         throw std::runtime_error("Unable to create window");
     }
 
-    SDL_SetWindowResizable(window, SDL_FALSE);
-
     return sdl_helpers::WindowPtr{ window };
 }
 
