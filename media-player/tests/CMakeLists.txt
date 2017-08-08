@@ -11,6 +11,7 @@ function(mars_add_test name)
             COMMAND "${MEMORYCHECK_COMMAND}" ${MEMORYCHECK_COMMAND_OPTIONS} ${CMAKE_CURRENT_BINARY_DIR}/${name}_tests
         )
     endif()
+    target_compile_options(${name}_tests PRIVATE -Wno-inconsistent-missing-override)
 endfunction()
 
 add_subdirectory(mocks)
