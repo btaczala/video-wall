@@ -1,6 +1,5 @@
 find_package(SDL2 REQUIRED)
 find_package(LIBVLC)
-set_package_properties(LIBVLC PROPERTIES TYPE RECOMMENDED PURPOSE "Enabled example with LIBVLC")
 
 if(LIBVLC_FOUND)
     add_executable(libvlc-sdl-example main.cxx)
