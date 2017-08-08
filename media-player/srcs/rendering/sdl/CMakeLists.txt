@@ -2,8 +2,6 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS filesystem)
-
 add_library(mars-rendering-sdl
     sdlrenderer.cxx 
     sdlhelpers.cxx

@@ -1,5 +1,4 @@
 
-find_package(Boost REQUIRED COMPONENTS filesystem)
 embed_resources(default_json json/default_config.json)
 
 add_library(mars-core

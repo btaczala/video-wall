@@ -1,4 +1,5 @@
 
+find_package(Boost QUIET REQUIRED COMPONENTS filesystem system)
 add_subdirectory(rendering)
 add_subdirectory(zones)
 add_subdirectory(widgets)

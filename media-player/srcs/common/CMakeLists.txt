@@ -1,7 +1,6 @@
 find_package(Threads REQUIRED)
 find_package(Xrandr REQUIRED)
 find_package(XCB REQUIRED)
-find_package(Boost REQUIRED COMPONENTS filesystem)
 
 add_library(mars-common
     loggers.cxx

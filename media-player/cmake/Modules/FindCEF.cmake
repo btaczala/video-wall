@@ -50,6 +50,3 @@ SET(CEF_LIBRARIES ${CEF_DLL_WRAPPER_LIBRARY} ${CEF_LIBRARY})
 
 include(FindPackageHandleStandardArgs)
 mark_as_advanced(CEF_INCLUDE_DIRS CEF_LIBRARIES)
-
-message(STATUS "CEF libraries = ${CEF_LIBRARIES}")
-message(STATUS "CEF include dirs = ${CEF_INCLUDE_DIRS}")
