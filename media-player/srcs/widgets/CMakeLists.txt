@@ -22,6 +22,7 @@ target_link_libraries(mars-widgets
     mars-common
     mars-core
 )
+
 target_include_directories(mars-widgets 
     PUBLIC 
         ${CEF_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}
