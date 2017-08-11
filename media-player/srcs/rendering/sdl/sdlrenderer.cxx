@@ -3,7 +3,6 @@
 #include "log.hpp"
 #include "renderer_types.hpp"
 #include "sdlfont.h"
-#include "sdlimage.h"
 #include "sdltexture.h"
 
 #include "widgets/widget.h"
@@ -41,10 +40,12 @@ std::unique_ptr<ITexture> SDLRenderer::createText(
     return f.renderText(text);
 }
 
-std::unique_ptr<IImage> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen) noexcept
+std::unique_ptr<ITexture> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen) noexcept
 {
-    mars_info_(rendering, "createImage(imagePath={}, fullscreen={})", imagePath, fullscreen);
-    return std::make_unique<SDLImage>(imagePath, fullscreen, _renderer.get());
+    auto surf = IMG_Load(imagePath.c_str());
+
+    return std::make_unique<SDLTexture>(
+        _renderer.get(), SDL_CreateTextureFromSurface(_renderer.get(), surf), fullscreen);
 }
 
 void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }

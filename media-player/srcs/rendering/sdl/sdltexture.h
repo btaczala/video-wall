@@ -15,7 +15,7 @@ namespace windowing {
 
 struct SDLTexture : public ITexture {
     SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_t height, PixelFormat format);
-    SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture);
+    SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture, bool fullscreeen = false);
 
     TextureSize size() const noexcept override;
     void put(const void* buffer, const TextureSize& size) noexcept override;

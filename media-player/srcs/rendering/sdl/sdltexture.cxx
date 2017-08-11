@@ -28,10 +28,11 @@ SDLTexture::SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_
 {
 }
 
-SDLTexture::SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture)
+SDLTexture::SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture, bool fullscreen /* = false*/)
     : _renderer(renderer)
     , _texture(texture)
 {
+    setFullscreen(fullscreen);
 }
 
 ITexture::TextureSize SDLTexture::size() const noexcept

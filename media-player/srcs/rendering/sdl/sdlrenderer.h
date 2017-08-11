@@ -23,7 +23,7 @@ struct SDLRenderer : public Renderer {
 
     std::unique_ptr<ITexture> createTexture(
         std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept override;
-    std::unique_ptr<IImage> createImage(const std::string& imagePath, bool fullscreen) noexcept override;
+    std::unique_ptr<ITexture> createImage(const std::string& imagePath, bool fullscreen) noexcept override;
     std::unique_ptr<ITexture> createText(
         const std::string& text, const std::string& family, std::uint16_t size) noexcept override;
 

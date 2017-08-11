@@ -1,15 +1,17 @@
 #ifndef IMAGEWIDGET_H_SKFR8KQO
 #define IMAGEWIDGET_H_SKFR8KQO
 
-#include "iimage.h"
 #include "widget.h"
 #include <string>
 
 namespace mars {
 namespace windowing {
+enum class ImageType { normal = 0, stretched };
+
 struct Renderer;
-struct IImage;
-}
+struct ITexture;
+} // namespace windowing
+
 namespace widgets {
 
 struct ImageWidget : public Widget {
@@ -21,7 +23,7 @@ struct ImageWidget : public Widget {
     void render() noexcept override;
 
 private:
-    const std::unique_ptr<windowing::IImage> _image;
+    const std::unique_ptr<windowing::ITexture> _image;
 };
 } // namespace widgets
 } // namespace mars
