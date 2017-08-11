@@ -26,8 +26,10 @@ struct TextWidget : public Widget {
 
 private:
     const std::string _text;
+    const bool _haveBackground;
     const std::unique_ptr<windowing::IFont> _font;
     const std::unique_ptr<windowing::ITexture> _textTexture;
+    const std::unique_ptr<windowing::ITexture> _bckTexture;
 };
 } // namespace widgets
 } // namespace mars

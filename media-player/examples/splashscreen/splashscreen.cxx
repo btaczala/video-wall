@@ -4,6 +4,7 @@
 #include "sdlrenderer.h"
 #include "text/textwidget.h"
 
+#include <condition_variable>
 #include <iostream>
 #include <thread>
 
@@ -27,6 +28,8 @@ int main()
     auto window = SDLRenderer::createSplashScreenWindow();
 
     auto timeout = 5;
+    std::mutex mtx;
+    std::condition_variable cv;
 
     SDLRenderer renderer{ window.get() };
     DummyConfigurationManager cfgMgr;
@@ -42,12 +45,14 @@ int main()
     renderer.addWidget(imageWidget);
     renderer.addWidget(textWidget);
 
-    std::thread quitThread{ [&renderer, timeout]() {
-        std::this_thread::sleep_for(std::chrono::seconds(timeout));
+    std::thread quitThread{ [&]() {
+        std::unique_lock<std::mutex> lk(mtx);
+        cv.wait_for(lk, std::chrono::seconds(timeout));
         renderer.quit();
     } };
 
     renderer.loop();
+    cv.notify_one();
 
     quitThread.join();
 

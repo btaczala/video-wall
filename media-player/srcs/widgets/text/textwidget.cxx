@@ -5,8 +5,6 @@
 #include "log.hpp"
 #include "renderer.h"
 
-#include <linux/limits.h>
-
 #include <boost/filesystem.hpp>
 namespace {
 
@@ -48,15 +46,26 @@ TextWidget::TextWidget(const std::string& text, const std::string& font, std::ui
     windowing::Renderer& renderer, core::IConfigurationManager& cm)
     : Widget(renderer)
     , _text(text)
+    , _haveBackground(false)
     , _font(renderer.createFont(fontPath(font, cm), textSize))
     , _textTexture(_font->renderText(text))
+    , _bckTexture(_haveBackground
+              ? renderer.createTexture(
+                    _textTexture->size().first, _textTexture->size().second, mars::windowing::PixelFormat::Unknown)
+              : nullptr)
 {
     mars_info("Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
         static_cast<void*>(_textTexture.get()));
     mars_info("texture size={}", _textTexture->size());
 }
 
-void TextWidget::render() noexcept { _textTexture->render(_x, _y); }
+void TextWidget::render() noexcept
+{
+    if (_haveBackground) {
+        _bckTexture->render(_x, _y);
+    }
+    _textTexture->render(_x, _y);
+}
 
 } // namespace widgets
 } // namespace mars

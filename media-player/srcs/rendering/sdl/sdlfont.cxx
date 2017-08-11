@@ -20,10 +20,7 @@ SDLFont::SDLFont(SDL_Renderer* renderer, const std::string& familyName, std::uin
     }
 }
 
-SDLFont::~SDLFont()
-{
-    TTF_CloseFont(_font);
-}
+SDLFont::~SDLFont() { TTF_CloseFont(_font); }
 
 std::unique_ptr<ITexture> SDLFont::renderText(const std::string& text) noexcept
 {
