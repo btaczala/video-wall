@@ -36,7 +36,9 @@ struct Renderer {
      */
     virtual std::unique_ptr<ITexture> createTexture(std::uint16_t width, std::uint16_t height, PixelFormat e) noexcept
         = 0;
-    virtual std::unique_ptr<IFont> createFont(const std::string& family, std::uint16_t size) noexcept = 0;
+    virtual std::unique_ptr<ITexture> createText(
+        const std::string& text, const std::string& family, std::uint16_t size) noexcept
+        = 0;
 
     virtual std::unique_ptr<IImage> createImage(const std::string& imagePath, bool fullscreen) noexcept = 0;
 

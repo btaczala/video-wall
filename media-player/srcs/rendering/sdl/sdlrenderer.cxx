@@ -33,9 +33,12 @@ std::unique_ptr<ITexture> SDLRenderer::createTexture(
     return std::make_unique<SDLTexture>(_renderer.get(), width, height, format);
 }
 
-std::unique_ptr<IFont> SDLRenderer::createFont(const std::string& family, std::uint16_t size) noexcept
+std::unique_ptr<ITexture> SDLRenderer::createText(
+    const std::string& text, const std::string& family, std::uint16_t size) noexcept
 {
-    return std::make_unique<SDLFont>(_renderer.get(), family, size);
+    mars_info_(rendering, "createText(text={}, font={}, size={})", text, family, size);
+    SDLFont f{ _renderer.get(), family, size };
+    return f.renderText(text);
 }
 
 std::unique_ptr<IImage> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen) noexcept

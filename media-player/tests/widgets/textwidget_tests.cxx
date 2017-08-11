@@ -31,12 +31,10 @@ TEST(TextWidget, font_full_path)
 
     RendererMock mock;
     ConfigurationManagerMock cfgMock;
-    auto* fontMock = new FontMock;
     auto* texture = new TextureMock;
 
     REQUIRE_CALL(cfgMock, fontsPaths()).RETURN(paths);
-    REQUIRE_CALL(mock, createFontProxy(fontPath, 24)).RETURN(fontMock);
-    REQUIRE_CALL(*fontMock, renderTextProxy("arial-black")).RETURN(texture);
+    REQUIRE_CALL(mock, createTextProxy("arial-black", fontPath, 24)).RETURN(texture);
     REQUIRE_CALL(*texture, size()).RETURN(std::make_pair(10, 10));
     auto fn = [&]() { mars::widgets::TextWidget w{ "arial-black", fontPath, 24, mock, cfgMock }; };
     EXPECT_NO_THROW(fn());
@@ -49,14 +47,12 @@ TEST(TextWidget, proper_font_path_combination)
 
     RendererMock mock;
     ConfigurationManagerMock cfgMock;
-    auto* fontMock = new FontMock;
     auto* texture = new TextureMock;
 
     REQUIRE_CALL(cfgMock, fontsPaths()).RETURN(paths);
-    REQUIRE_CALL(mock, createFontProxy(fontPath, 24)).RETURN(fontMock);
+    REQUIRE_CALL(mock, createTextProxy("arial-black", fontPath, 24)).RETURN(texture);
     REQUIRE_CALL(*texture, render(0u, 0u));
     REQUIRE_CALL(*texture, size()).RETURN(std::make_pair(10, 10));
-    REQUIRE_CALL(*fontMock, renderTextProxy("arial-black")).RETURN(texture);
     auto fn = [&]() {
         mars::widgets::TextWidget w{ "arial-black", "Hack-Regular.ttf", 24, mock, cfgMock };
         w.render();

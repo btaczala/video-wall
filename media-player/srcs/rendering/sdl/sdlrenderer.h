@@ -5,7 +5,6 @@
 #include <memory>
 #include <vector>
 
-#include "ifont.h"
 #include "itexture.h"
 #include "log.hpp"
 #include "renderer.h"
@@ -24,8 +23,9 @@ struct SDLRenderer : public Renderer {
 
     std::unique_ptr<ITexture> createTexture(
         std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept override;
-    std::unique_ptr<IFont> createFont(const std::string& family, std::uint16_t size) noexcept override;
-    virtual std::unique_ptr<IImage> createImage(const std::string& imagePath, bool fullscreen) noexcept override;
+    std::unique_ptr<IImage> createImage(const std::string& imagePath, bool fullscreen) noexcept override;
+    std::unique_ptr<ITexture> createText(
+        const std::string& text, const std::string& family, std::uint16_t size) noexcept override;
 
     void clear() noexcept override;
     void render() noexcept override;

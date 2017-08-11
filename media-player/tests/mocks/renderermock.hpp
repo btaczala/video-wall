@@ -1,7 +1,6 @@
 #ifndef RENDERERMOCK_HPP_AZXKKSZ0
 #define RENDERERMOCK_HPP_AZXKKSZ0
 
-#include "ifont.h"
 #include "iimage.h"
 #include "itexture.h"
 #include "renderer.h"
@@ -15,18 +14,20 @@ struct RendererMock : public mars::windowing::Renderer {
     {
         return std::unique_ptr<mars::windowing::ITexture>(createTextureProxy(w, h, p));
     }
-    std::unique_ptr<mars::windowing::IFont> createFont(const std::string& name, std::uint16_t size) noexcept override
-    {
-        return std::unique_ptr<mars::windowing::IFont>(createFontProxy(name, size));
-    }
     std::unique_ptr<mars::windowing::IImage> createImage(const std::string& name, bool fullscreen) noexcept override
     {
         return std::unique_ptr<mars::windowing::IImage>(createImageProxy(name, fullscreen));
     }
+    std::unique_ptr<mars::windowing::ITexture> createText(
+        const std::string& text, const std::string& name, std::uint16_t size) noexcept override
+    {
+        return std::unique_ptr<mars::windowing::ITexture>(createTextProxy(text, name, size));
+    }
 
     MAKE_MOCK3(createTextureProxy,
         mars::windowing::ITexture*(std::uint16_t, std::uint16_t, mars::windowing::PixelFormat), noexcept);
-    MAKE_MOCK2(createFontProxy, mars::windowing::IFont*(const std::string&, std::uint16_t), noexcept);
+    MAKE_MOCK3(
+        createTextProxy, mars::windowing::ITexture*(const std::string, const std::string&, std::uint16_t), noexcept);
     MAKE_MOCK2(createImageProxy, mars::windowing::IImage*(const std::string&, bool), noexcept);
     MAKE_MOCK0(clear, void(), noexcept, override);
     MAKE_MOCK0(render, void(), noexcept, override);
@@ -42,14 +43,6 @@ struct TextureMock : public mars::windowing::ITexture {
     MAKE_MOCK7(UpdateYUVTexture,
         void(const mars::windowing::Rect&, std::uint8_t*, int, std::uint8_t*, int, std::uint8_t*, int), noexcept,
         override);
-};
-
-struct FontMock : public mars::windowing::IFont {
-    std::unique_ptr<mars::windowing::ITexture> renderText(const std::string& text) noexcept override
-    {
-        return std::unique_ptr<mars::windowing::ITexture>(renderTextProxy(text));
-    }
-    MAKE_MOCK1(renderTextProxy, mars::windowing::ITexture*(const std::string&), noexcept);
 };
 
 struct ImageMock : public mars::windowing::IImage {

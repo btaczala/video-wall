@@ -1,7 +1,7 @@
 #ifndef SDLFONT_H_GMS1BLQU
 #define SDLFONT_H_GMS1BLQU
 
-#include "ifont.h"
+#include "itexture.h"
 #include "sdlhelpers.h"
 
 #include <cstdint>
@@ -11,10 +11,10 @@
 
 namespace mars {
 namespace windowing {
-struct SDLFont : public IFont {
+struct SDLFont {
     SDLFont(SDL_Renderer* renderer, const std::string& familyName, std::uint16_t size);
     ~SDLFont();
-    std::unique_ptr<ITexture> renderText(const std::string& text) noexcept override;
+    std::unique_ptr<ITexture> renderText(const std::string& text) noexcept;
 
 private:
     SDL_Renderer* const _renderer;

@@ -1,6 +1,5 @@
 #include "textwidget.h"
 #include "iconfigurationmanager.h"
-#include "ifont.h"
 #include "itexture.h"
 #include "log.hpp"
 #include "renderer.h"
@@ -47,8 +46,7 @@ TextWidget::TextWidget(const std::string& text, const std::string& font, std::ui
     : Widget(renderer)
     , _text(text)
     , _haveBackground(false)
-    , _font(renderer.createFont(fontPath(font, cm), textSize))
-    , _textTexture(_font->renderText(text))
+    , _textTexture(renderer.createText(text, fontPath(font, cm), textSize))
     , _bckTexture(_haveBackground
               ? renderer.createTexture(
                     _textTexture->size().first, _textTexture->size().second, mars::windowing::PixelFormat::Unknown)
