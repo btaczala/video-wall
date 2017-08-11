@@ -40,7 +40,7 @@ struct Renderer {
         const std::string& text, const std::string& family, std::uint16_t size) noexcept
         = 0;
 
-    virtual std::unique_ptr<ITexture> createImage(const std::string& imagePath, bool fullscreen) noexcept = 0;
+    virtual std::unique_ptr<ITexture> createImage(const std::string& imagePath, bool fullscreen) = 0;
 
     /**
      * @brief Clears a renderer

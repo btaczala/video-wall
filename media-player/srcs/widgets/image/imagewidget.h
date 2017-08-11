@@ -20,10 +20,7 @@ struct ImageWidget : public Widget {
 
     bool update() const noexcept override { return true; }
 
-    void render() noexcept override;
-
 private:
-    const std::unique_ptr<windowing::ITexture> _image;
 };
 } // namespace widgets
 } // namespace mars

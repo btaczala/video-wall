@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL_render.h>
 #include <boost/assert.hpp>
+#include <spdlog/fmt/fmt.h>
 
 namespace {
 
@@ -26,6 +27,14 @@ SDLTexture::SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_
     : _renderer(renderer)
     , _texture(SDL_CreateTexture(_renderer, ::convertPixelFormat(format), SDL_TEXTUREACCESS_STREAMING, width, height))
 {
+    if (!_texture) {
+        auto f = fmt::format("Unable to SDL_CreateTexture({}, {}, {}, {}, {}). SDL_GetError={})",
+            static_cast<void*>(_renderer), static_cast<int>(format), "SDL_TEXTUREACCESS_STREAMING", width, height,
+            SDL_GetError());
+        mars_error_(rendering, "{}", f);
+        throw std::runtime_error(f);
+    }
+    mars_debug_(rendering, "SDLTexture::SDLTexture _texture = {}", static_cast<void*>(_texture.get()));
 }
 
 SDLTexture::SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture, bool fullscreen /* = false*/)
@@ -61,15 +70,17 @@ void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
     BOOST_ASSERT_MSG(_texture, "Texture cannot be null");
     BOOST_ASSERT_MSG(_renderer, "Renderer cannot be null");
     auto si = size();
-    SDL_Rect r{};
-    r.x = x;
-    r.y = y;
-    r.w = si.first;
-    r.h = si.second;
+    SDL_Rect destRect{};
+    destRect.x = x;
+    destRect.y = y;
+    destRect.w = si.first;
+    destRect.h = si.second;
+
+    SDL_Rect srcRect{ 0, 0, si.first, si.second };
     if (!_fullscreen) {
-        mars_trace_(rendering, "[{}] Rendering texture {} under rect {} ", static_cast<void*>(this),
-            static_cast<void*>(_texture.get()), r);
-        SDL_RenderCopy(_renderer, _texture.get(), nullptr, &r);
+        mars_debug_(rendering, "[{}] Rendering texture {} under rect {} {}", static_cast<void*>(this),
+            static_cast<void*>(_texture.get()), srcRect, destRect);
+        SDL_RenderCopy(_renderer, _texture.get(), &srcRect, &destRect);
     } else {
         mars_trace_(rendering, "[{}] Rendering texture fullscreen ", static_cast<void*>(this));
         SDL_RenderCopy(_renderer, _texture.get(), nullptr, nullptr);

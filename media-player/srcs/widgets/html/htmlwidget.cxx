@@ -35,11 +35,11 @@ namespace widgets {
 
 HTMLWidget::HTMLWidget(const std::string& url, windowing::Renderer& renderer, std::uint16_t width, std::uint16_t height)
     : Widget(renderer)
-    , _renderingTexture(renderer.createTexture(width, height, windowing::PixelFormat::Unknown))
     , _cefRenderer(new mars::webengine::RenderHandler(
           std::bind(&HTMLWidget::updateBuffer, this, std::placeholders::_1), width, height))
     , _browserClient(new mars::webengine::BrowserClient(_cefRenderer))
 {
+    _texture = renderer.createTexture(width, height, windowing::PixelFormat::Unknown);
     _width = width;
     _height = height;
     CefWindowInfo window_info;
@@ -62,11 +62,6 @@ HTMLWidget::~HTMLWidget()
 }
 
 bool HTMLWidget::update() const noexcept { return true; }
-void HTMLWidget::render() noexcept
-{
-    mars_trace_(html, "HTMLWidget [{}] render()", static_cast<void*>(this));
-    _renderingTexture->render(_x, _y);
-}
 bool HTMLWidget::event(const windowing::EventVariant& event) noexcept
 {
     return boost::apply_visitor(html_event_visitor(_browser.get()), event);
@@ -75,7 +70,7 @@ bool HTMLWidget::event(const windowing::EventVariant& event) noexcept
 void HTMLWidget::updateBuffer(const void* buffer)
 {
     mars_trace_(html, "[{}] Udating buffer {}, {}", static_cast<void*>(this), _width, _height);
-    _renderingTexture->put(buffer, std::make_pair(_width, _height));
+    _texture->put(buffer, std::make_pair(_width, _height));
     requestRefresh();
 }
 

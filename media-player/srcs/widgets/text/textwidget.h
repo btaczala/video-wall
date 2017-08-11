@@ -21,13 +21,13 @@ struct TextWidget : public Widget {
         core::IConfigurationManager& cm);
 
     bool update() const noexcept override { return true; }
-    void render() noexcept override;
+    bool event(const windowing::EventVariant& event) noexcept override;
 
 private:
     const std::string _text;
     const bool _haveBackground;
-    const std::unique_ptr<windowing::ITexture> _textTexture;
-    const std::unique_ptr<windowing::ITexture> _bckTexture;
+    // const std::unique_ptr<windowing::ITexture> _textTexture;
+    // const std::unique_ptr<windowing::ITexture> _bckTexture;
 };
 } // namespace widgets
 } // namespace mars

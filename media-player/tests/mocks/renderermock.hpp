@@ -13,7 +13,7 @@ struct RendererMock : public mars::windowing::Renderer {
     {
         return std::unique_ptr<mars::windowing::ITexture>(createTextureProxy(w, h, p));
     }
-    std::unique_ptr<mars::windowing::ITexture> createImage(const std::string& name, bool fullscreen) noexcept override
+    std::unique_ptr<mars::windowing::ITexture> createImage(const std::string& name, bool fullscreen) override
     {
         return std::unique_ptr<mars::windowing::ITexture>(createImageProxy(name, fullscreen));
     }
@@ -23,14 +23,24 @@ struct RendererMock : public mars::windowing::Renderer {
         return std::unique_ptr<mars::windowing::ITexture>(createTextProxy(text, name, size));
     }
 
+    boost::optional<mars::windowing::EventVariant> pollEvent() noexcept override
+    {
+        auto s = pollEventProxy();
+        if (!s) {
+            return boost::optional<mars::windowing::EventVariant>{};
+        }
+
+        return boost::optional<mars::windowing::EventVariant>{ *s };
+    }
+
     MAKE_MOCK3(createTextureProxy,
         mars::windowing::ITexture*(std::uint16_t, std::uint16_t, mars::windowing::PixelFormat), noexcept);
     MAKE_MOCK3(
         createTextProxy, mars::windowing::ITexture*(const std::string, const std::string&, std::uint16_t), noexcept);
-    MAKE_MOCK2(createImageProxy, mars::windowing::ITexture*(const std::string&, bool), noexcept);
+    MAKE_MOCK2(createImageProxy, mars::windowing::ITexture*(const std::string&, bool));
     MAKE_MOCK0(clear, void(), noexcept, override);
     MAKE_MOCK0(render, void(), noexcept, override);
-    MAKE_MOCK0(pollEvent, boost::optional<mars::windowing::EventVariant>(), noexcept, override);
+    MAKE_MOCK0(pollEventProxy, mars::windowing::EventVariant*(), noexcept);
 
     MAKE_MOCK1(requestRefresh, void(mars::widgets::Widget*), noexcept, override);
 };

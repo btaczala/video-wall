@@ -5,6 +5,7 @@
 #include "renderer.h"
 
 #include <boost/filesystem.hpp>
+#include <boost/variant/get.hpp>
 namespace {
 
 using namespace boost::filesystem;
@@ -46,23 +47,25 @@ TextWidget::TextWidget(const std::string& text, const std::string& font, std::ui
     : Widget(renderer)
     , _text(text)
     , _haveBackground(false)
-    , _textTexture(renderer.createText(text, fontPath(font, cm), textSize))
-    , _bckTexture(_haveBackground
-              ? renderer.createTexture(
-                    _textTexture->size().first, _textTexture->size().second, mars::windowing::PixelFormat::Unknown)
-              : nullptr)
 {
-    mars_info("Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
-        static_cast<void*>(_textTexture.get()));
-    mars_info("texture size={}", _textTexture->size());
+    _texture = renderer.createText(text, fontPath(font, cm), textSize);
+    mars_info_(ui, "Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
+        static_cast<void*>(_texture.get()));
+    mars_debug_(ui, "texture size={}", _texture->size());
 }
 
-void TextWidget::render() noexcept
+bool TextWidget::event(const windowing::EventVariant& event) noexcept
 {
-    if (_haveBackground) {
-        _bckTexture->render(_x, _y);
+    mars_debug_(ui, "TextWidget::event");
+    auto pEvent = boost::get<windowing::events::Keyboard>(&event);
+    if (pEvent) {
+        if (pEvent->key == windowing::events::Keyboard::Key::Space) {
+            mars_debug_(ui, "Received space key");
+            return true;
+        }
     }
-    _textTexture->render(_x, _y);
+
+    return false;
 }
 
 } // namespace widgets

@@ -7,13 +7,11 @@ namespace widgets {
 
 ImageWidget::ImageWidget(const std::string& imagePath, windowing::ImageType type, windowing::Renderer& renderer)
     : Widget(renderer)
-    , _image(renderer.createImage(imagePath, type == windowing::ImageType::stretched))
 {
+    _texture = renderer.createImage(imagePath, type == windowing::ImageType::stretched);
 }
 
 ImageWidget::~ImageWidget() {}
-
-void ImageWidget::render() noexcept { _image->render(_x, _y); }
 
 } // namespace widgets
 } // namespace mars

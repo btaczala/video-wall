@@ -32,10 +32,8 @@ VideoWidget::VideoWidget(
     const std::string& filename, windowing::Renderer& renderer, rendering::IVideoBackend& videoBackend)
     : Widget(renderer)
     , _video(videoBackend.createVideo(filename))
-    , _texture(_parentRenderer.createTexture(_video->info().width, _video->info().height, windowing::PixelFormat::IYUV))
 {
-    _x = 0;
-    _y = 0;
+    _texture = _parentRenderer.createTexture(_video->info().width, _video->info().height, windowing::PixelFormat::IYUV);
     _width = _video->info().width;
     _height = _video->info().height;
     mars_info_(video, "[{}] VideoWidget video url = {}, size {}x{}", static_cast<void*>(this), filename,

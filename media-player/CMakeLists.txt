@@ -26,6 +26,10 @@ if(BUILD_WITH_COVERAGE)
         NAME coverage
         EXECUTABLE ctest
     )
+else()
+    add_custom_target(coverage
+        COMMAND cmake -E echo "Coverage disabled, run cmake . -DBUILD_WITH_COVERAGE=ON to enable")
+
 endif()
 
 add_subdirectory(3rdParty)

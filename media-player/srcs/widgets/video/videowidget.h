@@ -27,7 +27,6 @@ struct VideoWidget : public Widget {
 
 private:
     const std::unique_ptr<rendering::IVideoRenderer> _video;
-    const std::unique_ptr<windowing::ITexture> _texture;
 };
 } // namespace widgets
 } // namespace mars

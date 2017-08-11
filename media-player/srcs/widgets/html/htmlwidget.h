@@ -22,14 +22,11 @@ struct HTMLWidget : public Widget {
 
     bool update() const noexcept override;
 
-    void render() noexcept override;
-
     bool event(const windowing::EventVariant& event) noexcept override;
 
 private:
     void updateBuffer(const void* buffer);
 
-    const std::unique_ptr<windowing::ITexture> _renderingTexture;
 
     CefRefPtr<mars::webengine::RenderHandler> _cefRenderer;
     CefRefPtr<mars::webengine::BrowserClient> _browserClient;

@@ -6,13 +6,12 @@
 
 inline std::ostream& operator<<(std::ostream& os, const SDL_Rect& c)
 {
-    return os << "Rect {" << c.x << ","
-              << "," << c.y << "," << c.w << "," << c.h << "}";
+    return os << "SDL_Rect {" << c.x << "," << c.y << "," << c.w << "," << c.h << "}";
 }
 
 inline std::ostream& operator<<(std::ostream& os, const SDL_Surface& s)
 {
-    return os << "Surface { format = " << s.format << ",w = " << s.w << ",h=" << s.h;
+    return os << "SDL_Surface { format = " << s.format << ",w = " << s.w << ",h=" << s.h;
 }
 
 #endif /* end of include guard: SDLLOGGING_HPP_SHIC2UJZ */

@@ -13,6 +13,7 @@
 
 namespace {
 const std::uint32_t kRefreshEvent = SDL_RegisterEvents(1);
+
 } // namespace
 
 namespace mars {
@@ -29,21 +30,29 @@ SDLRenderer::SDLRenderer(SDL_Window* window)
 std::unique_ptr<ITexture> SDLRenderer::createTexture(
     std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept
 {
+    mars_info_(rendering, "SDLRenderer::createTexture({}, {}, {})", width, height, static_cast<int>(format));
     return std::make_unique<SDLTexture>(_renderer.get(), width, height, format);
 }
 
 std::unique_ptr<ITexture> SDLRenderer::createText(
     const std::string& text, const std::string& family, std::uint16_t size) noexcept
 {
-    mars_info_(rendering, "createText(text={}, font={}, size={})", text, family, size);
+    mars_info_(rendering, "SDLRenderer::createText(text={}, font={}, size={})", text, family, size);
     SDLFont f{ _renderer.get(), family, size };
     return f.renderText(text);
 }
 
-std::unique_ptr<ITexture> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen) noexcept
+std::unique_ptr<ITexture> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen)
 {
     auto surf = IMG_Load(imagePath.c_str());
 
+    if (!surf) {
+        const auto f = fmt::format("Unable to createImage with path {}, SDL_GetError = {}", imagePath, SDL_GetError());
+        mars_error_(rendering, "{}", f);
+        throw std::runtime_error(f);
+    }
+
+    mars_info_(rendering, "SDLRenderer::createImage({}, {})", imagePath, fullscreen);
     return std::make_unique<SDLTexture>(
         _renderer.get(), SDL_CreateTextureFromSurface(_renderer.get(), surf), fullscreen);
 }

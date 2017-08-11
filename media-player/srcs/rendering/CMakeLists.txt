@@ -2,7 +2,7 @@
 set(MARS_RENDERER_IMPL "sdl")
 
 add_subdirectory(${MARS_RENDERER_IMPL})
-add_library(mars-rendering 
+add_library(mars-rendering STATIC
     renderer.cxx
 )
 

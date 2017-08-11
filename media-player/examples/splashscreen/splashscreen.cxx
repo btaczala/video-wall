@@ -44,6 +44,7 @@ int main()
 
     renderer.addWidget(imageWidget);
     renderer.addWidget(textWidget);
+    textWidget->addBackground();
 
     std::thread quitThread{ [&]() {
         std::unique_lock<std::mutex> lk(mtx);
