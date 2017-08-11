@@ -1,9 +1,9 @@
 #ifndef HTMLWIDGET_H_AWUUR1O6
 #define HTMLWIDGET_H_AWUUR1O6
 
-#include "widget.h"
-#include "cefrenderhandler.h"
 #include "cefbrowserclient.h"
+#include "cefrenderhandler.h"
+#include "widget.h"
 
 #include <cef_browser.h>
 
@@ -27,7 +27,6 @@ struct HTMLWidget : public Widget {
     bool event(const windowing::EventVariant& event) noexcept override;
 
 private:
-
     void updateBuffer(const void* buffer);
 
     const std::unique_ptr<windowing::ITexture> _renderingTexture;

@@ -1,8 +1,8 @@
 #ifndef RENDERER_TYPES_HPP_TH4HPV7T
 #define RENDERER_TYPES_HPP_TH4HPV7T
 
-#include <boost/variant.hpp>
 #include "events.hpp"
+#include <boost/variant.hpp>
 
 namespace mars {
 namespace windowing {

@@ -29,7 +29,6 @@ struct FFMPEGRenderer : public IVideoRenderer {
     void setFrameReadyCb(const FrameReadyCb& cb) noexcept override;
 
 private:
-
     boost::optional<VideoFrame> getNextFrame() noexcept;
 
     const std::string _filepath;

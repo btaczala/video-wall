@@ -20,7 +20,7 @@ struct Refresh {
 
 struct Window {
     enum class Type {
-        Unknown=0,
+        Unknown = 0,
         Shown,
         Hidden,
         Exposed,

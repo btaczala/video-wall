@@ -30,5 +30,4 @@ private:
 } // namespace windowing
 } // namespace mars
 
-
 #endif /* end of include guard: SDLTEXTURE_H_YFTIZBST */
