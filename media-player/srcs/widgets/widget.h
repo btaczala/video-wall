@@ -45,7 +45,7 @@ struct Widget {
 
     void setZ(std::uint32_t z) { _z = z; }
 
-    void addBackground();
+    void addBackground() noexcept;
 
 protected:
     void requestRefresh();

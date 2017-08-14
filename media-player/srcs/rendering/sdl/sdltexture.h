@@ -20,6 +20,7 @@ struct SDLTexture : public ITexture {
     TextureSize size() const noexcept override;
     void put(const void* buffer, const TextureSize& size) noexcept override;
     void render(std::uint32_t x, std::uint32_t y) noexcept override;
+    void render(const boost::optional<Rect>& srcRect, const boost::optional<Rect>& dstRect) noexcept override;
     void UpdateYUVTexture(const Rect&, std::uint8_t*, int, std::uint8_t*, int, std::uint8_t*, int) noexcept override;
 
 private:

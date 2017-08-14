@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL_render.h>
 #include <boost/assert.hpp>
+#include <boost/optional/optional_io.hpp>
 #include <spdlog/fmt/fmt.h>
 
 namespace {
@@ -69,23 +70,36 @@ void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
 {
     BOOST_ASSERT_MSG(_texture, "Texture cannot be null");
     BOOST_ASSERT_MSG(_renderer, "Renderer cannot be null");
-    auto si = size();
-    SDL_Rect destRect{};
-    destRect.x = x;
-    destRect.y = y;
-    destRect.w = si.first;
-    destRect.h = si.second;
 
-    SDL_Rect srcRect{ 0, 0, si.first, si.second };
-    if (!_fullscreen) {
-        mars_debug_(rendering, "[{}] Rendering texture {} under rect {} {}", static_cast<void*>(this),
-            static_cast<void*>(_texture.get()), srcRect, destRect);
-        SDL_RenderCopy(_renderer, _texture.get(), &srcRect, &destRect);
+    auto si = size();
+    if (_fullscreen) {
+        render(boost::optional<Rect>{}, boost::optional<Rect>{});
     } else {
-        mars_trace_(rendering, "[{}] Rendering texture fullscreen ", static_cast<void*>(this));
-        SDL_RenderCopy(_renderer, _texture.get(), nullptr, nullptr);
+        render(boost::optional<Rect>{}, Rect{ x, y, si.first, si.second });
     }
 }
+
+void SDLTexture::render(const boost::optional<Rect>& srcRect, const boost::optional<Rect>& dstRect) noexcept
+{
+    BOOST_ASSERT_MSG(_texture, "Texture cannot be null");
+    BOOST_ASSERT_MSG(_renderer, "Renderer cannot be null");
+    const auto convertRect = [](const boost::optional<Rect>& r) -> SDL_Rect {
+        if (!r) {
+            return SDL_Rect{ 0, 0, 0, 0 };
+        } else {
+            return SDL_Rect{ static_cast<int>(r->x), static_cast<int>(r->y), static_cast<int>(r->w),
+                static_cast<int>(r->h) };
+        }
+    };
+
+    const SDL_Rect s{ convertRect(srcRect) };
+    const SDL_Rect d{ convertRect(dstRect) };
+
+    mars_debug_(rendering, "[{}] Rendering texture {} under rect {} {}", static_cast<void*>(this),
+        static_cast<void*>(_texture.get()), s, d);
+    SDL_RenderCopy(_renderer, _texture.get(), !!srcRect ? &s : nullptr, !!dstRect ? &d : nullptr);
+}
+
 void SDLTexture::UpdateYUVTexture(const Rect& rect, std::uint8_t* yplane, int ypitch, std::uint8_t* uplane, int upitch,
     std::uint8_t* vplane, int vpitch) noexcept
 {

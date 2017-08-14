@@ -19,6 +19,7 @@ Widget::Widget(windowing::Renderer& renderer)
 
 void Widget::render() noexcept
 {
+    mars_debug_(ui, "[{}] Widget::render()", static_cast<void*>(this));
     if (_background) {
         _background->render(_x, _y);
     }
@@ -42,7 +43,7 @@ void Widget::move(std::uint32_t x, std::uint32_t y)
     _y = y;
 }
 
-void Widget::addBackground()
+void Widget::addBackground() noexcept
 {
     mars_debug_(ui, "Adding background for Widget {}", static_cast<void*>(this));
     _background = _parentRenderer.createTexture(width(), height(), mars::windowing::PixelFormat::Unknown);
@@ -55,6 +56,7 @@ std::uint32_t Widget::width() const noexcept
     }
     return _texture->size().first;
 }
+
 std::uint32_t Widget::height() const noexcept
 {
     if (!_texture) {

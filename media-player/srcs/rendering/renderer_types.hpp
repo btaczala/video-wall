@@ -2,7 +2,9 @@
 #define RENDERER_TYPES_HPP_TH4HPV7T
 
 #include "events.hpp"
+
 #include <boost/variant.hpp>
+#include <iostream>
 
 namespace mars {
 namespace windowing {
@@ -13,6 +15,7 @@ struct Rect {
     const std::uint32_t w;
     const std::uint32_t h;
 };
+inline std::ostream& operator<<(std::ostream& os, const Rect& r) { return os; }
 
 enum class PixelFormat { Unknown = 0, IYUV };
 
