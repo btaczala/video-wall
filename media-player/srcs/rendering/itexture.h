@@ -27,8 +27,12 @@ struct ITexture {
 
     void setFullscreen(bool fullscreen) { _fullscreen = fullscreen; }
 
+    void setRenderingOffset(const Rect& offset) { renderingOffset = offset; }
+
 protected:
     bool _fullscreen{ false };
+
+    Rect renderingOffset{ 0, 0, 0, 0 };
 };
 } // namespace windowing
 } // namespace mars

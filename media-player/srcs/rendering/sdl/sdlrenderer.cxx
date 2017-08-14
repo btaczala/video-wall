@@ -57,7 +57,12 @@ std::unique_ptr<ITexture> SDLRenderer::createImage(const std::string& imagePath,
         _renderer.get(), SDL_CreateTextureFromSurface(_renderer.get(), surf), fullscreen);
 }
 
-void SDLRenderer::clear() noexcept { SDL_RenderClear(_renderer.get()); }
+void SDLRenderer::clear() noexcept
+{
+    mars_debug_(rendering, "Clearing buffer");
+    SDL_RenderClear(_renderer.get());
+}
+
 void SDLRenderer::render() noexcept { SDL_RenderPresent(_renderer.get()); }
 void SDLRenderer::quit() noexcept
 {
@@ -110,6 +115,7 @@ void /* static */ SDLRenderer::initialize()
     }
 
     SDL_EventState(SDL_MOUSEMOTION, SDL_IGNORE);
+    SDL_EventState(SDL_TEXTINPUT, SDL_IGNORE);
     SDL_EventState(SDL_KEYDOWN, SDL_IGNORE);
 }
 

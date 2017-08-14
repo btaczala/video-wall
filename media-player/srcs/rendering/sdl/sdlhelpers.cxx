@@ -12,7 +12,7 @@ events::Keyboard keyboardEvent(const SDL_Event& ev)
 {
     using namespace mars::windowing::events;
     Keyboard::Key k{ Keyboard::Key::Unknown };
-    if (ev.key.type == SDLK_SPACE) {
+    if (ev.key.keysym.scancode == SDL_SCANCODE_SPACE) {
         k = Keyboard::Key::Space;
     }
     return Keyboard{ k };
@@ -65,11 +65,11 @@ boost::optional<mars::windowing::EventVariant> translateEvent(const SDL_Event& e
 {
     if (kTranslator.find(ev.type) != kTranslator.end()) {
         auto translated = kTranslator.at(ev.type)(ev);
-        mars_trace_(rendering, "Translated event {:x} to {}", ev.type, translated.type().name());
+        mars_debug_(rendering, "Translated event {:x} to {}", ev.type, translated.type().name());
         return translated;
     }
 
-    mars_warn_(rendering, "Unable to translate event 0x{:x}", ev.type);
+    mars_warn_(ui, "Unable to translate event 0x{:x}", ev.type);
     return boost::optional<mars::windowing::EventVariant>{};
 }
 } // namespace sdl_helpers

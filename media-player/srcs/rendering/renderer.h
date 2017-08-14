@@ -58,6 +58,9 @@ struct Renderer {
     virtual boost::optional<EventVariant> pollEvent() noexcept = 0;
 
     void addWidget(const std::shared_ptr<widgets::Widget>& w);
+
+    void setFocus(const std::shared_ptr<widgets::Widget>& w);
+
     void loop(const std::vector<LoopFn>& additionalFunctions = std::vector<LoopFn>{}) noexcept;
 
 private:

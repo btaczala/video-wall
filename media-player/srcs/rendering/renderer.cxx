@@ -5,19 +5,26 @@
 namespace {
 using namespace mars::windowing;
 struct event_visitor : public boost::static_visitor<void> {
-    event_visitor(bool& quitFlag, bool& renderingFlag)
+    event_visitor(bool& quitFlag, bool& renderingFlag, mars::widgets::Widget* foc)
         : _quitFlag(quitFlag)
         , _renderingFlag(renderingFlag)
+        , _focused(foc)
     {
     }
 
-    void operator()(events::Keyboard) {}
+    void operator()(events::Keyboard k)
+    {
+        if (_focused) {
+            _focused->event(k);
+        }
+    }
     void operator()(events::Quit) { _quitFlag = true; }
     void operator()(events::Refresh) { _renderingFlag = true; }
     void operator()(events::Window) { _renderingFlag = true; }
 
     bool& _quitFlag;
     bool& _renderingFlag;
+    mars::widgets::Widget* _focused;
 };
 } // namespace
 
@@ -36,6 +43,8 @@ void Renderer::addWidget(const std::shared_ptr<widgets::Widget>& w)
         std::begin(_widgets), std::end(_widgets), [](const auto& sp1, const auto& sp2) { return sp1->z() > sp2->z(); });
 }
 
+void Renderer::setFocus(const std::shared_ptr<widgets::Widget>& w) { _focused = w; }
+
 void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
 {
     using namespace mars::windowing;
@@ -47,7 +56,7 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
 
         if (event) {
             // TODO: Implement a proper lambda visitation here
-            auto vis = event_visitor(quit, rendering);
+            auto vis = event_visitor(quit, rendering, _focused.get());
             boost::apply_visitor(vis, event.get());
         }
 
@@ -69,5 +78,6 @@ void Renderer::loop(const std::vector<LoopFn>& additionalFunctions) noexcept
     }
     mars_info_(rendering, "Finish rendering loop");
 }
+
 } // namespace windowing
 } // namespace mars

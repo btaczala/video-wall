@@ -75,7 +75,7 @@ void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
     if (_fullscreen) {
         render(boost::optional<Rect>{}, boost::optional<Rect>{});
     } else {
-        render(boost::optional<Rect>{}, Rect{ x, y, si.first, si.second });
+        render(Rect{ 0u, 0u, si.first, si.second }, Rect{ x, y, si.first, si.second });
     }
 }
 
@@ -92,8 +92,11 @@ void SDLTexture::render(const boost::optional<Rect>& srcRect, const boost::optio
         }
     };
 
-    const SDL_Rect s{ convertRect(srcRect) };
-    const SDL_Rect d{ convertRect(dstRect) };
+    SDL_Rect s{ convertRect(srcRect) };
+    SDL_Rect d{ convertRect(dstRect) };
+
+    s.x += renderingOffset.x;
+    d.w -= renderingOffset.x;
 
     mars_debug_(rendering, "[{}] Rendering texture {} under rect {} {}", static_cast<void*>(this),
         static_cast<void*>(_texture.get()), s, d);

@@ -10,10 +10,10 @@ namespace mars {
 namespace windowing {
 
 struct Rect {
-    const std::uint32_t x;
-    const std::uint32_t y;
-    const std::uint32_t w;
-    const std::uint32_t h;
+    std::uint32_t x;
+    std::uint32_t y;
+    std::uint32_t w;
+    std::uint32_t h;
 };
 inline std::ostream& operator<<(std::ostream& os, const Rect& r) { return os; }
 

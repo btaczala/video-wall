@@ -29,7 +29,10 @@ void Widget::render() noexcept
     }
 }
 
-bool Widget::event(const windowing::EventVariant& event) noexcept { return false; }
+bool Widget::event(const windowing::EventVariant& event) noexcept { 
+    mars_debug_(ui, "Default event handler will do nothing");
+    return false; 
+}
 
 void Widget::requestRefresh()
 {

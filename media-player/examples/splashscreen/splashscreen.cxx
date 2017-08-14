@@ -44,6 +44,8 @@ int main()
 
     renderer.addWidget(imageWidget);
     renderer.addWidget(textWidget);
+    renderer.setFocus(textWidget);
+
     textWidget->addBackground();
 
     std::thread quitThread{ [&]() {
