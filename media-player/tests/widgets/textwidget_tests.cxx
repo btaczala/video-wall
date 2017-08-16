@@ -48,10 +48,11 @@ TEST(TextWidget, proper_font_path_combination)
     RendererMock mock;
     ConfigurationManagerMock cfgMock;
     auto* texture = new TextureMock;
+    boost::optional<mars::windowing::Rect> r;
 
     REQUIRE_CALL(cfgMock, fontsPaths()).RETURN(paths);
     REQUIRE_CALL(mock, createTextProxy("arial-black", fontPath, 24)).RETURN(texture);
-    REQUIRE_CALL(*texture, render(0u, 0u));
+    REQUIRE_CALL(*texture, render(::trompeloeil::_, ::trompeloeil::_));
     ALLOW_CALL(*texture, size()).RETURN(std::make_pair(10, 10));
     auto fn = [&]() {
         mars::widgets::TextWidget w{ "arial-black", "Hack-Regular.ttf", 24, mock, cfgMock };
