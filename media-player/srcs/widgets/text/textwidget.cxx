@@ -48,6 +48,9 @@ TextWidget::TextWidget(const std::string& text, const std::string& font, std::ui
     , _text(text)
 {
     _texture = renderer.createText(text, fontPath(font, cm), textSize);
+    _width = _texture->size().first;
+    _height = _texture->size().second;
+
     mars_info_(ui, "Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
         static_cast<void*>(_texture.get()));
     mars_debug_(ui, "texture size={}x{}", _texture->size().first, _texture->size().second);

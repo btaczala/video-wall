@@ -12,8 +12,8 @@ namespace windowing {
 struct Rect {
     std::int32_t x;
     std::int32_t y;
-    std::int32_t w;
-    std::int32_t h;
+    std::uint32_t w;
+    std::uint32_t h;
 };
 inline std::ostream& operator<<(std::ostream& os, const Rect& c) { 
     return os << "windowing::Rect {" << c.x << "," << c.y << "," << c.w << "," << c.h << "}";

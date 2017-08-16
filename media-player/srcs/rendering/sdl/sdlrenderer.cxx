@@ -152,7 +152,7 @@ Rect SDLRenderer::geometry() const
 {
     int w{ 0 }, h{ 0 };
     SDL_GetRendererOutputSize(_renderer.get(), &w, &h);
-    return Rect{ 0, 0, w, h };
+    return Rect{ 0, 0, static_cast<std::uint32_t>(w), static_cast<std::uint32_t>(h) };
 }
 
 } // namespace windowing

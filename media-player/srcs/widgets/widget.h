@@ -41,6 +41,8 @@ struct Widget {
 
     std::uint32_t z() const noexcept { return _z; }
 
+    void setRect(const windowing::Rect& r);
+
     virtual void move(std::int32_t x, std::int32_t y);
 
     void setZ(std::uint32_t z) { _z = z; }

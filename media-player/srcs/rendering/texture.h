@@ -21,7 +21,7 @@ struct Texture {
 
     virtual void put(const void* buffer, const TextureSize& size) noexcept = 0;
 
-    virtual void render(std::uint32_t x, std::uint32_t y) noexcept;
+    virtual void render(const mars::windowing::Rect& r) noexcept;
 
     virtual void render(const boost::optional<Rect>& srcRect, const boost::optional<Rect>& dstRect) noexcept = 0;
 

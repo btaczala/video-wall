@@ -85,8 +85,8 @@ void SDLTexture::render(const boost::optional<Rect>& srcRect, const boost::optio
     s.x += _renderingOffset.x;
     d.w -= _renderingOffset.x;
 
-    mars_debug_(rendering, "[{}] Rendering texture {} under rect {} {}", static_cast<void*>(this),
-        static_cast<void*>(_texture.get()), s, d);
+    mars_debug_(rendering, "[{}] Rendering under srcRect {} destRect {}", static_cast<void*>(this),
+         s, d);
     SDL_RenderCopy(_renderer, _texture.get(), !!srcRect ? &s : nullptr, !!dstRect ? &d : nullptr);
 }
 

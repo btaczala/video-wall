@@ -1,6 +1,6 @@
 #include "imagewidget.h"
-#include "texture.h"
 #include "renderer.h"
+#include "texture.h"
 
 namespace mars {
 namespace widgets {
@@ -9,6 +9,9 @@ ImageWidget::ImageWidget(const std::string& imagePath, windowing::ImageType type
     : Widget(renderer)
 {
     _texture = renderer.createImage(imagePath, type == windowing::ImageType::stretched);
+
+    _width = _texture->size().first;
+    _height = _texture->size().second;
 }
 
 ImageWidget::~ImageWidget() {}

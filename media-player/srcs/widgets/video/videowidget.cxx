@@ -1,8 +1,8 @@
 #include "videowidget.h"
-#include "texture.h"
 #include "ivideorenderer.h"
 #include "renderer.h"
 #include "stopwatch.hpp"
+#include "texture.h"
 
 #include "renderer_types.hpp"
 
@@ -57,7 +57,7 @@ bool VideoWidget::update() const noexcept
 void VideoWidget::render() noexcept
 {
     Stopwatch<> sw;
-    _texture->render(_x, _y);
+    _texture->render(windowing::Rect{ _x, _y, _width, _height });
     mars_debug_(perf, "VideoWidget::render() took {}", sw.elapsed());
 }
 
