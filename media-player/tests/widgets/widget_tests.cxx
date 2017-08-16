@@ -13,14 +13,14 @@ TEST(Widget, event_return_false)
 TEST(Widget, default_position)
 {
     WidgetMock w;
-    EXPECT_EQ(w.x(), 0u);
-    EXPECT_EQ(w.y(), 0u);
+    EXPECT_EQ(w.x(), 0);
+    EXPECT_EQ(w.y(), 0);
     EXPECT_EQ(w.width(), std::numeric_limits<std::uint32_t>::max());
     EXPECT_EQ(w.height(), std::numeric_limits<std::uint32_t>::max());
 
     w.move(10, 10);
-    EXPECT_EQ(w.x(), 10u);
-    EXPECT_EQ(w.y(), 10u);
+    EXPECT_EQ(w.x(), 10);
+    EXPECT_EQ(w.y(), 10);
 }
 
 TEST(Widget, request_refresh)

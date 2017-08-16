@@ -40,10 +40,13 @@ void Widget::requestRefresh()
     _parentRenderer.requestRefresh(this);
 }
 
-void Widget::move(std::uint32_t x, std::uint32_t y)
+void Widget::move(std::int32_t x, std::int32_t y)
 {
+    mars_debug_(ui, "moving widget {}x{}", x, y);
     _x = x;
     _y = y;
+
+    requestRefresh();
 }
 
 void Widget::addBackground() noexcept

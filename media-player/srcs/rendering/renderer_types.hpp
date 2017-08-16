@@ -10,12 +10,14 @@ namespace mars {
 namespace windowing {
 
 struct Rect {
-    std::uint32_t x;
-    std::uint32_t y;
-    std::uint32_t w;
-    std::uint32_t h;
+    std::int32_t x;
+    std::int32_t y;
+    std::int32_t w;
+    std::int32_t h;
 };
-inline std::ostream& operator<<(std::ostream& os, const Rect& r) { return os; }
+inline std::ostream& operator<<(std::ostream& os, const Rect& c) { 
+    return os << "windowing::Rect {" << c.x << "," << c.y << "," << c.w << "," << c.h << "}";
+}
 
 enum class PixelFormat { Unknown = 0, IYUV };
 

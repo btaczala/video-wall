@@ -80,8 +80,8 @@ TEST_F(VideoWidgetCreatedTests, update_frames_left)
 
     EXPECT_TRUE(vw->update());
 
-    EXPECT_EQ(vw->x(), 0u);
-    EXPECT_EQ(vw->y(), 0u);
+    EXPECT_EQ(vw->x(), 0);
+    EXPECT_EQ(vw->y(), 0);
     EXPECT_EQ(vw->width(), 10u);
     EXPECT_EQ(vw->height(), 10u);
 }
