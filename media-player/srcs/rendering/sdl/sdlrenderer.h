@@ -34,6 +34,8 @@ struct SDLRenderer : public Renderer {
     void requestRefresh(widgets::Widget* widget) noexcept override;
     boost::optional<EventVariant> pollEvent() noexcept override;
 
+    Rect geometry() const;
+
     static void initialize();
 
     static sdl_helpers::WindowPtr createFullScreenWindow();

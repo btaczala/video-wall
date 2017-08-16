@@ -46,7 +46,7 @@ int main()
     renderer.addWidget(textWidget);
     renderer.setFocus(textWidget);
 
-    textWidget->addBackground();
+    //textWidget->addBackground();
 
     std::thread quitThread{ [&]() {
         std::unique_lock<std::mutex> lk(mtx);
@@ -54,10 +54,30 @@ int main()
         renderer.quit();
     } };
 
+    std::thread animationThread{ [&]() {
+        int offset = 5;
+        while (true) {
+            std::unique_lock<std::mutex> lk(mtx);
+            auto st = cv.wait_for(lk, std::chrono::milliseconds(15));
+            if (st != std::cv_status::timeout) {
+                break;
+            } else {
+                // offset += 1;
+                textWidget->move(textWidget->x() - offset, textWidget->y());
+
+                if (textWidget->x() < -250) {
+                    // offset = 0;
+                    textWidget->move(renderer.geometry().w, 150);
+                }
+            }
+        }
+    } };
+
     renderer.loop();
-    cv.notify_one();
+    cv.notify_all();
 
     quitThread.join();
+    animationThread.join();
 
     return 0;
 }

@@ -148,5 +148,12 @@ void /* static */ SDLRenderer::initialize()
     return sdl_helpers::WindowPtr{ window };
 }
 
+Rect SDLRenderer::geometry() const
+{
+    int w{ 0 }, h{ 0 };
+    SDL_GetRendererOutputSize(_renderer.get(), &w, &h);
+    return Rect{ 0, 0, w, h };
+}
+
 } // namespace windowing
 } // namespace mars

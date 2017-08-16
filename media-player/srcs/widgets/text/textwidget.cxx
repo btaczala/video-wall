@@ -46,34 +46,11 @@ TextWidget::TextWidget(const std::string& text, const std::string& font, std::ui
     windowing::Renderer& renderer, core::IConfigurationManager& cm)
     : Widget(renderer)
     , _text(text)
-    , _haveBackground(false)
 {
     _texture = renderer.createText(text, fontPath(font, cm), textSize);
     mars_info_(ui, "Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
         static_cast<void*>(_texture.get()));
     mars_debug_(ui, "texture size={}x{}", _texture->size().first, _texture->size().second);
-}
-
-bool TextWidget::event(const windowing::EventVariant& event) noexcept
-{
-    auto pEvent = boost::get<windowing::events::Keyboard>(&event);
-    if (pEvent) {
-        mars_debug_(ui, "TextWidget::event {}", static_cast<int>(pEvent->key));
-        if (pEvent->key == windowing::events::Keyboard::Key::Space) {
-            mars_debug_(ui, "Received space key");
-            offset += 10;
-            auto w = _texture->size().first;
-
-            if (offset > w) {
-                offset = 0;
-            }
-            _texture->setRenderingOffset(windowing::Rect{ offset, 0, 0, 0 });
-            requestRefresh();
-            return true;
-        }
-    }
-
-    return false;
 }
 
 } // namespace widgets

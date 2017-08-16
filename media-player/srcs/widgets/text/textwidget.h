@@ -21,12 +21,9 @@ struct TextWidget : public Widget {
         core::IConfigurationManager& cm);
 
     bool update() const noexcept override { return true; }
-    bool event(const windowing::EventVariant& event) noexcept override;
 
 private:
     const std::string _text;
-    const bool _haveBackground;
-    std::uint32_t offset{ 0 };
 };
 } // namespace widgets
 } // namespace mars
