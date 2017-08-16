@@ -27,9 +27,11 @@ int main()
 
     auto window = SDLRenderer::createSplashScreenWindow();
 
-    auto timeout = 5;
+    const auto timeout = 5;
     std::mutex mtx;
     std::condition_variable cv;
+
+    int leftPoint{ 100 };
 
     SDLRenderer renderer{ window.get() };
     DummyConfigurationManager cfgMgr;
@@ -39,18 +41,16 @@ int main()
     auto imageWidget = std::make_shared<ImageWidget>(imagePath, ImageType::stretched, renderer);
     auto marsLogo = std::make_shared<ImageWidget>(std::string{ TEST_DIR } + "/mars.png", ImageType::normal, renderer);
 
-    marsLogo->setRect(Rect{ 100, 150, 100, 40 });
+    marsLogo->setRect(Rect{ leftPoint, 150, 100, 40 });
 
     auto textWidget = std::make_shared<TextWidget>("Welcome to MARS", fontPath, 28, renderer, cfgMgr);
 
-    textWidget->move(230, 150);
+    textWidget->move(leftPoint + marsLogo->width() + 10, 150);
 
     renderer.addWidget(imageWidget);
     renderer.addWidget(textWidget);
     renderer.addWidget(marsLogo);
     renderer.setFocus(textWidget);
-
-    // textWidget->addBackground();
 
     std::thread quitThread{ [&]() {
         std::unique_lock<std::mutex> lk(mtx);
@@ -72,8 +72,8 @@ int main()
 
                 if (textWidget->x() < -250) {
                     // offset = 0;
-                    textWidget->move(renderer.geometry().w, 150);
-                    marsLogo->move(renderer.geometry().w - 130, 150);
+                    marsLogo->move(renderer.geometry().w, 150);
+                    textWidget->move(renderer.geometry().w + marsLogo->width() + 10, 150);
                 }
             }
         }

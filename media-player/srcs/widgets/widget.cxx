@@ -58,21 +58,9 @@ void Widget::addBackground() noexcept
     _background = _parentRenderer.createTexture(width(), height(), mars::windowing::PixelFormat::Unknown);
 }
 
-std::uint32_t Widget::width() const noexcept
-{
-    if (!_texture) {
-        return std::numeric_limits<std::uint32_t>::max();
-    }
-    return _texture->size().first;
-}
+std::uint32_t Widget::width() const noexcept { return _width; }
 
-std::uint32_t Widget::height() const noexcept
-{
-    if (!_texture) {
-        return std::numeric_limits<std::uint32_t>::max();
-    }
-    return _texture->size().second;
-}
+std::uint32_t Widget::height() const noexcept { return _height; }
 
 void Widget::setRect(const windowing::Rect& r)
 {
