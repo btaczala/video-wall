@@ -1,7 +1,7 @@
 #ifndef SDLTEXTURE_H_YFTIZBST
 #define SDLTEXTURE_H_YFTIZBST
 
-#include "itexture.h"
+#include "texture.h"
 #include "sdlhelpers.h"
 
 struct SDL_Renderer;
@@ -13,13 +13,12 @@ struct Widget;
 } // namespace widgets
 namespace windowing {
 
-struct SDLTexture : public ITexture {
+struct SDLTexture : public Texture {
     SDLTexture(SDL_Renderer* renderer, std::uint16_t width, std::uint16_t height, PixelFormat format);
     SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture, bool fullscreeen = false);
 
     TextureSize size() const noexcept override;
     void put(const void* buffer, const TextureSize& size) noexcept override;
-    void render(std::uint32_t x, std::uint32_t y) noexcept override;
     void render(const boost::optional<Rect>& srcRect, const boost::optional<Rect>& dstRect) noexcept override;
     void UpdateYUVTexture(const Rect&, std::uint8_t*, int, std::uint8_t*, int, std::uint8_t*, int) noexcept override;
 

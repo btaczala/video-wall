@@ -9,7 +9,7 @@ namespace windowing {
 enum class ImageType { normal = 0, stretched };
 
 struct Renderer;
-struct ITexture;
+struct Texture;
 } // namespace windowing
 
 namespace widgets {

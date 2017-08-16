@@ -7,7 +7,7 @@
 namespace mars {
 namespace windowing {
 struct IRenderer;
-struct ITexture;
+struct Texture;
 } // namespace windowing
 
 namespace webengine {

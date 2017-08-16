@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include "log.hpp"
 #include "widget.h"
+#include "texture.h"
 
 namespace {
 using namespace mars::windowing;

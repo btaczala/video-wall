@@ -25,7 +25,7 @@ TEST_F(HTMLWidgetTestCEFSetup, creation)
 {
     using namespace mars::windowing;
     RendererMock rMock;
-    ITexture* texture = nullptr;
+    Texture* texture = nullptr;
     REQUIRE_CALL(rMock, createTextureProxy(10, 10, mars::windowing::PixelFormat::Unknown)).RETURN(texture);
     mars::widgets::HTMLWidget html{ "", rMock, 10, 10 };
 

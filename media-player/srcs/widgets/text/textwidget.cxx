@@ -1,6 +1,6 @@
 #include "textwidget.h"
 #include "iconfigurationmanager.h"
-#include "itexture.h"
+#include "texture.h"
 #include "log.hpp"
 #include "renderer.h"
 
@@ -51,7 +51,7 @@ TextWidget::TextWidget(const std::string& text, const std::string& font, std::ui
     _texture = renderer.createText(text, fontPath(font, cm), textSize);
     mars_info_(ui, "Created TextWidget with text = {}, font = {}, size = {}, _texture = {}", text, font, textSize,
         static_cast<void*>(_texture.get()));
-    mars_debug_(ui, "texture size={}", _texture->size());
+    mars_debug_(ui, "texture size={}x{}", _texture->size().first, _texture->size().second);
 }
 
 bool TextWidget::event(const windowing::EventVariant& event) noexcept

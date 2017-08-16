@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-#include "itexture.h"
+#include "texture.h"
 #include "log.hpp"
 #include "renderer.h"
 #include "sdlhelpers.h"
@@ -21,10 +21,10 @@ namespace windowing {
 struct SDLRenderer : public Renderer {
     SDLRenderer(SDL_Window* window);
 
-    std::unique_ptr<ITexture> createTexture(
+    std::unique_ptr<Texture> createTexture(
         std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept override;
-    std::unique_ptr<ITexture> createImage(const std::string& imagePath, bool fullscreen) override;
-    std::unique_ptr<ITexture> createText(
+    std::unique_ptr<Texture> createImage(const std::string& imagePath, bool fullscreen) override;
+    std::unique_ptr<Texture> createText(
         const std::string& text, const std::string& family, std::uint16_t size) noexcept override;
 
     void clear() noexcept override;

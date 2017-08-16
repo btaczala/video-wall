@@ -29,7 +29,7 @@ TEST_F(VideoWidgetTests, create_video_widget)
     REQUIRE_CALL(*video, info()).RETURN(vi).TIMES(AT_LEAST(1));
     REQUIRE_CALL(*video, setFrameReadyCb(trompeloeil::_));
 
-    ITexture* texture = nullptr;
+    Texture* texture = nullptr;
     REQUIRE_CALL(_mock, createTextureProxy(vi.width, vi.height, mars::windowing::PixelFormat::IYUV)).RETURN(texture);
 
     auto fn = [this]() { mars::widgets::VideoWidget vw{ "", _mock, _videoBackendMock }; };

@@ -27,14 +27,14 @@ SDLRenderer::SDLRenderer(SDL_Window* window)
     mars_info_(rendering, "Created a renderer {} size {}x{}", static_cast<void*>(_renderer.get()), w, h);
 }
 
-std::unique_ptr<ITexture> SDLRenderer::createTexture(
+std::unique_ptr<Texture> SDLRenderer::createTexture(
     std::uint16_t width, std::uint16_t height, PixelFormat format) noexcept
 {
     mars_info_(rendering, "SDLRenderer::createTexture({}, {}, {})", width, height, static_cast<int>(format));
     return std::make_unique<SDLTexture>(_renderer.get(), width, height, format);
 }
 
-std::unique_ptr<ITexture> SDLRenderer::createText(
+std::unique_ptr<Texture> SDLRenderer::createText(
     const std::string& text, const std::string& family, std::uint16_t size) noexcept
 {
     mars_info_(rendering, "SDLRenderer::createText(text={}, font={}, size={})", text, family, size);
@@ -42,7 +42,7 @@ std::unique_ptr<ITexture> SDLRenderer::createText(
     return f.renderText(text);
 }
 
-std::unique_ptr<ITexture> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen)
+std::unique_ptr<Texture> SDLRenderer::createImage(const std::string& imagePath, bool fullscreen)
 {
     auto surf = IMG_Load(imagePath.c_str());
 

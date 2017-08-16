@@ -45,7 +45,7 @@ SDLTexture::SDLTexture(SDL_Renderer* renderer, SDL_Texture* texture, bool fullsc
     setFullscreen(fullscreen);
 }
 
-ITexture::TextureSize SDLTexture::size() const noexcept
+Texture::TextureSize SDLTexture::size() const noexcept
 {
     int w, h;
     SDL_QueryTexture(_texture.get(), nullptr, nullptr, &w, &h);
@@ -66,19 +66,6 @@ void SDLTexture::put(const void* buffer, const TextureSize& size) noexcept
     SDL_UnlockTexture(_texture.get());
 }
 
-void SDLTexture::render(std::uint32_t x, std::uint32_t y) noexcept
-{
-    BOOST_ASSERT_MSG(_texture, "Texture cannot be null");
-    BOOST_ASSERT_MSG(_renderer, "Renderer cannot be null");
-
-    auto si = size();
-    if (_fullscreen) {
-        render(boost::optional<Rect>{}, boost::optional<Rect>{});
-    } else {
-        render(Rect{ 0u, 0u, si.first, si.second }, Rect{ x, y, si.first, si.second });
-    }
-}
-
 void SDLTexture::render(const boost::optional<Rect>& srcRect, const boost::optional<Rect>& dstRect) noexcept
 {
     BOOST_ASSERT_MSG(_texture, "Texture cannot be null");
@@ -95,8 +82,8 @@ void SDLTexture::render(const boost::optional<Rect>& srcRect, const boost::optio
     SDL_Rect s{ convertRect(srcRect) };
     SDL_Rect d{ convertRect(dstRect) };
 
-    s.x += renderingOffset.x;
-    d.w -= renderingOffset.x;
+    s.x += _renderingOffset.x;
+    d.w -= _renderingOffset.x;
 
     mars_debug_(rendering, "[{}] Rendering texture {} under rect {} {}", static_cast<void*>(this),
         static_cast<void*>(_texture.get()), s, d);

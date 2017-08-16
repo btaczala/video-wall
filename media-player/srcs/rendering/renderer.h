@@ -17,7 +17,7 @@ struct Widget;
 } // namespace widgets
 namespace windowing {
 
-struct ITexture;
+struct Texture;
 struct IFont;
 struct IImage;
 
@@ -34,13 +34,13 @@ struct Renderer {
      * @brief Creates a texture
      * @return a unique pointer to newly created format
      */
-    virtual std::unique_ptr<ITexture> createTexture(std::uint16_t width, std::uint16_t height, PixelFormat e) noexcept
+    virtual std::unique_ptr<Texture> createTexture(std::uint16_t width, std::uint16_t height, PixelFormat e) noexcept
         = 0;
-    virtual std::unique_ptr<ITexture> createText(
+    virtual std::unique_ptr<Texture> createText(
         const std::string& text, const std::string& family, std::uint16_t size) noexcept
         = 0;
 
-    virtual std::unique_ptr<ITexture> createImage(const std::string& imagePath, bool fullscreen) = 0;
+    virtual std::unique_ptr<Texture> createImage(const std::string& imagePath, bool fullscreen) = 0;
 
     /**
      * @brief Clears a renderer

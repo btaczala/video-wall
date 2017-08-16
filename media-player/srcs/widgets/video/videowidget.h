@@ -13,7 +13,6 @@ struct IVideoBackend;
 
 namespace windowing {
 struct IRenderer;
-struct ITexture;
 } // namespace windowing
 namespace widgets {
 

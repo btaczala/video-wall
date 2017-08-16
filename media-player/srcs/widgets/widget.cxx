@@ -3,7 +3,7 @@
 #include "renderer.h"
 #include "renderer_types.hpp"
 
-#include "itexture.h"
+#include "texture.h"
 
 namespace mars {
 namespace widgets {

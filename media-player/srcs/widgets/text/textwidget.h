@@ -7,7 +7,7 @@
 namespace mars {
 namespace windowing {
 struct Renderer;
-struct ITexture;
+struct Texture;
 } // windowing
 
 namespace core {

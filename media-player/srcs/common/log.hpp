@@ -16,14 +16,6 @@ extern std::shared_ptr<spdlog::logger> ffmpegLibLogger;
 extern std::shared_ptr<spdlog::logger> htmlLogger;
 extern std::shared_ptr<spdlog::logger> perfLogger;
 
-namespace std {
-template <typename F, typename S> std::ostream& operator<<(std::ostream& os, const std::pair<F, S>& p)
-{
-    os << "{" << p.first << " ," << p.second << "}";
-    return os;
-}
-} // namespace std
-
 #define __FILENAME__ (std::strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 #define mars_trace(fmt, ...)                                                                                           \

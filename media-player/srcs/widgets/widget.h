@@ -8,7 +8,7 @@
 namespace mars {
 namespace windowing {
 struct Renderer;
-struct ITexture;
+struct Texture;
 }
 namespace widgets {
 
@@ -57,8 +57,8 @@ protected:
     std::uint32_t _height;
     std::uint32_t _z;
 
-    std::unique_ptr<windowing::ITexture> _texture;
-    std::unique_ptr<windowing::ITexture> _background;
+    std::unique_ptr<windowing::Texture> _texture;
+    std::unique_ptr<windowing::Texture> _background;
 };
 } // namespace widgets
 } // namespace mars

@@ -1,6 +1,6 @@
 #include "htmlwidget.h"
 #include "cefrenderhandler.h"
-#include "itexture.h"
+#include "texture.h"
 #include "log.hpp"
 #include "renderer.h"
 

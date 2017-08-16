@@ -4,6 +4,7 @@ set(MARS_RENDERER_IMPL "sdl")
 add_subdirectory(${MARS_RENDERER_IMPL})
 add_library(mars-rendering STATIC
     renderer.cxx
+    texture.cxx
 )
 
 target_include_directories(mars-rendering 
@@ -13,7 +14,7 @@ target_include_directories(mars-rendering
 )
 
 target_link_libraries(mars-rendering 
-    mars-rendering-${MARS_RENDERER_IMPL}
+    PUBLIC mars-rendering-${MARS_RENDERER_IMPL}
     mars-widgets
 )
 

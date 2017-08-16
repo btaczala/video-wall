@@ -1,5 +1,5 @@
 #include "videowidget.h"
-#include "itexture.h"
+#include "texture.h"
 #include "ivideorenderer.h"
 #include "renderer.h"
 #include "stopwatch.hpp"

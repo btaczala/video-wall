@@ -1,5 +1,5 @@
 #include "imagewidget.h"
-#include "itexture.h"
+#include "texture.h"
 #include "renderer.h"
 
 namespace mars {

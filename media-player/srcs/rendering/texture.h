@@ -1,5 +1,5 @@
-#ifndef ITEXTURE_H_LFG1JAQW
-#define ITEXTURE_H_LFG1JAQW
+#ifndef TEXTURE_H_LFG1JAQW
+#define TEXTURE_H_LFG1JAQW
 
 #include "renderer_types.hpp"
 
@@ -13,13 +13,15 @@ namespace windowing {
 /**
  * @brief
  */
-struct ITexture {
+struct Texture {
     using TextureSize = std::pair<std::uint16_t, std::uint16_t>;
-    virtual ~ITexture() = default;
+    Texture();
+    virtual ~Texture() = default;
     virtual TextureSize size() const noexcept = 0;
 
     virtual void put(const void* buffer, const TextureSize& size) noexcept = 0;
-    virtual void render(std::uint32_t x, std::uint32_t y) noexcept = 0;
+
+    virtual void render(std::uint32_t x, std::uint32_t y) noexcept;
 
     virtual void render(const boost::optional<Rect>& srcRect, const boost::optional<Rect>& dstRect) noexcept = 0;
 
@@ -27,14 +29,14 @@ struct ITexture {
 
     void setFullscreen(bool fullscreen) { _fullscreen = fullscreen; }
 
-    void setRenderingOffset(const Rect& offset) { renderingOffset = offset; }
+    void setRenderingOffset(const Rect& offset) { _renderingOffset = offset; }
 
 protected:
     bool _fullscreen{ false };
 
-    Rect renderingOffset{ 0, 0, 0, 0 };
+    Rect _renderingOffset{ 0, 0, 0, 0 };
 };
 } // namespace windowing
 } // namespace mars
 
-#endif /* end of include guard: ITEXTURE_H_LFG1JAQW */
+#endif /* end of include guard: TEXTURE_H_LFG1JAQW */
