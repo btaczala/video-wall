@@ -37,6 +37,9 @@ int main()
     const std::string imagePath = std::string{ TEST_DIR } + "/mars.jpg";
     const std::string fontPath = std::string{ TEST_DIR } + "/Hack-Regular.ttf";
     auto imageWidget = std::make_shared<ImageWidget>(imagePath, ImageType::stretched, renderer);
+    auto marsLogo = std::make_shared<ImageWidget>(std::string{ TEST_DIR } + "/mars.png", ImageType::normal, renderer);
+
+    marsLogo->setRect(Rect{ 100, 150, 100, 40 });
 
     auto textWidget = std::make_shared<TextWidget>("Welcome to MARS", fontPath, 28, renderer, cfgMgr);
 
@@ -44,9 +47,10 @@ int main()
 
     renderer.addWidget(imageWidget);
     renderer.addWidget(textWidget);
+    renderer.addWidget(marsLogo);
     renderer.setFocus(textWidget);
 
-    //textWidget->addBackground();
+    // textWidget->addBackground();
 
     std::thread quitThread{ [&]() {
         std::unique_lock<std::mutex> lk(mtx);
@@ -64,10 +68,12 @@ int main()
             } else {
                 // offset += 1;
                 textWidget->move(textWidget->x() - offset, textWidget->y());
+                marsLogo->move(marsLogo->x() - offset, marsLogo->y());
 
                 if (textWidget->x() < -250) {
                     // offset = 0;
                     textWidget->move(renderer.geometry().w, 150);
+                    marsLogo->move(renderer.geometry().w - 130, 150);
                 }
             }
         }
