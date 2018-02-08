@@ -41,10 +41,16 @@ include("cef_macros")
 set(CEF_INCLUDE_DIRS "${CEF_ROOT}/include;${CEF_ROOT}")
 
 find_library(CEF_DLL_WRAPPER_LIBRARY cef_dll_wrapper 
-    PATHS ${CEF_ROOT}/build/libcef_dll_wrapper)
+    PATHS 
+        ${CEF_ROOT}/build/libcef_dll_wrapper
+        ${CEF_ROOT}/libcef_dll_wrapper
+    )
 
 find_library(CEF_LIBRARY cef
-    PATHS ${CEF_ROOT}/${CMAKE_BUILD_TYPE})
+    PATHS 
+        ${CEF_ROOT}/${CMAKE_BUILD_TYPE}
+        ${CEF_ROOT}/Release
+    )
 
 SET(CEF_LIBRARIES ${CEF_DLL_WRAPPER_LIBRARY} ${CEF_LIBRARY})
 

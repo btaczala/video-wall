@@ -17,7 +17,6 @@ TEST(GlobalConfigurationTests, fontPaths)
 TEST(GlobalConfigurationTests, uuid)
 {
     mars::core::ConfigurationManager cfg;
-
     EXPECT_EQ(cfg.uuid(), "%UUID%");
 }
 

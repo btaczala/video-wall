@@ -22,6 +22,7 @@ private:
     const std::string _configPath;
     const nlohmann::json _jsonObject;
 };
+
 } // namespace core
 } // namespace mars
 

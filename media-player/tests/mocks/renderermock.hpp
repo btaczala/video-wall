@@ -1,9 +1,9 @@
 #ifndef RENDERERMOCK_HPP_AZXKKSZ0
 #define RENDERERMOCK_HPP_AZXKKSZ0
 
-#include "texture.h"
 #include "renderer.h"
 #include "renderer_types.hpp"
+#include "texture.h"
 #include <boost/optional/optional_io.hpp>
 #include <trompeloeil.hpp>
 
@@ -14,10 +14,12 @@ struct RendererMock : public mars::windowing::Renderer {
     {
         return std::unique_ptr<mars::windowing::Texture>(createTextureProxy(w, h, p));
     }
+
     std::unique_ptr<mars::windowing::Texture> createImage(const std::string& name, bool fullscreen) override
     {
         return std::unique_ptr<mars::windowing::Texture>(createImageProxy(name, fullscreen));
     }
+
     std::unique_ptr<mars::windowing::Texture> createText(
         const std::string& text, const std::string& name, std::uint16_t size) noexcept override
     {

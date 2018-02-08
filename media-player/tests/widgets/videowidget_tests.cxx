@@ -76,7 +76,7 @@ TEST_F(VideoWidgetCreatedTests, update_frames_left)
     REQUIRE_CALL(*video, info()).RETURN(vi).TIMES(AT_LEAST(1));
     REQUIRE_CALL(*video, frame()).RETURN(ff);
     REQUIRE_CALL(*_texture, UpdateYUVTexture(_, _, _, _, _, _, _));
-    REQUIRE_CALL(*_texture, size()).RETURN(std::make_pair(10, 10)).TIMES(2);
+    //REQUIRE_CALL(*_texture, size()).RETURN(std::make_pair(10, 10)).TIMES(2);
 
     EXPECT_TRUE(vw->update());
 

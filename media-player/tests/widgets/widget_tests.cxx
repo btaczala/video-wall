@@ -15,8 +15,8 @@ TEST(Widget, default_position)
     WidgetMock w;
     EXPECT_EQ(w.x(), 0);
     EXPECT_EQ(w.y(), 0);
-    EXPECT_EQ(w.width(), std::numeric_limits<std::uint32_t>::max());
-    EXPECT_EQ(w.height(), std::numeric_limits<std::uint32_t>::max());
+    EXPECT_EQ(w.width(), 0u);
+    EXPECT_EQ(w.height(), 0u);
 
     ALLOW_CALL(w._rMock, requestRefresh(::trompeloeil::_));
     w.move(10, 10);
